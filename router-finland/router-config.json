@@ -99,13 +99,6 @@
       "fuzzyTripMatching": false
     },
     {
-      "id": "samocat-bike-rental",
-      "type": "bike-rental",
-      "sourceType": "samocat",
-      "url": "http://digitransit-proxy:8080/out/finagent.samocat.net/api/stations_info/",
-      "frequencySec": 10
-    },
-    {
       "id": "vantaa-bike-rental",
       "type": "bike-rental",
       "sourceType": "sharingos",
