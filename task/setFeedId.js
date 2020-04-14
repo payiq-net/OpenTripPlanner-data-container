@@ -4,6 +4,8 @@ const converter = require('json-2-csv')
 const through = require('through2')
 const cloneable = require('cloneable-readable')
 
+const { postSlackMessage } = require('../util')
+
 function createFeedInfo (zip, file, csv, cb) {
   zip.file('feed_info.txt', csv)
   zip.generateNodeStream({ streamFiles: true, compression: 'DEFLATE' })
@@ -43,6 +45,15 @@ ${id}-fake-name,${id}-fake-url,${id}-fake-lang,${id}\n`
           }
           /* eslint-enable */
           if (json.length > 0) {
+            if (process.env.VERSION_CHECK) {
+              const EIGHT_HOURS = 8 * 60 * 60 * 1000
+              const idsToCheck = process.env.VERSION_CHECK.replace(/ /g, '').split(',')
+              if (idsToCheck.includes(id) && json[0]['feed_version'] !== undefined &&
+                ((new Date()) - new Date(json[0]['feed_version'])) > EIGHT_HOURS) {
+                process.stdout.write('GTFS data for ' + id + ' had not been updated within 8 hours.\n')
+                postSlackMessage('GTFS data for ' + id + ' had not been updated within 8 hours.\n')
+              }
+            }
             // no id or id is wrong
             if (json[0]['feed_id'] === undefined || json[0]['feed_id'] !== id) {
               json[0]['feed_id'] = id
