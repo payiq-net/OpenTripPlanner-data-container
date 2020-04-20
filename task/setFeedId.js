@@ -48,10 +48,16 @@ ${id}-fake-name,${id}-fake-url,${id}-fake-lang,${id}\n`
             if (process.env.VERSION_CHECK) {
               const EIGHT_HOURS = 8 * 60 * 60 * 1000
               const idsToCheck = process.env.VERSION_CHECK.replace(/ /g, '').split(',')
+              const now = new Date()
+              // check if a warning should be shown about feed_version timestamp being over 8 hours in the past
               if (idsToCheck.includes(id) && json[0]['feed_version'] !== undefined &&
-                ((new Date()) - new Date(json[0]['feed_version'])) > EIGHT_HOURS) {
+                ((now) - new Date(json[0]['feed_version'])) > EIGHT_HOURS) {
                 process.stdout.write('GTFS data for ' + id + ' had not been updated within 8 hours.\n')
-                postSlackMessage('GTFS data for ' + id + ' had not been updated within 8 hours.\n')
+                // send warning also to slack between monday and friday
+                const day = now.getDay()
+                if (day > 0 && day < 6) {
+                  postSlackMessage('GTFS data for ' + id + ' had not been updated within 8 hours.\n')
+                }
               }
             }
             // no id or id is wrong
