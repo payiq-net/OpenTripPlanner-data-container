@@ -1,6 +1,5 @@
 # Build process for OpenTripPlanner-data-container
 
-[![Greenkeeper badge](https://badges.greenkeeper.io/HSLdevcom/OpenTripPlanner-data-container.svg)](https://greenkeeper.io/)
 [![Build](https://api.travis-ci.org/HSLdevcom/OpenTripPlanner-data-container.svg?branch=master)](https://travis-ci.org/HSLdevcom/OpenTripPlanner-data-container)
 
 ## This project:
