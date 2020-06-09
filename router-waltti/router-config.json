@@ -146,6 +146,14 @@
       "url": "http://digitransit-proxy:8080/out/kaupunkipyorat.kuopio.fi/tkhs-export-map.html?format=xml",
       "frequencySec": 10,
       "network": "vilkku"
+    },
+    {
+      "id": "kuopio-alerts",
+      "type": "real-time-alerts",
+      "frequencySec": 30,
+      "url": "http://digitransit-proxy:8080/out/vilkku.mattersoft.fi/api/gtfsrealtime/v1.0/feed/servicealert",
+      "feedId": "Kuopio",
+      "fuzzyTripMatching": false
     }
   ]
 }
