@@ -154,6 +154,23 @@
       "url": "http://digitransit-proxy:8080/out/vilkku.mattersoft.fi/api/gtfsrealtime/v1.0/feed/servicealert",
       "feedId": "Kuopio",
       "fuzzyTripMatching": false
+    },
+    {
+      "id": "hameenlinna-trip-updates",
+      "type": "stop-time-updater",
+      "frequencySec": 60,
+      "sourceType": "gtfs-http",
+      "url": "http://digitransit-proxy:8080/out/hameenlinna.mattersoft.fi/api/gtfsrealtime/v1.0/feed/tripupdate",
+      "feedId": "Hameenlinna",
+      "fuzzyTripMatching": false
+    },
+    {
+      "id": "hameenlinna-alerts",
+      "type": "real-time-alerts",
+      "frequencySec": 30,
+      "url": "http://digitransit-proxy:8080/out/hameenlinna.mattersoft.fi/api/gtfsrealtime/v1.0/feed/servicealert",
+      "feedId": "Hameenlinna",
+      "fuzzyTripMatching": false
     }
   ]
 }
