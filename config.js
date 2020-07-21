@@ -53,7 +53,8 @@ const WALTTI_CONFIG = {
     src('LINKKI', 'https://tvv.fra1.digitaloceanspaces.com/209.zip', 'gtfs_shape_mapfit/fit_gtfs_stops.bash'),
     src('tampere', 'http://www.tampere.fi/ekstrat/ptdata/tamperefeed_deprecated.zip', false),
     src('Rovaniemi', 'https://tvv.fra1.digitaloceanspaces.com/237.zip', 'gtfs_shape_mapfit/fit_gtfs_stops.bash', ['router-waltti/gtfs-rules/waltti.rule']),
-    src('TampereVR', 'https://rata.digitraffic.fi/api/v1/trains/gtfs-vr-tre.zip', false)
+    src('TampereVR', 'https://rata.digitraffic.fi/api/v1/trains/gtfs-vr-tre.zip', false),
+    src('tampereDRT', 'https://www.tampere.fi/ekstrat/ptdata/tamperefeed_kutsuliikenne.zip', false)
   ],
   'osm': 'finland',
   'dem': 'waltti'
