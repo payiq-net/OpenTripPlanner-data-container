@@ -42,7 +42,7 @@ module.exports = function (entries) {
     const r = {
       url: entry.url,
       encoding: null,
-      ...entry.requestOptions,
+      ...entry.requestOptions
     }
 
     request(r, downloadHandler)
