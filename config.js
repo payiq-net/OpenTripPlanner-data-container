@@ -4,8 +4,9 @@
  * url = feed url (String)
  * fit = mapfit shapes (true/false)
  * rules = OBA Filter rules to apply (array of strings)
+ * request options = optional special options for request
  */
-const src = (id, url, fit, rules) => ({ id, url, fit, rules })
+const src = (id, url, fit, rules, request_options) => ({ id, url, fit, rules, request_options })
 
 const HSL_CONFIG = {
   'id': 'hsl',
@@ -51,7 +52,7 @@ const WALTTI_CONFIG = {
     src('Kuopio', 'http://karttapalvelu.kuopio.fi/google_transit/google_transit.zip', false, ['router-waltti/gtfs-rules/waltti.rule']),
     src('OULU', 'https://assets.oulunliikenne.fi/gtfs_google/google_transit.zip', false),
     src('LINKKI', 'https://tvv.fra1.digitaloceanspaces.com/209.zip', 'gtfs_shape_mapfit/fit_gtfs_stops.bash'),
-    src('tampere', 'http://www.tampere.fi/ekstrat/ptdata/tamperefeed_deprecated.zip', false),
+    src('tampere', 'http://www.tampere.fi/ekstrat/ptdata/tamperefeed_deprecated.zip', false, false, { gzip: true} ),
     src('Rovaniemi', 'https://tvv.fra1.digitaloceanspaces.com/237.zip', 'gtfs_shape_mapfit/fit_gtfs_stops.bash', ['router-waltti/gtfs-rules/waltti.rule']),
     src('TampereVR', 'https://rata.digitraffic.fi/api/v1/trains/gtfs-vr-tre.zip', false),
     src('tampereDRT', 'https://www.tampere.fi/ekstrat/ptdata/tamperefeed_kutsuliikenne.zip', false)

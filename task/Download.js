@@ -39,7 +39,13 @@ module.exports = function (entries) {
     }
 
     process.stdout.write('Downloading ' + entry.url + '...\n')
-    request({ url: entry.url, encoding: null }, downloadHandler)
+    const r = {
+      url: entry.url,
+      encoding: null,
+      ...entry.request_options,
+    }
+
+    request(r, downloadHandler)
   }
   downloadIgnoreErrors(entries[0])
 
