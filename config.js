@@ -6,7 +6,7 @@
  * rules = OBA Filter rules to apply (array of strings)
  * request options = optional special options for request
  */
-const src = (id, url, fit, rules, request_options) => ({ id, url, fit, rules, request_options })
+const src = (id, url, fit, rules, requestOptions) => ({ id, url, fit, rules, requestOptions })
 
 const HSL_CONFIG = {
   'id': 'hsl',
