@@ -144,7 +144,7 @@
       "type": "bike-rental",
       "sourceType": "vilkku",
       "url": "http://digitransit-proxy:8080/out/kaupunkipyorat.kuopio.fi/tkhs-export-map.html?format=xml",
-      "frequencySec": 10,
+      "frequencySec": 60,
       "network": "vilkku"
     },
     {
