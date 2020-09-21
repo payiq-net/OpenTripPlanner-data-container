@@ -1,4 +1,4 @@
-FROM openjdk:8-jre
+FROM openjdk:11-jre
 MAINTAINER Digitransit version: 0.1
 ADD build-otp-data-tools.sh ${WORK}
 VOLUME /data
