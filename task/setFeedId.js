@@ -92,7 +92,7 @@ module.exports = {
     return through.obj(function (file, encoding, callback) {
       const gtfsFile = file.history[file.history.length - 1]
       const fileName = gtfsFile.split('/').pop()
-      const id = fileName.substring(0, fileName.indexOf('.'))
+      const id = fileName.substring(0, fileName.indexOf('-gtfs'))
       process.stdout.write(gtfsFile + ' ' + 'Setting GTFS feed id to ' + id + '\n')
       setFeedId(gtfsFile, id, (action) => {
         process.stdout.write(gtfsFile + ' ID ' + action + ' SUCCESS\n')

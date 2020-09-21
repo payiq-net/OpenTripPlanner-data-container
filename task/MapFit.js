@@ -62,7 +62,7 @@ module.exports = {
       const gtfsFile = file.history[file.history.length - 1]
       const fileName = gtfsFile.split('/').pop()
       const relativeFilename = path.relative(process.cwd(), gtfsFile)
-      const id = fileName.substring(0, fileName.indexOf('.'))
+      const id = fileName.substring(0, fileName.indexOf('-gtfs'))
       const config = configs[id]
       if (config === undefined) {
         process.stdout.write(`${gtfsFile} Could not find config for Id:${id}, ignoring fit...\n`)

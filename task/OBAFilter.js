@@ -67,7 +67,7 @@ module.exports = {
         callback(null, null)
         return
       }
-      const id = fileName.substring(0, fileName.indexOf('.'))
+      const id = fileName.substring(0, fileName.indexOf('-gtfs'))
       const config = configs[id]
       if (config === undefined) {
         process.stdout.write(`${gtfsFile} Could not find config for Id:${id}, ignoring filter...\n`)

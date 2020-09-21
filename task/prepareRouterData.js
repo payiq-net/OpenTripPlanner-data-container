@@ -5,7 +5,7 @@ const cloneable = require('cloneable-readable')
 const { routerDir } = require('../util')
 const osmFile = (config) => config.osm + '.pbf'
 const demFile = (config) => config.dem + '.tif'
-const gtfsFile = (src) => src.id + '.zip'
+const gtfsFile = (src) => src.id + '-gtfs.zip'
 const { dataDir } = require('../config')
 
 function createFile (config, fileName, source) {

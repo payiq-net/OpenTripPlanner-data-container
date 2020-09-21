@@ -15,6 +15,7 @@ const config = require('./config')
 const { buildOTPGraphTask } = require('./task/buildOTPGraph')
 const hslHackTask = require('./task/hslHackTask')
 const { postSlackMessage } = require('./util')
+const { renameGTFSFile } = require('./task/GTFSRename')
 
 /**
  * Download and test new osm data
@@ -65,7 +66,7 @@ gulp.task('del:id', () => del([`${config.dataDir}/id`]))
  * download and test new gtfs data:
  * clear download & stage dir
  * 1. download
- * 2. name zip as <id>.zip (in dir download)
+ * 2. name zip as <id>-gtfs.zip (in dir download)
  * 3. test zip loads with OpenTripPlanner
  * 4. copy to id dir if test is succesful
  */
@@ -82,6 +83,7 @@ gulp.task('gtfs:dl', gulp.series('del:id', function () {
   const files = Object.keys(urlEntry).map(key => urlEntry[key])
 
   return dl(files, true, true)
+    .pipe(renameGTFSFile())
     .pipe(gulp.dest(`${config.dataDir}/downloads/gtfs`))
   //    .pipe(vinylPaths(del))
     .pipe(testGTFSFile())
