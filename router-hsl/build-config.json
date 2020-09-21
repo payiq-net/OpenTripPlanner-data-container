@@ -4,7 +4,5 @@
   "parentStopLinking": true,
   "subwayAccessTime": 0,
   "osmWayPropertySet": "finland",
-  "fares": "HSL",
-  "elevationUnitMultiplier": 0.1,
-  "vertexConnector": "HSL"
+  "elevationUnitMultiplier": 0.1
 }

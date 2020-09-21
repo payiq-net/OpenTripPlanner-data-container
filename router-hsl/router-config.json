@@ -15,7 +15,6 @@
       "walkBoardCost": 540,
       "walkOnStreetReluctance": 1.5,
       "carParkCarLegWeight": 2,
-      "itineraryFiltering": 2.0,
       "maxSlope": 0.125
   },
   "routePreferenceSettings": "HSL",

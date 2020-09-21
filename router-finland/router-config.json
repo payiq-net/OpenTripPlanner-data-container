@@ -10,7 +10,6 @@
     "stairsReluctance": 1.65,
     "walkBoardCost": 540,
     "compactLegsByReversedSearch": false,
-    "itineraryFiltering": 1.0,
     "maxSlope": 0.125
   },
 
