@@ -32,12 +32,12 @@ function imagedeploy {
         docker build --tag="$ORG/$1:$DOCKER_TAG" .
         docker push $ORG/$1:$DOCKER_TAG
         tagandpush $1 "latest" ""
-      elif [ "$TRAVIS_BRANCH" = "next" ]; then
+      elif [ "$TRAVIS_BRANCH" = "otp2" ]; then
         echo "processing master build $TRAVIS_COMMIT"
-        #master branch, build and tag as latest
-        docker build --tag="$ORG/$1:next-$DOCKER_TAG" .
-        docker push $ORG/$1:next-$DOCKER_TAG
-        tagandpush $1 "next" "next-"
+        #otp2 branch, build and tag as otp2
+        docker build --tag="$ORG/$1:otp2-$DOCKER_TAG" .
+        docker push $ORG/$1:otp2-$DOCKER_TAG
+        tagandpush $1 "otp2" "otp2-"
       else
         #check if branch is greenkeeper branch
         echo Not Pushing greenkeeper to docker hub
