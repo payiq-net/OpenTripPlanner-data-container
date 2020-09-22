@@ -128,7 +128,7 @@ gulp.task('gtfs:filter', gulp.series('copyRouterConfig', function () {
 gulp.task('gtfs:del', () => del([`${config.dataDir}/ready/gtfs`]))
 
 gulp.task('gtfs:seed', gulp.series('gtfs:del', function () {
-  return Seed(config.ALL_CONFIGS(), /\.zip/).pipe(gulp.dest(`${config.dataDir}/ready/gtfs`))
+  return Seed(config.ALL_CONFIGS(), /\.zip/).pipe(renameGTFSFile()).pipe(gulp.dest(`${config.dataDir}/ready/gtfs`))
 }))
 
 gulp.task('osm:del', () => del([`${config.dataDir}/ready/osm`]))
