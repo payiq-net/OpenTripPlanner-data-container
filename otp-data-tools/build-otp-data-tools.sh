@@ -37,4 +37,5 @@ make -C pymapmatch
 cd ..
 
 git clone https://github.com/HSLdevcom/OTPQA.git
+git checkout otp2
 
