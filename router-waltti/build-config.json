@@ -2,5 +2,8 @@
   "areaVisibility": true,
   "parentStopLinking": true,
   "osmWayPropertySet": "finland",
-  "elevationUnitMultiplier": 0.1
+  "elevationUnitMultiplier": 0.1,
+  "multiThreadElevationCalculations": true,
+  "transitServiceStart": "-P2W",
+  "transitServiceEnd": "P12W"
 }
