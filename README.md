@@ -6,8 +6,8 @@
 Contains tools for fetching, building and deploying fresh otp data-containers
 for consumption by hsl, waltti and finland otp instances. This project can be
 reused for building data for other otp instances but it is only tested to
-work for the aforementioned otp instances. Currently, this is used for OTP
-version 1.x.
+work for the aforementioned otp instances. This is used for OTP
+version 2.x.
 
 ## Main components
 
