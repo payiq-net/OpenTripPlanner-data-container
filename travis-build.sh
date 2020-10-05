@@ -42,7 +42,7 @@ function imagedeploy {
         echo "processing master build $TRAVIS_COMMIT"
         #otp2 branch, build and tag as otp2-prod
         docker build --tag="$ORG/$1:otp2-prod-$DOCKER_TAG" .
-        docker push $ORG/$1:otp2-$DOCKER_TAG
+        docker push $ORG/$1:otp2-prod-$DOCKER_TAG
         tagandpush $1 "otp2-prod" "otp2-prod-"
       else
         #check if branch is greenkeeper branch
