@@ -4,22 +4,9 @@ set -e
 # databuild
 
 ORG=${ORG:-hsldevcom}
-DOCKER_IMAGE=$ORG/otp-data-builder
-DOCKER_TAG="latest"
+DOCKER_IMAGE=otp-data-builder
 
-if [ "$TRAVIS_TAG" ]; then
-  DOCKER_TAG="prod"
-elif [ "$TRAVIS_BRANCH" != "master" ]; then
-  DOCKER_TAG=$TRAVIS_BRANCH
-fi
-
-DOCKER_TAG_LONG=$DOCKER_TAG-$(date +"%Y-%m-%dT%H.%M.%S")-${TRAVIS_COMMIT:0:7}
-#DOCKER_IMAGE_LATEST=$DOCKER_IMAGE:latest
-#DOCKER_IMAGE_TAG=$DOCKER_IMAGE:$DOCKER_TAG
-#DOCKER_IMAGE_TAG_LONG=$DOCKER_IMAGE:$DOCKER_TAG_LONG
-
-DOCKER_CI_TAG="ci-${TRAVIS_COMMIT}"
-
+DOCKER_TAG="ci-${TRAVIS_COMMIT}"
 # Set these environment variables
 #DOCKER_USER=
 #DOCKER_AUTH=
@@ -31,28 +18,26 @@ function tagandpush {
 
 function imagedeploy {
   if [ "$TRAVIS_PULL_REQUEST" = "false" ]; then
-    docker login -u $DOCKER_USER -p $DOCKER_AUTH
 
+    docker login -u $DOCKER_USER -p $DOCKER_AUTH
     if [ "$TRAVIS_TAG" ];then
       echo "processing release $TRAVIS_TAG"
       #release do not rebuild, just tag
-      docker pull $ORG/$1:$DOCKER_CI_TAG
-      tagandpush $1 $DOCKER_TAG ""
-      tagandpush $1 $DOCKER_TAG_LONG ""
+      docker pull $ORG/$1:$DOCKER_TAG
+      tagandpush $1 "prod" ""
     else
       if [ "$TRAVIS_BRANCH" = "master" ]; then
         echo "processing master build $TRAVIS_COMMIT"
         #master branch, build and tag as latest
-        docker build --tag="$ORG/$1:$DOCKER_CI_TAG" .
-        docker push $ORG/$1:$DOCKER_CI_TAG
-        tagandpush $1 $DOCKER_TAG ""
+        docker build --tag="$ORG/$1:$DOCKER_TAG" .
+        docker push $ORG/$1:$DOCKER_TAG
+        tagandpush $1 "latest" ""
       elif [ "$TRAVIS_BRANCH" = "next" ]; then
         echo "processing master build $TRAVIS_COMMIT"
         #master branch, build and tag as latest
-        docker build --tag="$ORG/$1:$DOCKER_TAG-$DOCKER_CI_TAG" .
-        docker push $ORG/$1:$DOCKER_TAG-$DOCKER_CI_TAG
-        tagandpush $1 $DOCKER_TAG "$DOCKER_TAG-"
-        tagandpush $1 $DOCKER_TAG_LONG "$DOCKER_TAG-" # ??????????
+        docker build --tag="$ORG/$1:next-$DOCKER_TAG" .
+        docker push $ORG/$1:next-$DOCKER_TAG
+        tagandpush $1 "next" "next-"
       else
         #check if branch is greenkeeper branch
         echo Not Pushing greenkeeper to docker hub
@@ -61,7 +46,7 @@ function imagedeploy {
     fi
   else
     echo "processing pr $TRAVIS_PULL_REQUEST"
-    docker build --tag="$ORG/$1:$DOCKER_CI_TAG" .
+    docker build --tag="$ORG/$1:$DOCKER_TAG" .
   fi
 }
 
