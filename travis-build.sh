@@ -7,12 +7,15 @@ ORG=${ORG:-hsldevcom}
 DOCKER_IMAGE=otp-data-builder
 
 DOCKER_TAG="ci-${TRAVIS_COMMIT}"
+DOCKER_TAG_LONG=$(date +"%Y-%m-%dT%H.%M.%S")-${TRAVIS_COMMIT:0:7}
 # Set these environment variables
 #DOCKER_USER=
 #DOCKER_AUTH=
 
 function tagandpush {
   docker tag $ORG/$1:$3$DOCKER_TAG $ORG/$1:$2
+  docker tag $ORG/$1:$3$DOCKER_TAG $ORG/$1:$2-$DOCKER_TAG_LONG
+  docker push $ORG/$1:$2-$DOCKER_TAG_LONG
   docker push $ORG/$1:$2
 }
 
