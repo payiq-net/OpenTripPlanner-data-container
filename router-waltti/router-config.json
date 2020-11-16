@@ -140,6 +140,15 @@
       "fuzzyTripMatching": false
     },
     {
+      "id": "lahti-trip-updates",
+      "type": "stop-time-updater",
+      "frequencySec": 60,
+      "sourceType": "gtfs-http",
+      "url": "http://digitransit-proxy:8080/out/lsl.mattersoft.fi/api/gtfsrealtime/v1.0/feed/tripupdate",
+      "feedId": "Lahti",
+      "fuzzyTripMatching": false
+    },
+    {
       "id": "kuopio-bike-rental",
       "type": "bike-rental",
       "sourceType": "vilkku",
