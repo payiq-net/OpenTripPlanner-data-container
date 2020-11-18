@@ -185,7 +185,7 @@
       "id": "lappeenranta-bike-rental",
       "type": "bike-rental",
       "sourceType": "kaakau",
-      "url": "https://geoserver.joensuu.fi/www/digitransit/kaupunkipyoraparkit_lpr.geojson",
+      "url": "http://digitransit-proxy:8080/out/geoserver.joensuu.fi/www/digitransit/kaupunkipyoraparkit_lpr.geojson",
       "frequencySec": 3600,
       "network": "lappeenranta"
     }
