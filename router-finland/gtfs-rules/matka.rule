@@ -18,8 +18,6 @@
 {"op":"remove", "match":{"file":"routes.txt", "agency_id":"4", "route_short_name":"Y"}}
 # HSL
 {"op":"remove", "match":{"file":"agency.txt", "agency_id":"2"}}
-{"op":"remove", "match":{"file":"routes.txt", "agency_id":"HSL", "route_short_name":"R"}}
-{"op":"remove", "match":{"file":"routes.txt", "agency_id":"HSL", "route_short_name":"Z"}}
 # Tampere old
 {"op":"remove", "match":{"file":"agency.txt", "agency_id":"3"}}
 # Tampere new
