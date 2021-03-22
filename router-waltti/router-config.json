@@ -104,7 +104,8 @@
       "sourceType": "smoove",
       "url": "http://digitransit-proxy:8080/out/data.foli.fi/citybike/smoove",
       "frequencySec": 10,
-      "network": "turku"
+      "network": "turku",
+      "allowOverloading": false
     },
     {
       "id": "linkki-trip-updates",
