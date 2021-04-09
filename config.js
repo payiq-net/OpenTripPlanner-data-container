@@ -38,7 +38,7 @@ const WALTTI_CONFIG = {
     // src('Hameenlinna', 'https://tvv.fra1.digitaloceanspaces.com/203.zip', 'gtfs_shape_mapfit/fit_gtfs_stops.bash', ['router-waltti/gtfs-rules/waltti.rule']),
     // src('Kajaani', 'https://tvv.fra1.digitaloceanspaces.com/211.zip', 'gtfs_shape_mapfit/fit_gtfs_stops.bash', ['router-waltti/gtfs-rules/waltti.rule']),
     src('Kotka', 'https://tvv.fra1.digitaloceanspaces.com/217.zip', 'gtfs_shape_mapfit/fit_gtfs_stops.bash', ['router-waltti/gtfs-rules/waltti.rule']),
-    src('Kouvola', 'https://tvv.fra1.digitaloceanspaces.com/219.zip', 'gtfs_shape_mapfit/fit_gtfs_stops.bash', ['router-waltti/gtfs-rules/waltti.rule']),
+    src('Kouvola', 'https://tvv.fra1.digitaloceanspaces.com/219.zip', 'gtfs_shape_mapfit/fit_gtfs_stops.bash', ['router-waltti/gtfs-rules/waltti.rule'])
     // src('Lappeenranta', 'https://tvv.fra1.digitaloceanspaces.com/225.zip', 'gtfs_shape_mapfit/fit_gtfs_stops.bash', ['router-waltti/gtfs-rules/waltti.rule']),
     // src('Mikkeli', 'https://tvv.fra1.digitaloceanspaces.com/227.zip', 'gtfs_shape_mapfit/fit_gtfs_stops.bash', ['router-waltti/gtfs-rules/waltti.rule']),
     // src('PohjoisPohjanmaanEly', 'https://tvv.fra1.digitaloceanspaces.com/113.zip', 'gtfs_shape_mapfit/fit_gtfs_stops.bash', ['router-waltti/gtfs-rules/waltti.rule']),
