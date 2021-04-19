@@ -82,6 +82,14 @@
       "fuzzyTripMatching": false
     },
     {
+      "id": "lappeenranta-alerts",
+      "type": "real-time-alerts",
+      "frequencySec": 30,
+      "url": "http://digitransit-proxy:8080/out/lappeenranta.mattersoft.fi/api/gtfsrealtime/v1.0/feed/servicealert",
+      "feedId": "Lappeenranta",
+      "fuzzyTripMatching": false
+    },
+    {
       "id": "tampere-trip-updates",
       "type": "stop-time-updater",
       "frequencySec": 60,
