@@ -197,6 +197,23 @@
       "url": "http://digitransit-proxy:8080/out/ckan.saita.fi/geojson/kaupunkipyoraparkit_lpr.geojson",
       "frequencySec": 3600,
       "network": "lappeenranta"
+    },
+    {
+      "id": "mikkeli-trip-updates",
+      "type": "stop-time-updater",
+      "frequencySec": 60,
+      "sourceType": "gtfs-http",
+      "url": "http://digitransit-proxy:8080/out/mikkeli.mattersoft.fi/api/gtfsrealtime/v1.0/feed/tripupdate",
+      "feedId": "Mikkeli",
+      "fuzzyTripMatching": false
+    },
+    {
+      "id": "mikkeli-alerts",
+      "type": "real-time-alerts",
+      "frequencySec": 30,
+      "url": "http://digitransit-proxy:8080/out/mikkeli.mattersoft.fi/api/gtfsrealtime/v1.0/feed/servicealert",
+      "feedId": "Mikkeli",
+      "fuzzyTripMatching": false
     }
   ]
 }
