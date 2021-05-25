@@ -20,6 +20,24 @@
       "maxWinTimeMinutes" : 1440
     }
   },
+  "vectorTileLayers": [
+    {
+      "name": "stops",
+      "type": "Stop",
+      "mapper": "Digitransit",
+      "maxZoom": 17,
+      "minZoom": 13,
+      "cacheMaxSeconds": 600
+    },
+    {
+      "name": "stations",
+      "type": "Station",
+      "mapper": "Digitransit",
+      "maxZoom": 17,
+      "minZoom": 11,
+      "cacheMaxSeconds": 600
+    }
+  ],
   "updaters": [
   ]
 }
