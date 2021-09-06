@@ -3,8 +3,8 @@
 set -e
 apt-get update && \
   apt-get -y install \
-    git build-essential python-dev protobuf-compiler libprotobuf-dev \
-    make swig g++ python-dev libreadosm-dev \
+    git build-essential python3-dev protobuf-compiler libprotobuf-dev \
+    make swig g++ libreadosm-dev \
     libboost-graph-dev libproj-dev libgoogle-perftools-dev \
     osmctools unzip zip wget python3-pyproj python3-argh \
     python3-scipy python3-sklearn python3-pip python3-numpy curl
