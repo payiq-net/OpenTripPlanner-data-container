@@ -17,7 +17,8 @@ pip3 install git+https://github.com/lechup/imposm-parser@python3 && \
   pip3 install grequests && \
   pip3 install unicodecsv && \
   pip3 install cffi && \
-  pip3 install utm
+  pip3 install utm && \
+  pip3 install cython
 
 mkdir -p one-busaway-gtfs-transformer && \
   wget -O one-busaway-gtfs-transformer/onebusaway-gtfs-transformer-cli.jar "http://nexus.onebusaway.org/service/local/artifact/maven/content?r=public&g=org.onebusaway&a=onebusaway-gtfs-transformer-cli&v=1.3.9"
