@@ -11,8 +11,7 @@ apt-get update && \
 
 rm -rf /var/lib/apt/lists/*
 
-pip3 install imposm.parser && \
-  pip3 install argh && \
+pip3 install pip3 install argh && \
   pip3 install future && \
   pip3 install grequests && \
   pip3 install unicodecsv && \
