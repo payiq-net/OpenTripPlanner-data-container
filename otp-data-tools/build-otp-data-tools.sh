@@ -24,6 +24,7 @@ mkdir -p one-busaway-gtfs-transformer && \
 
 git clone https://github.com/jswhit/pyproj.git
 cd pyproj
+git checkout ec9151e8c6909f7fac72bb2eab927ff18fa4cf1d
 python3 setup.py build
 python3 setup.py install
 cd ..
