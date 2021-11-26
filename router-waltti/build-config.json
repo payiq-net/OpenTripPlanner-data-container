@@ -5,5 +5,9 @@
   "elevationUnitMultiplier": 0.1,
   "multiThreadElevationCalculations": true,
   "transitServiceStart": "-P2W",
-  "transitServiceEnd": "P12W"
+  "transitServiceEnd": "P12W",
+  "transferRequests": [
+    { "mode": "WALK" },
+    { "mode": "WALK", "wheelchairAccessible": true }
+  ]
 }
