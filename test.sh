@@ -51,15 +51,17 @@ fi
 
 echo "Got otp ip: $IP"
 
+date=${date '+%Y%m%d'}
+
 if [ "$ROUTER_NAME" == "hsl" ]; then
     MAX_WAIT=30
-    URL="http://$IP:8080/otp/routers/default/plan?fromPlace=60.19812876015124%2C24.934051036834713&toPlace=60.218630210423306%2C24.807472229003906"
+    URL="http://$IP:8080/otp/routers/default/plan?fromPlace=60.19812876015124%2C24.934051036834713&toPlace=60.218630210423306%2C24.807472229003906&date=${date}&time=14:00"
 elif [ "$ROUTER_NAME" == "waltti" ]; then
     MAX_WAIT=60
-    URL="http://$IP:8080/otp/routers/default/plan?fromPlace=60.51265301487%2C26.9125556&toPlace=60.462168956%2C26.9432830"
+    URL="http://$IP:8080/otp/routers/default/plan?fromPlace=60.51265301487%2C26.9125556&toPlace=60.462168956%2C26.9432830&date=${date}&time=14:00"
 else
     MAX_WAIT=60
-    URL="http://$IP:8080/otp/routers/default/plan?fromPlace=60.19812876015124%2C24.934051036834713&toPlace=60.218630210423306%2C24.807472229003906"
+    URL="http://$IP:8080/otp/routers/default/plan?fromPlace=60.19812876015124%2C24.934051036834713&toPlace=60.218630210423306%2C24.807472229003906&date=${date}&time=14:00"
 fi
 
 ITERATIONS=$(($MAX_WAIT * 6))
