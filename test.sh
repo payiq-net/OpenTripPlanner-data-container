@@ -51,7 +51,7 @@ fi
 
 echo "Got otp ip: $IP"
 
-date=${date '+%Y%m%d'}
+date=$(date '+%Y%m%d')
 
 if [ "$ROUTER_NAME" == "hsl" ]; then
     MAX_WAIT=30
