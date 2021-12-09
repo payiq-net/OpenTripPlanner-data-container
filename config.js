@@ -40,8 +40,7 @@ const WALTTI_CONFIG = {
     src('Salo', 'https://tvv.fra1.digitaloceanspaces.com/239.zip', 'gtfs_shape_mapfit/fit_gtfs_stops.bash', ['router-waltti/gtfs-rules/waltti.rule']),
     src('Matkahuolto', 'http://digitransit-proxy:8080/out/gtfs.perille.fi/lmj/matkahuolto-latest-gtfs.zip', 'gtfs_shape_mapfit/fit_gtfs_stops.bash')
   ],
-  'osm': 'finland',
-  'dem': 'waltti'
+  'osm': 'finland'
 }
 
 let ALL_CONFIGS
