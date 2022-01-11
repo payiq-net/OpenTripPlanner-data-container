@@ -1,2 +1,4 @@
 router
+!router/report
+!router/report/*
 !router/*.csv
