@@ -13,17 +13,17 @@ module.exports = function (configs, regexp) {
 
   let toProcess = configs.length
   configs.forEach(c => {
-    const container = `hsldevcom/opentripplanner-data-container-${c.id}:${seedTag}`
+    const container = `hsldevcom/opentripplanner-data-container-waltti:${seedTag}`
     process.stdout.write(`extracting data from ${container}...\n`)
     const script =
   `docker rmi --force ${container} || true;
-  docker rm data-extract-${c.id} || true;
-  docker rename data-extract-${c.id} $(date +%s) || true; 
-  docker create --name data-extract-${c.id} ${container};
-  docker cp data-extract-${c.id}:var/www/localhost/htdocs/router-${c.id}.zip .;
-  docker rm data-extract-${c.id}`
+  docker rm data-extract-waltti || true;
+  docker rename data-extract-waltti $(date +%s) || true; 
+  docker create --name data-extract-waltti ${container};
+  docker cp data-extract-waltti:var/www/localhost/htdocs/router-waltti.zip .;
+  docker rm data-extract-waltti`
     execSync(script)
-    const file = `router-${c.id}.zip`
+    const file = `router-waltti.zip`
     fs.readFile(file, function (err, data) {
       if (err) {
         process.stdout.write(err)
