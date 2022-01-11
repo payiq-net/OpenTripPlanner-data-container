@@ -1,5 +1,14 @@
 {
+  "dataImportReport": true,
   "areaVisibility": true,
   "parentStopLinking": true,
-  "osmWayPropertySet": "finland"
+  "osmWayPropertySet": "finland",
+  "maxAreaNodes": 1000,
+  "maxTransferDistance": 2500,
+  "transitServiceStart": "-P2W",
+  "transitServiceEnd": "P12W",
+  "transferRequests": [
+    { "mode": "WALK" },
+    { "mode": "WALK", "wheelchairAccessible": true }
+  ]
 }

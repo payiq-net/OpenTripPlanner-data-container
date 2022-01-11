@@ -1,8 +1,18 @@
 {
+  "dataImportReport": true,
   "areaVisibility": true,
   "staticParkAndRide": false,
   "parentStopLinking": true,
   "subwayAccessTime": 0,
   "osmWayPropertySet": "finland",
-  "elevationUnitMultiplier": 0.1
+  "elevationUnitMultiplier": 0.1,
+  "maxAreaNodes": 1000,
+  "maxTransferDistance": 2500,
+  "multiThreadElevationCalculations": true,
+  "transitServiceStart": "-P2W",
+  "transitServiceEnd": "P12W",
+  "transferRequests": [
+    { "mode": "WALK" },
+    { "mode": "WALK", "wheelchairAccessible": true }
+  ]
 }

@@ -4,7 +4,7 @@
 
 ## This project:
 Contains tools for fetching, building and deploying fresh otp data-containers
-for consumption by hsl, waltti and finland otp instances. This project can be
+for consumption by hsl, waltti, waltti-alt and finland otp instances. This project can be
 reused for building data for other otp instances but it is only tested to
 work for the aforementioned otp instances. This is used for OTP
 version 2.x.
@@ -41,7 +41,7 @@ It is possible to change the behaviour of the data builder by defining environme
 * (Optional, default latest) "OTP_TAG" defines what version of OTP is used for testing and building graphs.
 * (Optional, default latest) "TOOLS_TAG" defines what version of otp-data-tools image is used for testing.
 * (Optional, default ${process.cwd()}/data) "HOST_DATA" defines base path for volume directories.
-* (Optional, default 'finland, waltti, hsl') "ROUTERS" defines which data containers are being built and deployed.
+* (Optional, default 'finland, waltti, hsl, waltti-alt') "ROUTERS" defines which data containers are being built and deployed.
 * (Optional, default ${process.cwd()}/data) "DATA" defines base path for data directories in container's file system.
 * (Optional, default 23:00:00) "BUILD_TIME" defines when data build is being run. Uses UTC time.
 * (Optional, default dev) "BUILDER_TYPE" used as a postfix to slack bot name
@@ -112,6 +112,7 @@ Each data container image runs a http server listening to port 8080, serving bot
 - hsl: http://localhost:8080/router-hsl.zip and graph-hsl-<otpversion>.zip
 - waltti: http://localhost:8080/router-waltti.zip and graph-waltti-<otpversion>.zip
 - finland: http://localhost:8080/router-finland.zip and graph-finland-<otpversion>.zip
+- waltti-alt: http://localhost:8080/router-waltti-alt.zip and graph-waltti-alt-<otpversion>.zip
 
 ### otp-data-tools
 Contains tools for gtfs manipulation, such as One Bus Away gtfs filter.
