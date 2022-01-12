@@ -4,7 +4,6 @@
       "APIGraphInspectorTile": true,
       "APIServerInfo": true,
       "APIUpdaterStatus": false,
-      "APIExternalGeocoder": false,
       "APIBikeRental": false,
       "SandboxAPIMapboxVectorTilesApi": true
   }
