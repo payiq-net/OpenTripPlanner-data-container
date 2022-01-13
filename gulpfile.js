@@ -16,6 +16,7 @@ const { buildOTPGraphTask } = require('./task/buildOTPGraph')
 const hslHackTask = require('./task/hslHackTask')
 const { postSlackMessage } = require('./util')
 const { renameGTFSFile } = require('./task/GTFSRename')
+const { replaceGTFSFilesTask } = require('./task/GTFSReplace')
 
 /**
  * Download and test new osm data
@@ -83,6 +84,7 @@ gulp.task('gtfs:dl', gulp.series('del:id', function () {
   const files = Object.keys(urlEntry).map(key => urlEntry[key])
 
   return dl(files, true, true)
+    .pipe(replaceGTFSFilesTask(config.configMap))
     .pipe(renameGTFSFile())
     .pipe(gulp.dest(`${config.dataDir}/downloads/gtfs`))
   //    .pipe(vinylPaths(del))
