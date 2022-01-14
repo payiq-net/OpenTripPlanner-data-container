@@ -10,7 +10,7 @@
   "transitServiceStart": "-P2W",
   "transitServiceEnd": "P12W",
   "transferRequests": [
-    { "mode": "WALK" },
-    { "mode": "WALK", "wheelchairAccessible": true }
+    { "modes": ["WALK"] },
+    { "modes": ["WALK"], "wheelchairAccessible": true }
   ]
 }
