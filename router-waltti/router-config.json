@@ -39,5 +39,209 @@
     }
   ],
   "updaters": [
+    {
+      "id": "foli-trip-updates",
+      "type": "stop-time-updater",
+      "frequencySec": 60,
+      "sourceType": "gtfs-http",
+      "url": "http://siri2gtfsrt:8080/FOLI",
+      "feedId": "FOLI",
+      "fuzzyTripMatching": true
+    },
+    {
+      "id": "foli-alerts",
+      "type": "real-time-alerts",
+      "frequencySec": 30,
+      "url": "http://digitransit-proxy:8080/out/data.foli.fi/gtfs-rt/reittiopas",
+      "feedId": "FOLI",
+      "fuzzyTripMatching": false
+    },
+    {
+      "id": "oulu-trip-updates",
+      "type": "stop-time-updater",
+      "frequencySec": 60,
+      "sourceType": "gtfs-http",
+      "url": "http://digitransit-proxy:8080/out/92.62.36.215/RTIX/trip-updates",
+      "feedId": "OULU",
+      "fuzzyTripMatching": false
+    },
+    {
+      "id": "oulu-alerts",
+      "type": "real-time-alerts",
+      "frequencySec": 30,
+      "url": "http://digitransit-proxy:8080/out/92.62.36.215/RTIX/service-alerts",
+      "feedId": "OULU",
+      "fuzzyTripMatching": false
+    },
+    {
+      "id": "kuopio-trip-updates",
+      "type": "stop-time-updater",
+      "frequencySec": 60,
+      "sourceType": "gtfs-http",
+      "url": "http://digitransit-proxy:8080/out/vilkku.mattersoft.fi/api/gtfsrealtime/v1.0/feed/tripupdate",
+      "feedId": "Kuopio",
+      "fuzzyTripMatching": false
+    },
+    {
+      "id": "joensuu-trip-updates",
+      "type": "stop-time-updater",
+      "frequencySec": 60,
+      "sourceType": "gtfs-http",
+      "url": "http://digitransit-proxy:8080/out/jojo.mattersoft.fi/api/gtfsrealtime/v1.0/feed/tripupdate",
+      "feedId": "Joensuu",
+      "fuzzyTripMatching": false
+    },
+    {
+      "id": "joensuu-alerts",
+      "type": "real-time-alerts",
+      "frequencySec": 30,
+      "url": "http://digitransit-proxy:8080/out/jojo.mattersoft.fi/api/gtfsrealtime/v1.0/feed/servicealert",
+      "feedId": "Joensuu",
+      "fuzzyTripMatching": false
+    },
+    {
+      "id": "lappeenranta-trip-updates",
+      "type": "stop-time-updater",
+      "frequencySec": 60,
+      "sourceType": "gtfs-http",
+      "url": "http://digitransit-proxy:8080/out/lappeenranta.mattersoft.fi/api/gtfsrealtime/v1.0/feed/tripupdate",
+      "feedId": "Lappeenranta",
+      "fuzzyTripMatching": false
+    },
+    {
+      "id": "lappeenranta-alerts",
+      "type": "real-time-alerts",
+      "frequencySec": 30,
+      "url": "http://digitransit-proxy:8080/out/lappeenranta.mattersoft.fi/api/gtfsrealtime/v1.0/feed/servicealert",
+      "feedId": "Lappeenranta",
+      "fuzzyTripMatching": false
+    },
+    {
+      "id": "tampere-trip-updates",
+      "type": "stop-time-updater",
+      "frequencySec": 60,
+      "sourceType": "gtfs-http",
+      "url": "https://gtfsrt.blob.core.windows.net/tampere/tripupdate",
+      "feedId": "tampere",
+      "fuzzyTripMatching": false
+    },
+    {
+      "id": "tampere-alerts",
+      "type": "real-time-alerts",
+      "frequencySec": 30,
+      "url": "http://digitransit-proxy:8080/out/tre.mattersoft.fi/api/gtfsrealtime/v1.0/feed/servicealert",
+      "feedId": "tampere",
+      "fuzzyTripMatching": false
+    },
+    {
+      "id": "linkki-trip-updates",
+      "type": "stop-time-updater",
+      "frequencySec": 60,
+      "sourceType": "gtfs-http",
+      "url": "http://digitransit-proxy:8080/out/linkki.mattersoft.fi/api/gtfsrealtime/v1.0/feed/tripupdate",
+      "feedId": "LINKKI",
+      "fuzzyTripMatching": false
+    },
+    {
+      "id": "linkki-alerts",
+      "type": "real-time-alerts",
+      "frequencySec": 30,
+      "url": "http://digitransit-proxy:8080/out/linkki.mattersoft.fi/api/gtfsrealtime/v1.0/feed/servicealert",
+      "feedId": "LINKKI",
+      "fuzzyTripMatching": false
+    },
+    {
+      "id": "lahti-alerts",
+      "type": "real-time-alerts",
+      "frequencySec": 30,
+      "url": "http://digitransit-proxy:8080/out/lsl.mattersoft.fi/api/gtfsrealtime/v1.0/feed/servicealert",
+      "feedId": "Lahti",
+      "fuzzyTripMatching": false
+    },
+    {
+      "id": "lahti-trip-updates",
+      "type": "stop-time-updater",
+      "frequencySec": 60,
+      "sourceType": "gtfs-http",
+      "url": "http://digitransit-proxy:8080/out/lsl.mattersoft.fi/api/gtfsrealtime/v1.0/feed/tripupdate",
+      "feedId": "Lahti",
+      "fuzzyTripMatching": false
+    },
+    {
+      "id": "kuopio-alerts",
+      "type": "real-time-alerts",
+      "frequencySec": 30,
+      "url": "http://digitransit-proxy:8080/out/vilkku.mattersoft.fi/api/gtfsrealtime/v1.0/feed/servicealert",
+      "feedId": "Kuopio",
+      "fuzzyTripMatching": false
+    },
+    {
+      "id": "hameenlinna-trip-updates",
+      "type": "stop-time-updater",
+      "frequencySec": 60,
+      "sourceType": "gtfs-http",
+      "url": "http://digitransit-proxy:8080/out/hameenlinna.mattersoft.fi/api/gtfsrealtime/v1.0/feed/tripupdate",
+      "feedId": "Hameenlinna",
+      "fuzzyTripMatching": false
+    },
+    {
+      "id": "hameenlinna-alerts",
+      "type": "real-time-alerts",
+      "frequencySec": 30,
+      "url": "http://digitransit-proxy:8080/out/hameenlinna.mattersoft.fi/api/gtfsrealtime/v1.0/feed/servicealert",
+      "feedId": "Hameenlinna",
+      "fuzzyTripMatching": false
+    },
+    {
+      "id": "mikkeli-trip-updates",
+      "type": "stop-time-updater",
+      "frequencySec": 60,
+      "sourceType": "gtfs-http",
+      "url": "http://digitransit-proxy:8080/out/mikkeli.mattersoft.fi/api/gtfsrealtime/v1.0/feed/tripupdate",
+      "feedId": "Mikkeli",
+      "fuzzyTripMatching": false
+    },
+    {
+      "id": "mikkeli-alerts",
+      "type": "real-time-alerts",
+      "frequencySec": 30,
+      "url": "http://digitransit-proxy:8080/out/mikkeli.mattersoft.fi/api/gtfsrealtime/v1.0/feed/servicealert",
+      "feedId": "Mikkeli",
+      "fuzzyTripMatching": false
+    },
+    {
+      "id": "vaasa-trip-updates",
+      "type": "stop-time-updater",
+      "frequencySec": 60,
+      "sourceType": "gtfs-http",
+      "url": "http://digitransit-proxy:8080/out/lifti.mattersoft.fi/api/gtfsrealtime/v1.0/feed/tripupdate",
+      "feedId": "Vaasa",
+      "fuzzyTripMatching": false
+    },
+    {
+      "id": "vaasa-alerts",
+      "type": "real-time-alerts",
+      "frequencySec": 30,
+      "url": "http://digitransit-proxy:8080/out/lifti.mattersoft.fi/api/gtfsrealtime/v1.0/feed/servicealert",
+      "feedId": "Vaasa",
+      "fuzzyTripMatching": false
+    },
+    {
+      "id": "kouvola-trip-updates",
+      "type": "stop-time-updater",
+      "frequencySec": 60,
+      "sourceType": "gtfs-http",
+      "url": "http://digitransit-proxy:8080/out/koutsi.mattersoft.fi/api/gtfsrealtime/v1.0/feed/tripupdate",
+      "feedId": "Kouvola",
+      "fuzzyTripMatching": false
+    },
+    {
+      "id": "kouvola-alerts",
+      "type": "real-time-alerts",
+      "frequencySec": 30,
+      "url": "http://digitransit-proxy:8080/out/koutsi.mattersoft.fi/api/gtfsrealtime/v1.0/feed/servicealert",
+      "feedId": "Kouvola",
+      "fuzzyTripMatching": false
+    }
   ]
 }

@@ -13,6 +13,91 @@
     "maxSlope": 0.125
   },
   "updaters": [
+    {
+      "id": "hsl-trip-updates",
+      "type": "mqtt-gtfs-rt-updater",
+      "url": "tcp://pred.rt.hsl.fi",
+      "topic": "gtfsrt/v2/fi/hsl/tu",
+      "feedId": "HSL",
+      "fuzzyTripMatching": true
+    },
+    {
+      "id": "hsl-alerts",
+      "type": "real-time-alerts",
+      "frequencySec": 30,
+      "url": "https://realtime.hsl.fi/realtime/service-alerts/v2/hsl",
+      "feedId": "HSL",
+      "fuzzyTripMatching": true
+    },
+    {
+      "id": "matka-trip-updates",
+      "type": "stop-time-updater",
+      "frequencySec": 60,
+      "sourceType": "gtfs-http",
+      "url": "http://digitransit-proxy:8080/out/tyokalu.navici.com/joukkoliikenne/manual-gtfsrt/api/gtfsrt/updates",
+      "feedId": "MATKA",
+      "fuzzyTripMatching": true
+    },
+    {
+      "id": "matka-alerts",
+      "type": "real-time-alerts",
+      "frequencySec": 60,
+      "sourceType": "gtfs-http",
+      "url": "http://digitransit-proxy:8080/out/tyokalu.navici.com/joukkoliikenne/manual-gtfsrt/api/gtfsrt/alerts",
+      "feedId": "MATKA",
+      "fuzzyTripMatching": true
+    },
+    {
+      "id": "oulu-trip-updates",
+      "type": "stop-time-updater",
+      "frequencySec": 60,
+      "sourceType": "gtfs-http",
+      "url": "http://digitransit-proxy:8080/out/92.62.36.215/RTIX/trip-updates",
+      "feedId": "OULU",
+      "fuzzyTripMatching": false
+    },
+    {
+      "id": "oulu-alerts",
+      "type": "real-time-alerts",
+      "frequencySec": 30,
+      "url": "http://digitransit-proxy:8080/out/92.62.36.215/RTIX/service-alerts",
+      "feedId": "OULU",
+      "fuzzyTripMatching": false
+    },
+    {
+      "id": "tampere-trip-updates",
+      "type": "stop-time-updater",
+      "frequencySec": 60,
+      "sourceType": "gtfs-http",
+      "url": "https://gtfsrt.blob.core.windows.net/tampere/tripupdate",
+      "feedId": "tampere",
+      "fuzzyTripMatching": false
+    },
+    {
+      "id": "tampere-alerts",
+      "type": "real-time-alerts",
+      "frequencySec": 30,
+      "url": "http://digitransit-proxy:8080/out/tre.mattersoft.fi/api/gtfsrealtime/v1.0/feed/servicealert",
+      "feedId": "tampere",
+      "fuzzyTripMatching": false
+    },
+    {
+      "id": "linkki-trip-updates",
+      "type": "stop-time-updater",
+      "frequencySec": 60,
+      "sourceType": "gtfs-http",
+      "url": "http://digitransit-proxy:8080/out/linkki.mattersoft.fi/api/gtfsrealtime/v1.0/feed/tripupdate",
+      "feedId": "LINKKI",
+      "fuzzyTripMatching": false
+    },
+    {
+      "id": "linkki-alerts",
+      "type": "real-time-alerts",
+      "frequencySec": 30,
+      "url": "http://digitransit-proxy:8080/out/linkki.mattersoft.fi/api/gtfsrealtime/v1.0/feed/servicealert",
+      "feedId": "LINKKI",
+      "fuzzyTripMatching": false
+    }
   ],
   "boardTimes": {
     "AIRPLANE": 2700
