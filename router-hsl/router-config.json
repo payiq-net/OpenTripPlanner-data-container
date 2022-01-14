@@ -1,17 +1,43 @@
 {
   "routingDefaults": {
-      "walkSpeed": 1.3,
-      "transferSlack": 120,
-      "maxTransfers": 4,
-      "waitReluctance": 0.95,
-      "waitAtBeginningFactor": 0.7,
-      "walkReluctance": 1.75,
-      "stairsReluctance": 1.65,
-      "walkBoardCost": 540,
-      "walkOnStreetReluctance": 1.5,
-      "carParkCarLegWeight": 2,
-      "maxSlope": 0.125
+    "walkSpeed": 1.3,
+    "transferSlack": 120,
+    "maxTransfers": 4,
+    "waitReluctance": 0.95,
+    "waitAtBeginningFactor": 0.7,
+    "walkReluctance": 1.75,
+    "stairsReluctance": 1.65,
+    "walkBoardCost": 540,
+    "walkOnStreetReluctance": 1.5,
+    "carParkCarLegWeight": 2,
+    "maxSlope": 0.125
   },
   "updaters": [
+    {
+      "id": "hsl-trip-updates",
+      "type": "mqtt-gtfs-rt-updater",
+      "url": "tcp://pred.rt.hsl.fi",
+      "topic": "gtfsrt/v2/fi/hsl/tu",
+      "feedId": "HSL",
+      "fuzzyTripMatching": true
+    },
+    {
+      "id": "hsl-alerts",
+      "type": "real-time-alerts",
+      "frequencySec": 30,
+      "url": "https://realtime.hsl.fi/realtime/service-alerts/v2/hsl",
+      "feedId": "HSL",
+      "fuzzyTripMatching": true
+    },
+    {
+      "id": "hsl-park",
+      "type": "vehicle-parking",
+      "sourceType": "hsl-park",
+      "feedId": "hslpark",
+      "facilitiesFrequencySec": 3600,
+      "facilitiesUrl": "http://digitransit-proxy:8080/out/p.hsl.fi/api/v1/facilities.json?limit=-1",
+      "utilizationsFrequencySec": 600,
+      "utilizationsUrl": "https://digitransit-proxy:8080/out/p.hsl.fi/api/v1/utilizations.json?limit=-1"
+    }
   ]
 }
