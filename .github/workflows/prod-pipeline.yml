@@ -1,41 +1,11 @@
-name: Build prod from release
+name: Build v3-prod from release
 on:
-  push:
-    branches:
-      - otp2-prod
-  pull_request:
-    branches:
-      - otp2-prod
+  release:
+    types:
+      - published
 jobs:
-  lint:
+  v3-release:
     runs-on: ubuntu-18.04
-    strategy:
-      matrix:
-        node-version: [10.x]
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v2
-      - name: Use Node.js ${{ matrix.node-version }}
-        uses: actions/setup-node@v1
-        with:
-          node-version: ${{ matrix.node-version }}
-      - name: Cache node modules
-        uses: actions/cache@v2
-        with:
-          path: '**/node_modules'
-          key: ${{ runner.os }}-modules-${{ hashFiles('**/package-lock.json') }}
-      - name: Install dependencies
-        run: npm install
-      - name: Run linters
-        run: npm run test
-  docker-push:
-    if: github.ref == 'refs/heads/otp2-prod'
-    needs:
-      - lint
-    runs-on: ubuntu-18.04
-    strategy:
-      matrix:
-        node-version: [10.x]
     steps:
       - name: Checkout
         uses: actions/checkout@v2
@@ -43,20 +13,17 @@ jobs:
         uses: zcong1993/setup-timezone@master
         with:
           timezone: "Europe/Helsinki"
-      - name: Use Node.js ${{ matrix.node-version }}
-        uses: actions/setup-node@v1
-        with:
-          node-version: ${{ matrix.node-version }}
-      - name: Cache node modules
-        uses: actions/cache@v2
-        with:
-          path: '**/node_modules'
-          key: ${{ runner.os }}-modules-${{ hashFiles('**/package-lock.json') }}
-      - name: Install dependencies
-        run: npm install
-      - name: Build docker image from otp2-prod and push it
-        run: ./.github/workflows/scripts/build_and_push_dev.sh
+      - name: Check Tag
+        id: check-tag
+        run: |
+          if [[ ${GITHUB_REF##*/} =~ ^202[0-9][0-1][0-9][0-3][0-9] ]]; then
+              echo ::set-output name=match::true
+          fi
+      - name: Push latest image as v3-prod
+        if: steps.check-tag.outputs.match == 'true'
+        run: ./.github/workflows/scripts/push_prod.sh
         env:
           DOCKER_USER: ${{ secrets.DOCKER_USER }}
           DOCKER_AUTH: ${{ secrets.DOCKER_AUTH }}
-          DOCKER_BASE_TAG: otp2-prod
+          DOCKER_BASE_TAG: v3-prod
+          DOCKER_DEV_TAG: v3
