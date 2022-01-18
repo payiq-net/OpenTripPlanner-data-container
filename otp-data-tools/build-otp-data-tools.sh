@@ -38,5 +38,5 @@ cd ..
 
 git clone https://github.com/HSLdevcom/OTPQA.git
 cd OTPQA
-git checkout otp2
+git checkout v3
 cd ..
