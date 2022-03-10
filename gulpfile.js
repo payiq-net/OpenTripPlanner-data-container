@@ -24,7 +24,7 @@ const { replaceGTFSFilesTask } = require('./task/GTFSReplace')
 gulp.task('osm:update', function () {
   const osmFiles = [...new Set(config.ALL_CONFIGS().map(cfg => cfg.osm))]
   const urls = osmFiles.length > 0 ? osmFiles.map(key => config.osmMap[key]) : [config.osmMap['finland']]
-  return dl(urls, true, true)
+  return dl(urls)
     .pipe(gulp.dest(`${config.dataDir}/downloads/osm`))
     .pipe(validateBlobSize())
     .pipe(testGTFSFile())
@@ -83,7 +83,7 @@ gulp.task('gtfs:dl', gulp.series('del:id', function () {
 
   const files = Object.keys(urlEntry).map(key => urlEntry[key])
 
-  return dl(files, true, true)
+  return dl(files)
     .pipe(replaceGTFSFilesTask(config.configMap))
     .pipe(renameGTFSFile())
     .pipe(gulp.dest(`${config.dataDir}/downloads/gtfs`))
