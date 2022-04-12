@@ -10,7 +10,7 @@
     "walkBoardCost": 540,
     "walkOnStreetReluctance": 1.5,
     "carParkCarLegWeight": 2,
-    "maxSlope": 0.125
+    "maxWheelchairSlope": 0.125
   },
   "updaters": [
     {

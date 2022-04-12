@@ -9,6 +9,6 @@
   "transitServiceEnd": "P12W",
   "transferRequests": [
     { "modes": "WALK" },
-    { "modes": "WALK", "wheelchairAccessible": true }
+    { "modes": "WALK", "wheelchairAccessible": true, "maxWheelchairSlope": 0.125 }
   ]
 }
