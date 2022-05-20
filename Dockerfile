@@ -6,7 +6,7 @@ RUN apk add --update --no-cache bash curl nodejs nodejs-npm \
 
 WORKDIR /opt/otp-data-builder
 
-ADD package-lock.json package.json *.js *.sh  gulpfile.js /opt/otp-data-builder/
+ADD package-lock.json package.json *.js *.sh  gulpfile.js logback-include-extensions.xml /opt/otp-data-builder/
 
 ADD task /opt/otp-data-builder/task
 ADD router-finland /opt/otp-data-builder/router-finland
