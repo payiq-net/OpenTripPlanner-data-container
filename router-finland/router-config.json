@@ -149,6 +149,13 @@
       "frequencySec": 30,
       "network": "smoove",
       "url": "https://helsinki-gbfs.smoove.pro/gbfs/gbfs.json"
+    },
+    {
+      "id": "turku-bike-rental",
+      "type": "vehicle-rental",
+      "sourceType": "gbfs",
+      "frequencySec": 30,
+      "url": "http://digitransit-proxy:8080/out/stables.donkey.bike/api/public/gbfs/2/donkey_turku/gbfs.json"
     }
   ],
   "boardTimes": {
