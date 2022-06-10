@@ -13,6 +13,7 @@ ADD router-finland /opt/otp-data-builder/router-finland
 ADD router-hsl /opt/otp-data-builder/router-hsl
 ADD router-waltti /opt/otp-data-builder/router-waltti
 ADD router-waltti-alt /opt/otp-data-builder/router-waltti-alt
+ADD router-varely /opt/otp-data-builder/router-varely
 ADD otp-data-container /opt/otp-data-builder/otp-data-container
 
 RUN npm install
