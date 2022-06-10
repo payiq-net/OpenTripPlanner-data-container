@@ -66,7 +66,6 @@ const WALTTI_ALT_CONFIG = {
   'osm': 'finland'
 }
 
-
 const VARELY_CONFIG = {
   'id': 'varely',
   'src': [
