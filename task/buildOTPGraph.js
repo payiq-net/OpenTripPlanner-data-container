@@ -1,4 +1,5 @@
 const { zipWithGlob } = require('../util')
+const otpMatching = require('otp-matching')
 const fs = require('fs')
 const { dataDir, hostDataDir, constants } = require('../config.js')
 const { postSlackMessage } = require('../util')
@@ -98,7 +99,7 @@ module.exports = {
             }
           })
         })
-        return Promise.all([p1, p2, p3])
+        return Promise.all([p1, p2, p3]).then(() => otpMatching(`${dataDir}/build/${config.id}/router`, config.id))
       })
     })).then(() => {
       process.stdout.write('Created SUCCESS\n')
