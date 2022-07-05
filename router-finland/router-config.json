@@ -156,6 +156,16 @@
       "sourceType": "gbfs",
       "frequencySec": 30,
       "url": "http://digitransit-proxy:8080/out/stables.donkey.bike/api/public/gbfs/2/donkey_turku/gbfs.json"
+    },
+    {
+      "id": "hsl-park",
+      "type": "vehicle-parking",
+      "sourceType": "hsl-park",
+      "feedId": "hslpark",
+      "facilitiesFrequencySec": 3600,
+      "facilitiesUrl": "http://digitransit-proxy:8080/out/test.liipi.hsldev.com/api/v1/facilities.json?limit=-1",
+      "utilizationsFrequencySec": 600,
+      "utilizationsUrl": "https://digitransit-proxy:8080/out/test.liipi.hsldev.com/api/v1/utilizations.json?limit=-1"
     }
   ],
   "boardTimes": {

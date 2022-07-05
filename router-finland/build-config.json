@@ -3,6 +3,7 @@
   "areaVisibility": true,
   "parentStopLinking": true,
   "osmWayPropertySet": "finland",
+  "staticParkAndRide": false,
   "maxAreaNodes": 1000,
   "maxTransferDistance": 2500,
   "transitServiceStart": "-P2W",
