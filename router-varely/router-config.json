@@ -8,8 +8,35 @@
       "walkReluctance": 1.75,
       "stairsReluctance": 1.65,
       "walkBoardCost": 540,
-      "itineraryFiltering": 1.0,
-      "maxSlope": 0.125
+      "maxWheelchairSlope": 0.125
   },
+  "streetRoutingTimeout": 8,
+  "transit": {
+    "maxNumberOfTransfers" : 12,
+    "dynamicSearchWindow" : {
+      "minTransitTimeCoefficient" : 2.5,
+      "minWaitTimeCoefficient": 0.5,
+      "minWinTimeMinutes" : 60,
+      "maxWinTimeMinutes" : 1440
+    }
+  },
+  "vectorTileLayers": [
+    {
+      "name": "stops",
+      "type": "Stop",
+      "mapper": "Digitransit",
+      "maxZoom": 17,
+      "minZoom": 13,
+      "cacheMaxSeconds": 600
+    },
+    {
+      "name": "stations",
+      "type": "Station",
+      "mapper": "Digitransit",
+      "maxZoom": 17,
+      "minZoom": 11,
+      "cacheMaxSeconds": 600
+    }
+  ],
   "updaters": []
 }
