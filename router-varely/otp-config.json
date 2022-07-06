@@ -1,0 +1,10 @@
+{
+  "otpFeatures": {
+      "SandboxAPILegacyGraphQLApi": true,
+      "APIGraphInspectorTile": true,
+      "APIServerInfo": true,
+      "APIUpdaterStatus": false,
+      "APIBikeRental": false,
+      "SandboxAPIMapboxVectorTilesApi": true
+  }
+}

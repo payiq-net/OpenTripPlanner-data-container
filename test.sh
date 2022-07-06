@@ -25,6 +25,8 @@ docker stop otp-data-hsl || true
 docker stop otp-hsl || true
 docker stop otp-data-waltti-alt || true
 docker stop otp-waltti-alt || true
+docker stop otp-data-varely || true
+docker stop otp-varely || true
 docker rmi --force $DOCKER_IMAGE || true
 cd data/build/$ROUTER_NAME
 echo "Building data-container image..."
@@ -65,6 +67,9 @@ elif [ "$ROUTER_NAME" == "waltti" ]; then
 elif [ "$ROUTER_NAME" == "waltti-alt" ]; then
     MAX_WAIT=60
     URL="http://$IP:8080/otp/routers/default/plan?fromPlace=60.51265301487%2C26.9125556&toPlace=60.462168956%2C26.9432830&date=${date}&time=14:00"
+elif [ "$ROUTER_NAME" == "varely" ]; then
+    MAX_WAIT=60
+    URL="http://$IP:8080/otp/routers/default/plan?fromPlace=60.629165131895085%2C22.05413103103638&toPlace=60.44274085084863%2C22.288684844970703&date=${date}&time=14:00"
 else
     MAX_WAIT=60
     URL="http://$IP:8080/otp/routers/default/plan?fromPlace=60.19812876015124%2C24.934051036834713&toPlace=60.218630210423306%2C24.807472229003906&date=${date}&time=14:00"
