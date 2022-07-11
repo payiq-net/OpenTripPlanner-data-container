@@ -112,12 +112,13 @@ exexuting the command 'node index.js once'. The end result of the build is 2 doc
 Digitransit-deployer detects the changes and restarts OTP instances, so that new data becomes in use.
 
 Each data container image runs a http server listening to port 8080, serving both a gtfs data bundle and a pre-built graph:
+
 - hsl: http://localhost:8080/router-hsl.zip and graph-hsl-<otpversion>.zip
 - waltti: http://localhost:8080/router-waltti.zip and graph-waltti-<otpversion>.zip
 - finland: http://localhost:8080/router-finland.zip and graph-finland-<otpversion>.zip
 - waltti-alt: http://localhost:8080/router-waltti-alt.zip and graph-waltti-alt-<otpversion>.zip
 
 ### otp-data-tools
-Contains tools for gtfs manipulation, such as One Bus Away gtfs filter.
-These tools are packaged inside docker container and are used dunring the data build process.
 
+Contains tools for gtfs manipulation, such as One Bus Away gtfs filter.
+These tools are packaged inside docker container and are used during the data build process.
