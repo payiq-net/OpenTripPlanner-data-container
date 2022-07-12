@@ -69,7 +69,8 @@ const WALTTI_ALT_CONFIG = {
 const VARELY_CONFIG = {
   'id': 'varely',
   'src': [
-    src('VARELY', 'http://digitransit-proxy:8080/out/varelyadmin.mattersoft.fi/feeds/102.zip', false)
+    src('VARELY', 'http://digitransit-proxy:8080/out/varelyadmin.mattersoft.fi/feeds/102.zip', false),
+    src('FOLI', 'http://data.foli.fi/gtfs/gtfs.zip', false, ['router-waltti/gtfs-rules/waltti.rule'])
   ],
   'osm': 'finland'
 }
