@@ -14,5 +14,6 @@
   "transferRequests": [
     { "modes": "WALK" },
     { "modes": "WALK", "wheelchairAccessible": true, "maxWheelchairSlope": 0.125 }
-  ]
+  ],
+  "timeZone": "Europe/Helsinki"
 }
