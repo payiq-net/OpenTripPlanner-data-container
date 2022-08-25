@@ -18,6 +18,6 @@ post_slack_message () {
 }
 
 die_with_error () {
-    post_slack_message "$1"
+    post_slack_message "$1 :boom:"
     exit 1
 }
