@@ -7,6 +7,7 @@
     "walkReluctance": 1.75,
     "stairsReluctance": 1.65,
     "walkBoardCost": 540,
+    "streetRoutingTimeout": 6,
     "wheelchairAccessibility": {
       "maxSlope": 0.125
     },
