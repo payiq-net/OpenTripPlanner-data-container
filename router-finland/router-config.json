@@ -167,10 +167,10 @@
       "utilizationsUrl": "https://digitransit-proxy:8080/out/test.liipi.hsldev.com/api/v1/utilizations.json?limit=-1"
     }
   ],
-  "boardTimes": {
+  "boardSlackForMode": {
     "AIRPLANE": 2700
   },
-  "alightTimes": {
+  "alightSlackForMode": {
     "AIRPLANE": 1200
   }
 }
