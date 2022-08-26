@@ -5,7 +5,7 @@
   "osmWayPropertySet": "finland",
   "elevationUnitMultiplier": 0.1,
   "maxAreaNodes": 1000,
-  "maxTransferDistance": 2500,
+  "maxTransferDurationSeconds": 2280,
   "multiThreadElevationCalculations": true,
   "transitServiceStart": "-P2W",
   "transitServiceEnd": "P12W",
