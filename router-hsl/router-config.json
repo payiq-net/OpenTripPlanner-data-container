@@ -8,8 +8,6 @@
     "walkReluctance": 1.75,
     "stairsReluctance": 1.65,
     "walkBoardCost": 540,
-    "walkOnStreetReluctance": 1.5,
-    "carParkCarLegWeight": 2,
     "maxWheelchairSlope": 0.125,
     "itineraryFilters": {
       "transitGeneralizedCostLimit": {

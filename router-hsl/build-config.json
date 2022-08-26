@@ -2,7 +2,6 @@
   "dataImportReport": true,
   "areaVisibility": true,
   "staticParkAndRide": false,
-  "parentStopLinking": true,
   "subwayAccessTime": 0,
   "osmWayPropertySet": "finland",
   "elevationUnitMultiplier": 0.1,

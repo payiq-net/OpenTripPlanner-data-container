@@ -1,7 +1,6 @@
 {
   "dataImportReport": true,
   "areaVisibility": true,
-  "parentStopLinking": true,
   "osmWayPropertySet": "finland",
   "staticParkAndRide": false,
   "maxAreaNodes": 1000,

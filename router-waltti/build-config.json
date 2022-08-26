@@ -1,7 +1,6 @@
 {
   "dataImportReport": true,
   "areaVisibility": true,
-  "parentStopLinking": true,
   "osmWayPropertySet": "finland",
   "elevationUnitMultiplier": 0.1,
   "maxAreaNodes": 1000,
