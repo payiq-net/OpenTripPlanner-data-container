@@ -9,8 +9,7 @@
     "walkReluctance": 1.75,
     "stairsReluctance": 1.65,
     "walkBoardCost": 540,
-    "compactLegsByReversedSearch": false,
-    "maxWheelchairSlope": 0.125
+    "compactLegsByReversedSearch": false
   },
   "updaters": [
     {

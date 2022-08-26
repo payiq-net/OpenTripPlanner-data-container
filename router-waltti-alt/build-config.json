@@ -10,7 +10,12 @@
   "transitServiceEnd": "P12W",
   "transferRequests": [
     { "modes": "WALK" },
-    { "modes": "WALK", "wheelchairAccessible": true, "maxWheelchairSlope": 0.125 }
+    {
+      "modes": "WALK",
+      "wheelchairAccessibility": {
+        "enabled": true
+      }
+    }
   ],
   "timeZone": "Europe/Helsinki"
 }
