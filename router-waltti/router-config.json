@@ -11,7 +11,7 @@
       "maxSlope": 0.125
     }
   },
-  "streetRoutingTimeout": 8,
+  "streetRoutingTimeout": "8s",
   "transit": {
     "maxNumberOfTransfers" : 12,
     "dynamicSearchWindow" : {

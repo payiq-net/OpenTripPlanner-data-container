@@ -7,7 +7,6 @@
     "walkReluctance": 1.75,
     "stairsReluctance": 1.65,
     "walkBoardCost": 540,
-    "streetRoutingTimeout": 6,
     "wheelchairAccessibility": {
       "maxSlope": 0.125
     },
@@ -16,7 +15,7 @@
         "costLimitFunction": "600 + 1.5x"
       }
     },
-    "unpreferredRouteCost": "600 + 3.0x",
+    "unpreferredCost": "600 + 3.0x",
     "unpreferred": {
       "routes": [
         "HSL:2143A",
@@ -56,6 +55,7 @@
       ]
     }
   },
+  "streetRoutingTimeout": "6s",
   "updaters": [
     {
       "id": "hsl-trip-updates",

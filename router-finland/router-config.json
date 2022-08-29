@@ -6,9 +6,9 @@
     "waitReluctance": 0.99,
     "walkReluctance": 1.75,
     "stairsReluctance": 1.65,
-    "walkBoardCost": 540,
-    "streetRoutingTimeout": 9
+    "walkBoardCost": 540
   },
+  "streetRoutingTimeout": "9s",
   "updaters": [
     {
       "id": "hsl-trip-updates",
