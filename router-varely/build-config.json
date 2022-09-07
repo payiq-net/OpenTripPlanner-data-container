@@ -1,13 +1,13 @@
 {
   "dataImportReport": true,
   "areaVisibility": true,
-  "osmWayPropertySet": "finland",
   "elevationUnitMultiplier": 0.1,
   "maxAreaNodes": 1000,
   "maxTransferDurationSeconds": 2280,
   "multiThreadElevationCalculations": true,
   "transitServiceStart": "-P2W",
   "transitServiceEnd": "P12W",
+  "transitModelTimeZone": "Europe/Helsinki",
   "transferRequests": [
     { "modes": "WALK" },
     {
@@ -17,5 +17,8 @@
       }
     }
   ],
-  "timeZone": "Europe/Helsinki"
+  "osmDefaults": {
+    "timeZone": "Europe/Helsinki",
+    "osmTagMapping": "finland"
+  }
 }
