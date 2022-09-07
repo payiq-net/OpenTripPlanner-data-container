@@ -77,6 +77,7 @@
       "type": "vehicle-parking",
       "sourceType": "hsl-park",
       "feedId": "hslpark",
+      "timeZone": "Europe/Helsinki",
       "facilitiesFrequencySec": 3600,
       "facilitiesUrl": "http://digitransit-proxy:8080/out/p.hsl.fi/api/v1/facilities.json?limit=-1",
       "utilizationsFrequencySec": 600,

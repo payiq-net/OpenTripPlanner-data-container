@@ -1,7 +1,6 @@
 {
   "dataImportReport": true,
   "areaVisibility": true,
-  "osmWayPropertySet": "finland",
   "elevationUnitMultiplier": 0.1,
   "maxAreaNodes": 1000,
   "maxTransferDurationSeconds": 2280,
@@ -17,5 +16,8 @@
       }
     }
   ],
-  "timeZone": "Europe/Helsinki"
+  "osmDefaults": {
+    "timeZone": "Europe/Helsinki",
+    "osmTagMapping": "finland"
+  }
 }

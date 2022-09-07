@@ -3,8 +3,6 @@
   "areaVisibility": true,
   "staticParkAndRide": false,
   "subwayAccessTime": 0,
-  "osmWayPropertySet": "finland",
-  "elevationUnitMultiplier": 0.1,
   "maxAreaNodes": 1000,
   "maxTransferDurationSeconds": 2280,
   "multiThreadElevationCalculations": true,
@@ -20,5 +18,14 @@
       }
     }
   ],
-  "timeZone": "Europe/Helsinki"
+  "osmDefaults": {
+    "timeZone": "Europe/Helsinki",
+    "osmTagMapping": "finland"
+  },
+  "dem": [
+    {
+      "source": "hsl.tif",
+      "elevationUnitMultiplier": 0.1
+    }
+  ]
 }
