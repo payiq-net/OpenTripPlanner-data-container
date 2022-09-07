@@ -6,6 +6,7 @@
   "maxTransferDurationSeconds": 2280,
   "transitServiceStart": "-P2W",
   "transitServiceEnd": "P12W",
+  "transitModelTimeZone": "Europe/Helsinki",
   "transferRequests": [
     { "modes": "WALK" },
     {
