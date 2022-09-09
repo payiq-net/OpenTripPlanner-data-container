@@ -302,7 +302,10 @@
       "sourceType": "gbfs",
       "frequencySec": 30,
       "network": "seatcode_tampere",
-      "url": "http://digitransit-proxy:8080/out/tampere-api.giravolta.io/api-opendata/gbfs/2_3/gbfs"
+      "url": "http://digitransit-proxy:8080/out/tampere-api.giravolta.io/api-opendata/gbfs/2_3/gbfs",
+      "headers": {
+        "system-id": "tampere"
+      }
     },
     {
       "id": "turku-bike-rental",
