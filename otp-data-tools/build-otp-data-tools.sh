@@ -1,6 +1,10 @@
-#!/bin/bash
-# this script is run inside the otp-data-tools container
-set +e
+#!/usr/bin/env bash
+
+# This script is run inside the otp-data-tools container.
+
+set -e
+
+# shellcheck disable=2015
 apt-get update && \
   apt-get -y install \
     git build-essential python-dev protobuf-compiler libprotobuf-dev \
@@ -11,6 +15,7 @@ apt-get update && \
 
 rm -rf /var/lib/apt/lists/*
 
+# shellcheck disable=2015
 wget https://bootstrap.pypa.io/pip/2.7/get-pip.py && \
   python get-pip.py && \
   pip install imposm.parser && \
@@ -21,22 +26,28 @@ wget https://bootstrap.pypa.io/pip/2.7/get-pip.py && \
   pip install cffi && \
   pip install utm
 
+ONEBUSAWAY_URL="http://nexus.onebusaway.org/service/local/artifact/maven/content?r=public&g=org.onebusaway&a=onebusaway-gtfs-transformer-cli&v=1.3.9"
+
+# shellcheck disable=2015
 mkdir -p one-busaway-gtfs-transformer && \
-  wget -O one-busaway-gtfs-transformer/onebusaway-gtfs-transformer-cli.jar "http://nexus.onebusaway.org/service/local/artifact/maven/content?r=public&g=org.onebusaway&a=onebusaway-gtfs-transformer-cli&v=1.3.9"
+  wget -O one-busaway-gtfs-transformer/onebusaway-gtfs-transformer-cli.jar $ONEBUSAWAY_URL
 
-git clone https://github.com/jswhit/pyproj.git
-cd pyproj
-git checkout ec9151e8c6909f7fac72bb2eab927ff18fa4cf1d
-python setup.py build
-python setup.py install
+# shellcheck disable=2015
+git clone https://github.com/jswhit/pyproj.git && \
+  cd pyproj && \
+  git checkout ec9151e8c6909f7fac72bb2eab927ff18fa4cf1d && \
+  python setup.py build && \
+  python setup.py install
 cd ..
 
-git clone --recursive -b fastmapmatch https://github.com/HSLdevcom/gtfs_shape_mapfit.git
-cd gtfs_shape_mapfit
-make -C pymapmatch
+# shellcheck disable=2015
+git clone --recursive -b fastmapmatch https://github.com/HSLdevcom/gtfs_shape_mapfit.git && \
+  cd gtfs_shape_mapfit && \
+  make -C pymapmatch
 cd ..
 
-git clone https://github.com/HSLdevcom/OTPQA.git
-cd OTPQA
-git checkout v3
+# shellcheck disable=2015
+git clone https://github.com/HSLdevcom/OTPQA.git && \
+  cd OTPQA && \
+  git checkout v3
 cd ..
