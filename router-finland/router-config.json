@@ -1,17 +1,13 @@
 {
-  "timeouts": [20, 20, 20],
   "routingDefaults": {
     "walkSpeed": 1.3,
     "transferSlack": 120,
-    "maxTransfers": 4,
     "waitReluctance": 0.99,
-    "waitAtBeginningFactor": 0.4,
     "walkReluctance": 1.75,
     "stairsReluctance": 1.65,
-    "walkBoardCost": 540,
-    "compactLegsByReversedSearch": false,
-    "maxWheelchairSlope": 0.125
+    "walkBoardCost": 540
   },
+  "streetRoutingTimeout": "9s",
   "updaters": [
     {
       "id": "hsl-trip-updates",
@@ -168,10 +164,10 @@
       "utilizationsUrl": "https://digitransit-proxy:8080/out/test.liipi.hsldev.com/api/v1/utilizations.json?limit=-1"
     }
   ],
-  "boardTimes": {
+  "boardSlackForMode": {
     "AIRPLANE": 2700
   },
-  "alightTimes": {
+  "alightSlackForMode": {
     "AIRPLANE": 1200
   }
 }

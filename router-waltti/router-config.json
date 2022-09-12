@@ -1,16 +1,16 @@
 {
   "routingDefaults": {
-      "walkSpeed": 1.3,
-      "transferSlack": 120,
-      "maxTransfers": 4,
-      "waitReluctance": 0.95,
-      "waitAtBeginningFactor": 0.7,
-      "walkReluctance": 1.75,
-      "stairsReluctance": 1.65,
-      "walkBoardCost": 540,
-      "maxWheelchairSlope": 0.125
+    "walkSpeed": 1.3,
+    "transferSlack": 120,
+    "waitReluctance": 0.95,
+    "walkReluctance": 1.75,
+    "stairsReluctance": 1.65,
+    "walkBoardCost": 540,
+    "wheelchairAccessibility": {
+      "maxSlope": 0.125
+    }
   },
-  "streetRoutingTimeout": 8,
+  "streetRoutingTimeout": "8s",
   "transit": {
     "maxNumberOfTransfers" : 12,
     "dynamicSearchWindow" : {
@@ -302,7 +302,10 @@
       "sourceType": "gbfs",
       "frequencySec": 30,
       "network": "seatcode_tampere",
-      "url": "http://digitransit-proxy:8080/out/tampere-api.giravolta.io/api-opendata/gbfs/2_3/gbfs"
+      "url": "http://digitransit-proxy:8080/out/tampere-api.giravolta.io/api-opendata/gbfs/2_3/gbfs",
+      "headers": {
+        "system-id": "tampere"
+      }
     },
     {
       "id": "turku-bike-rental",

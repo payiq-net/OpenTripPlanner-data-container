@@ -1,16 +1,23 @@
 {
   "dataImportReport": true,
   "areaVisibility": true,
-  "parentStopLinking": true,
-  "osmWayPropertySet": "finland",
   "staticParkAndRide": false,
   "maxAreaNodes": 1000,
-  "maxTransferDistance": 2500,
+  "maxTransferDurationSeconds": 2280,
   "transitServiceStart": "-P2W",
   "transitServiceEnd": "P12W",
+  "transitModelTimeZone": "Europe/Helsinki",
   "transferRequests": [
     { "modes": "WALK" },
-    { "modes": "WALK", "wheelchairAccessible": true, "maxWheelchairSlope": 0.125 }
+    {
+      "modes": "WALK",
+      "wheelchairAccessibility": {
+        "enabled": true
+      }
+    }
   ],
-  "timeZone": "Europe/Helsinki"
+  "osmDefaults": {
+    "timeZone": "Europe/Helsinki",
+    "osmTagMapping": "finland"
+  }
 }
