@@ -5,6 +5,7 @@
       "APIServerInfo": true,
       "APIUpdaterStatus": false,
       "APIBikeRental": false,
-      "SandboxAPIMapboxVectorTilesApi": true
+      "SandboxAPIMapboxVectorTilesApi": true,
+      "FloatingBike": false
   }
 }
