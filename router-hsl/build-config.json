@@ -9,6 +9,7 @@
   "transitServiceStart": "-P2W",
   "transitServiceEnd": "P12W",
   "transitModelTimeZone": "Europe/Helsinki",
+  "fares": "hsl",
   "transferRequests": [
     { "modes": "WALK" },
     {
