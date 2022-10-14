@@ -170,6 +170,15 @@
       "facilitiesUrl": "http://digitransit-proxy:8080/out/test.liipi.hsldev.com/api/v1/facilities.json?limit=-1",
       "utilizationsFrequencySec": 600,
       "utilizationsUrl": "https://digitransit-proxy:8080/out/test.liipi.hsldev.com/api/v1/utilizations.json?limit=-1"
+    },
+    {
+      "id": "digitraffic-trip-updates",
+      "type": "stop-time-updater",
+      "frequencySec": 60,
+      "sourceType": "gtfs-http",
+      "url": "http://digitransit-proxy:8080/out/rata.digitraffic.fi/api/v1/trains/gtfs-rt-updates",
+      "feedId": "digitraffic",
+      "fuzzyTripMatching": false
     }
   ],
   "boardSlackForMode": {
