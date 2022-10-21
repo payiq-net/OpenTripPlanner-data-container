@@ -12,7 +12,7 @@ const src = (id, url, fit, rules, replacements, requestOptions) => ({ id, url, f
 const HSL_CONFIG = {
   'id': 'hsl',
   'src': [
-    src('HSL', 'https://infopalvelut.storage.hsldev.com/gtfs/hsl.zip', false, undefined, { 'translations.txt': 'translations_new.txt' }),
+    src('HSL', 'https://infopalvelut.storage.hsldev.com/gtfs/hsl.zip', false, ['router-hsl/gtfs-rules/hsl.rule'], { 'translations.txt': 'translations_new.txt' }),
     src('HSLlautta', 'http://lautta.net/db/gtfs_pk/gtfs.zip', false)
   ],
   'osm': 'hsl',
