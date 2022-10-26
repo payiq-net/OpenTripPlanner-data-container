@@ -261,6 +261,23 @@
       "fuzzyTripMatching": false
     },
     {
+      "id": "rovaniemi-trip-updates",
+      "type": "stop-time-updater",
+      "frequencySec": 60,
+      "sourceType": "gtfs-http",
+      "url": "http://digitransit-proxy:8080/out/linkkari.mattersoft.fi/api/gtfsrealtime/v1.0/feed/tripupdate",
+      "feedId": "Rovaniemi",
+      "fuzzyTripMatching": false
+    },
+    {
+      "id": "rovaniemi-alerts",
+      "type": "real-time-alerts",
+      "frequencySec": 30,
+      "url": "http://digitransit-proxy:8080/out/linkkari.mattersoft.fi/api/gtfsrealtime/v1.0/feed/servicealert",
+      "feedId": "Rovaniemi",
+      "fuzzyTripMatching": false
+    },
+    {
       "id": "lappeenranta-bike-rental",
       "type": "vehicle-rental",
       "sourceType": "gbfs",
@@ -310,6 +327,20 @@
       "sourceType": "gbfs",
       "frequencySec": 30,
       "url": "http://digitransit-proxy:8080/out/stables.donkey.bike/api/public/gbfs/2/donkey_turku/gbfs.json"
+    },
+    {
+      "id": "hsl-bike-park",
+      "type": "bike-park",
+      "sourceType": "hsl-parkandride",
+      "url": "http://digitransit-proxy:8080/out/p.hsl.fi/api/v1/facilities.json?limit=-1",
+      "frequencySec": 600
+    },
+    {
+      "id": "hsl-car-park",
+      "type": "car-park",
+      "sourceType": "hsl-parkandride",
+      "url": "http://digitransit-proxy:8080/out/p.hsl.fi/api/v1/facilities.json?limit=-1",
+      "frequencySec": 600
     }
   ]
 }
