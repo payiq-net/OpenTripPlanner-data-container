@@ -329,18 +329,15 @@
       "url": "http://digitransit-proxy:8080/out/stables.donkey.bike/api/public/gbfs/2/donkey_turku/gbfs.json"
     },
     {
-      "id": "hsl-bike-park",
-      "type": "bike-park",
-      "sourceType": "hsl-parkandride",
-      "url": "http://digitransit-proxy:8080/out/p.hsl.fi/api/v1/facilities.json?limit=-1",
-      "frequencySec": 600
-    },
-    {
-      "id": "hsl-car-park",
-      "type": "car-park",
-      "sourceType": "hsl-parkandride",
-      "url": "http://digitransit-proxy:8080/out/p.hsl.fi/api/v1/facilities.json?limit=-1",
-      "frequencySec": 600
+      "id": "hsl-park",
+      "type": "vehicle-parking",
+      "sourceType": "hsl-park",
+      "feedId": "hslpark",
+      "timeZone": "Europe/Helsinki",
+      "facilitiesFrequencySec": 3600,
+      "facilitiesUrl": "http://digitransit-proxy:8080/out/p.hsl.fi/api/v1/facilities.json?limit=-1",
+      "utilizationsFrequencySec": 600,
+      "utilizationsUrl": "http://digitransit-proxy:8080/out/p.hsl.fi/api/v1/utilizations.json?limit=-1"
     }
   ]
 }
