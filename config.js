@@ -22,7 +22,7 @@ const HSL_CONFIG = {
 const FINLAND_CONFIG = {
   'id': 'finland',
   'src': [
-    src('HSL', 'https://infopalvelut.storage.hsldev.com/gtfs/hsl.zip', false, ['router-finland/gtfs-rules/hsl-no-trains.rule','router-hsl/gtfs-rules/hsl.rule'], { 'translations.txt': 'translations_new.txt' }),
+    src('HSL', 'https://infopalvelut.storage.hsldev.com/gtfs/hsl.zip', false, ['router-finland/gtfs-rules/hsl-no-trains.rule', 'router-hsl/gtfs-rules/hsl.rule'], { 'translations.txt': 'translations_new.txt' }),
     src('MATKA', 'https://gtfsdatav2.blob.core.windows.net/gtfsdata-blob/matka.zip', 'gtfs_shape_mapfit/fit_gtfs_stops.bash', ['router-finland/gtfs-rules/matka.rule']),
     src('tampere', 'http://ekstrat.tampere.fi/ekstrat/ptdata/tamperefeed_deprecated.zip', false),
     src('LINKKI', 'https://tvv.fra1.digitaloceanspaces.com/209.zip', 'gtfs_shape_mapfit/fit_gtfs_stops.bash'),
