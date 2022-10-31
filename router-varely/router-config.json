@@ -33,24 +33,6 @@
       "maxZoom": 20,
       "minzoom": 5,
       "cacheMaxSeconds": 43200
-    },
-    {
-      "name": "rentalStations",
-      "type": "VehicleRentalStation",
-      "mapper": "Digitransit",
-      "maxZoom": 20,
-      "minzoom": 5,
-      "cacheMaxSeconds": 43200,
-      "expansionFactor": 0.25
-    },
-    {
-      "name": "realtimeRentalStations",
-      "type": "VehicleRentalStation",
-      "mapper": "DigitransitRealtime",
-      "maxZoom": 20,
-      "minzoom": 5,
-      "cacheMaxSeconds": 45,
-      "expansionFactor": 0.25
     }
   ],
   "updaters": []
