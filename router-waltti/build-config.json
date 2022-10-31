@@ -1,6 +1,7 @@
 {
   "dataImportReport": true,
   "areaVisibility": true,
+  "staticParkAndRide": false,
   "maxAreaNodes": 1000,
   "maxTransferDurationSeconds": 2280,
   "multiThreadElevationCalculations": true,
