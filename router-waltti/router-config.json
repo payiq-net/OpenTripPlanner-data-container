@@ -26,7 +26,7 @@
       "type": "Stop",
       "mapper": "Digitransit",
       "maxZoom": 20,
-      "minZoom": 0,
+      "minzoom": 5,
       "cacheMaxSeconds": 43200
     },
     {
@@ -34,7 +34,7 @@
       "type": "Station",
       "mapper": "Digitransit",
       "maxZoom": 20,
-      "minZoom": 0,
+      "minzoom": 5,
       "cacheMaxSeconds": 43200
     },
     {
@@ -42,7 +42,7 @@
       "type": "VehicleRentalStation",
       "mapper": "Digitransit",
       "maxZoom": 20,
-      "minZoom": 0,
+      "minzoom": 5,
       "cacheMaxSeconds": 43200,
       "expansionFactor": 0.25
     },
@@ -51,7 +51,7 @@
       "type": "VehicleRentalStation",
       "mapper": "DigitransitRealtime",
       "maxZoom": 20,
-      "minZoom": 0,
+      "minzoom": 5,
       "cacheMaxSeconds": 45,
       "expansionFactor": 0.25
     },
@@ -60,7 +60,7 @@
       "type": "VehicleParking",
       "mapper": "Digitransit",
       "maxZoom": 20,
-      "minZoom": 0,
+      "minzoom": 5,
       "cacheMaxSeconds": 43200,
       "expansionFactor": 0.25
     },
@@ -69,7 +69,7 @@
       "type": "VehicleParkingGroup",
       "mapper": "Digitransit",
       "maxZoom": 20,
-      "minZoom": 0,
+      "minzoom": 5,
       "cacheMaxSeconds": 43200,
       "expansionFactor": 0.25
     }
