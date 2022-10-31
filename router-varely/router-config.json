@@ -30,17 +30,17 @@
       "name": "stops",
       "type": "Stop",
       "mapper": "Digitransit",
-      "maxZoom": 17,
-      "minZoom": 13,
-      "cacheMaxSeconds": 600
+      "maxZoom": 20,
+      "minzoom": 5,
+      "cacheMaxSeconds": 43200
     },
     {
       "name": "stations",
       "type": "Station",
       "mapper": "Digitransit",
-      "maxZoom": 17,
-      "minZoom": 11,
-      "cacheMaxSeconds": 600
+      "maxZoom": 20,
+      "minzoom": 5,
+      "cacheMaxSeconds": 43200
     }
   ],
   "updaters": []
