@@ -22,17 +22,35 @@
       "name": "stops",
       "type": "Stop",
       "mapper": "Digitransit",
-      "maxZoom": 17,
-      "minZoom": 13,
-      "cacheMaxSeconds": 600
+      "maxZoom": 20,
+      "minZoom": 0,
+      "cacheMaxSeconds": 43200
     },
     {
       "name": "stations",
       "type": "Station",
       "mapper": "Digitransit",
-      "maxZoom": 17,
-      "minZoom": 11,
-      "cacheMaxSeconds": 600
+      "maxZoom": 20,
+      "minZoom": 0,
+      "cacheMaxSeconds": 43200
+    },
+    {
+      "name": "rentalStations",
+      "type": "VehicleRentalStation",
+      "mapper": "Digitransit",
+      "maxZoom": 20,
+      "minZoom": 0,
+      "cacheMaxSeconds": 43200,
+      "expansionFactor": 0.25
+    },
+    {
+      "name": "realtimeRentalStations",
+      "type": "VehicleRentalStation",
+      "mapper": "DigitransitRealtime",
+      "maxZoom": 20,
+      "minZoom": 0,
+      "cacheMaxSeconds": 45,
+      "expansionFactor": 0.25
     }
   ],
   "updaters": [
