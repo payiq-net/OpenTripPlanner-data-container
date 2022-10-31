@@ -66,7 +66,6 @@
       "id": "salo-trip-updates",
       "type": "stop-time-updater",
       "frequencySec": 60,
-      "sourceType": "gtfs-http",
       "url": "http://digitransit-proxy:8080/out/paikku.mattersoft.fi/api/gtfsrealtime/v1.0/feed/tripupdate",
       "feedId": "Salo",
       "fuzzyTripMatching": false
@@ -75,7 +74,6 @@
       "id": "kouvola-trip-updates",
       "type": "stop-time-updater",
       "frequencySec": 60,
-      "sourceType": "gtfs-http",
       "url": "http://digitransit-proxy:8080/out/koutsi.mattersoft.fi/api/gtfsrealtime/v1.0/feed/tripupdate",
       "feedId": "Kouvola",
       "fuzzyTripMatching": false
@@ -92,7 +90,6 @@
       "id": "kotka-trip-updates",
       "type": "stop-time-updater",
       "frequencySec": 60,
-      "sourceType": "gtfs-http",
       "url": "http://digitransit-proxy:8080/out/jonnejaminne.mattersoft.fi/api/gtfsrealtime/v1.0/feed/tripupdate",
       "feedId": "Kotka",
       "fuzzyTripMatching": false
