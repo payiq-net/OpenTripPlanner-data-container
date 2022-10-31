@@ -7,6 +7,11 @@
     "stairsReluctance": 1.65,
     "walkBoardCost": 540,
     "wheelchairAccessibility": {
+      "stop": {
+        "onlyConsiderAccessible": false,
+        "unknownCost": 0,
+        "inaccessibleCost": 36000000
+      },
       "maxSlope": 0.125
     },
     "itineraryFilters": {
