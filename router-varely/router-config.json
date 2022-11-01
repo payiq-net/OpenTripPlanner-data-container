@@ -31,7 +31,7 @@
       "type": "Stop",
       "mapper": "Digitransit",
       "maxZoom": 20,
-      "minzoom": 5,
+      "minZoom": 5,
       "cacheMaxSeconds": 43200
     },
     {
@@ -39,7 +39,7 @@
       "type": "Station",
       "mapper": "Digitransit",
       "maxZoom": 20,
-      "minzoom": 5,
+      "minZoom": 5,
       "cacheMaxSeconds": 43200
     }
   ],
