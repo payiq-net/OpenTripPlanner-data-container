@@ -10,7 +10,7 @@
       "stop": {
         "onlyConsiderAccessible": false,
         "unknownCost": 0,
-        "inaccessibleCost": 36000000
+        "inaccessibleCost": 100000
       },
       "maxSlope": 0.125
     },
