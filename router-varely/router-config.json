@@ -14,6 +14,12 @@
         "inaccessibleCost": 100000
       },
       "maxSlope": 0.125
+    },
+    "itineraryFilters": {
+      "transitGeneralizedCostLimit": {
+        "costLimitFunction": "600 + 1.5x"
+      },
+      "nonTransitGeneralizedCostLimit": "300 + 1.5x"
     }
   },
   "streetRoutingTimeout": "8s",
