@@ -24,10 +24,7 @@
     "timeZone": "Europe/Helsinki",
     "osmTagMapping": "finland"
   },
-  "dem": [
-    {
-      "source": "hsl.tif",
-      "elevationUnitMultiplier": 0.1
-    }
-  ]
+  "demDefaults": {
+    "elevationUnitMultiplier": 0.1
+  }
 }

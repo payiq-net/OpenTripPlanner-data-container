@@ -23,5 +23,8 @@
   "osmDefaults": {
     "timeZone": "Europe/Helsinki",
     "osmTagMapping": "finland"
+  },
+  "demDefaults": {
+    "elevationUnitMultiplier": 0.1
   }
 }
