@@ -4,6 +4,7 @@
     "transferSlack": 120,
     "waitReluctance": 0.95,
     "walkReluctance": 1.75,
+    "carReluctance": 10.0,
     "stairsReluctance": 1.65,
     "walkBoardCost": 540,
     "wheelchairAccessibility": {
@@ -17,7 +18,8 @@
     "itineraryFilters": {
       "transitGeneralizedCostLimit": {
         "costLimitFunction": "600 + 1.5x"
-      }
+      },
+      "nonTransitGeneralizedCostLimit": "300 + 1.5x"
     },
     "unpreferredCost": "600 + 3.0x",
     "unpreferred": {
