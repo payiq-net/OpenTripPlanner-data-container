@@ -7,6 +7,8 @@
     "carReluctance": 10.0,
     "stairsReluctance": 1.65,
     "walkBoardCost": 540,
+    "maxAccessEgressDuration": "45m",
+    "maxDirectStreetDuration": "100h",
     "maxAccessEgressDurationForMode": {
       "CAR_PARK": "2h"
     },
