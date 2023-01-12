@@ -9,6 +9,7 @@
     "walkBoardCost": 540,
     "maxAccessEgressDuration": "35m",
     "maxDirectStreetDuration": "8h",
+    "maxJourneyDuration": "12h",
     "wheelchairAccessibility": {
       "stop": {
         "onlyConsiderAccessible": false,

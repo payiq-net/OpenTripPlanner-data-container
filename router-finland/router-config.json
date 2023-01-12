@@ -9,6 +9,7 @@
     "walkBoardCost": 540,
     "maxAccessEgressDuration": "45m",
     "maxDirectStreetDuration": "100h",
+    "maxJourneyDuration": "24h",
     "maxAccessEgressDurationForMode": {
       "CAR_PARK": "2h"
     },
