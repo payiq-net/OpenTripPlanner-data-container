@@ -2,7 +2,7 @@
   "dataImportReport": true,
   "areaVisibility": true,
   "maxAreaNodes": 1000,
-  "maxTransferDurationSeconds": 2280,
+  "maxTransferDurationSeconds": 1550,
   "multiThreadElevationCalculations": true,
   "transitServiceStart": "-P2W",
   "transitServiceEnd": "P12W",
