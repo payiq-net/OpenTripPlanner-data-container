@@ -3,7 +3,7 @@
   "areaVisibility": true,
   "staticParkAndRide": false,
   "maxAreaNodes": 1000,
-  "maxTransferDurationSeconds": 2280,
+  "maxTransferDurationSeconds": 1550,
   "transitServiceStart": "-P2W",
   "transitServiceEnd": "P12W",
   "transitModelTimeZone": "Europe/Helsinki",

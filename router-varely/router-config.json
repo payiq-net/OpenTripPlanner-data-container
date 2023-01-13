@@ -7,6 +7,9 @@
     "carReluctance": 10.0,
     "stairsReluctance": 1.65,
     "walkBoardCost": 540,
+    "maxAccessEgressDuration": "45m",
+    "maxDirectStreetDuration": "8h",
+    "maxJourneyDuration": "12h",
     "wheelchairAccessibility": {
       "stop": {
         "onlyConsiderAccessible": false,
