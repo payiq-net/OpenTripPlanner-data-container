@@ -52,7 +52,8 @@ const WALTTI_CONFIG = {
     src('TampereVR', 'https://rata.digitraffic.fi/api/v1/trains/gtfs-vr-tre.zip', false, undefined, undefined, { gzip: true }),
     src('tampereDRT', 'https://ekstrat.tampere.fi/ekstrat/ptdata/tamperefeed_kutsuliikenne.zip', false)
   ],
-  'osm': 'finland'
+  'osm': 'finland',
+  'dem': 'waltti'
 }
 
 const WALTTI_ALT_CONFIG = {
