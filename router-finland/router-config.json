@@ -11,7 +11,7 @@
     "maxDirectStreetDuration": "100h",
     "maxJourneyDuration": "24h",
     "maxAccessEgressDurationForMode": {
-      "CAR_PARK": "2h"
+      "CAR_TO_PARK": "2h"
     },
     "wheelchairAccessibility": {
       "stop": {
