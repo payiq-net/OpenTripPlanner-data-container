@@ -52,8 +52,12 @@ const postSlackMessage = (message) => {
  */
 const compareSizes = (localFile, newFileSize, maxDifference) => {
   return new Promise((resolve, reject) => {
-    if (newFileSize === undefined || !fs.existsSync(localFile)) {
+    if (newFileSize === undefined) {
       return resolve()
+    }
+    if (!fs.existsSync(localFile)) {
+      // download new file as local file does not exist
+      reject('error') // eslint-disable-line
     }
     let fileSize = fs.statSync(localFile).size
     if (fileSize * (1 - maxDifference) <= newFileSize) {
