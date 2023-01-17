@@ -26,6 +26,12 @@
         "costLimitFunction": "600 + 1.5x"
       },
       "nonTransitGeneralizedCostLimit": "300 + 1.5x"
+    },
+    "boardSlackForMode": {
+      "AIRPLANE": "2700s"
+    },
+    "alightSlackForMode": {
+      "AIRPLANE": "1200s"
     }
   },
   "streetRoutingTimeout": "9s",
@@ -267,11 +273,5 @@
       "feedId": "Rauma",
       "fuzzyTripMatching": false
     }
-  ],
-  "boardSlackForMode": {
-    "AIRPLANE": 2700
-  },
-  "alightSlackForMode": {
-    "AIRPLANE": 1200
-  }
+  ]
 }
