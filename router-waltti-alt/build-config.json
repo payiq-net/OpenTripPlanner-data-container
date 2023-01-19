@@ -3,7 +3,6 @@
   "areaVisibility": true,
   "maxAreaNodes": 1000,
   "maxTransferDurationSeconds": 1550,
-  "multiThreadElevationCalculations": true,
   "transitServiceStart": "-P2W",
   "transitServiceEnd": "P12W",
   "transitModelTimeZone": "Europe/Helsinki",
