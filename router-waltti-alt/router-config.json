@@ -82,40 +82,6 @@
       "backwardsDelayPropagationType": "ALWAYS"
     },
     {
-      "id": "kouvola-trip-updates",
-      "type": "stop-time-updater",
-      "frequencySec": 60,
-      "url": "http://digitransit-proxy:8080/out/koutsi.mattersoft.fi/api/gtfsrealtime/v1.0/feed/tripupdate",
-      "feedId": "Kouvola",
-      "fuzzyTripMatching": false,
-      "backwardsDelayPropagationType": "ALWAYS"
-    },
-    {
-      "id": "kouvola-alerts",
-      "type": "real-time-alerts",
-      "frequencySec": 30,
-      "url": "http://digitransit-proxy:8080/out/koutsi.mattersoft.fi/api/gtfsrealtime/v1.0/feed/servicealert",
-      "feedId": "Kouvola",
-      "fuzzyTripMatching": false
-    },
-    {
-      "id": "kotka-trip-updates",
-      "type": "stop-time-updater",
-      "frequencySec": 60,
-      "url": "http://digitransit-proxy:8080/out/jonnejaminne.mattersoft.fi/api/gtfsrealtime/v1.0/feed/tripupdate",
-      "feedId": "Kotka",
-      "fuzzyTripMatching": false,
-      "backwardsDelayPropagationType": "ALWAYS"
-    },
-    {
-      "id": "kotka-alerts",
-      "type": "real-time-alerts",
-      "frequencySec": 30,
-      "url": "http://digitransit-proxy:8080/out/jonnejaminne.mattersoft.fi/api/gtfsrealtime/v1.0/feed/servicealert",
-      "feedId": "Kotka",
-      "fuzzyTripMatching": false
-    },
-    {
       "id": "kajaani-trip-updates",
       "type": "stop-time-updater",
       "frequencySec": 60,
@@ -131,27 +97,6 @@
       "url": "http://digitransit-proxy:8080/out/kajaani.mattersoft.fi/api/gtfsrealtime/v1.0/feed/servicealert",
       "feedId": "Kajaani",
       "fuzzyTripMatching": false
-    },
-    {
-      "id": "kotka-bike-rental",
-      "type": "vehicle-rental",
-      "sourceType": "gbfs",
-      "frequencySec": 30,
-      "url": "http://digitransit-proxy:8080/out/stables.donkey.bike/api/public/gbfs/2/donkey_kotka/gbfs.json"
-    },
-    {
-      "id": "hamina-bike-rental",
-      "type": "vehicle-rental",
-      "sourceType": "gbfs",
-      "frequencySec": 30,
-      "url": "http://digitransit-proxy:8080/out/stables.donkey.bike/api/public/gbfs/2/donkey_hamina/gbfs.json"
-    },
-    {
-      "id": "kouvola-bike-rental",
-      "type": "vehicle-rental",
-      "sourceType": "gbfs",
-      "frequencySec": 30,
-      "url": "http://digitransit-proxy:8080/out/stables.donkey.bike/api/public/gbfs/2/donkey_kouvola/gbfs.json"
     }
   ]
 }
