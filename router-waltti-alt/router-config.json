@@ -78,7 +78,8 @@
       "frequencySec": 60,
       "url": "http://digitransit-proxy:8080/out/paikku.mattersoft.fi/api/gtfsrealtime/v1.0/feed/tripupdate",
       "feedId": "Salo",
-      "fuzzyTripMatching": false
+      "fuzzyTripMatching": false,
+      "backwardsDelayPropagationType": "ALWAYS"
     },
     {
       "id": "kouvola-trip-updates",
@@ -86,7 +87,8 @@
       "frequencySec": 60,
       "url": "http://digitransit-proxy:8080/out/koutsi.mattersoft.fi/api/gtfsrealtime/v1.0/feed/tripupdate",
       "feedId": "Kouvola",
-      "fuzzyTripMatching": false
+      "fuzzyTripMatching": false,
+      "backwardsDelayPropagationType": "ALWAYS"
     },
     {
       "id": "kouvola-alerts",
@@ -102,7 +104,8 @@
       "frequencySec": 60,
       "url": "http://digitransit-proxy:8080/out/jonnejaminne.mattersoft.fi/api/gtfsrealtime/v1.0/feed/tripupdate",
       "feedId": "Kotka",
-      "fuzzyTripMatching": false
+      "fuzzyTripMatching": false,
+      "backwardsDelayPropagationType": "ALWAYS"
     },
     {
       "id": "kotka-alerts",
@@ -118,7 +121,8 @@
       "frequencySec": 60,
       "url": "http://digitransit-proxy:8080/out/kajaani.mattersoft.fi/api/gtfsrealtime/v1.0/feed/tripupdate",
       "feedId": "Kajaani",
-      "fuzzyTripMatching": false
+      "fuzzyTripMatching": false,
+      "backwardsDelayPropagationType": "ALWAYS"
     },
     {
       "id": "kajaani-alerts",

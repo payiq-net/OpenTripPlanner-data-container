@@ -132,7 +132,8 @@
       "url": "tcp://pred.rt.hsl.fi",
       "topic": "gtfsrt/v2/fi/hsl/tu",
       "feedId": "HSL",
-      "fuzzyTripMatching": true
+      "fuzzyTripMatching": true,
+      "backwardsDelayPropagationType": "ALWAYS"
     },
     {
       "id": "hsl-alerts",
