@@ -24,6 +24,11 @@
       },
       "nonTransitGeneralizedCostLimit": "300 + 1.5x"
     },
+    "transitReluctanceForMode": {
+      "BUS": 1.2,
+      "SUBWAY": 0.9,
+      "RAIL": 0.95
+    },
     "unpreferredCost": "600 + 3.0x",
     "unpreferred": {
       "routes": [
@@ -127,7 +132,8 @@
       "url": "tcp://pred.rt.hsl.fi",
       "topic": "gtfsrt/v2/fi/hsl/tu",
       "feedId": "HSL",
-      "fuzzyTripMatching": true
+      "fuzzyTripMatching": true,
+      "backwardsDelayPropagationType": "ALWAYS"
     },
     {
       "id": "hsl-alerts",

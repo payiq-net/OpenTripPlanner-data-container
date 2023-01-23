@@ -96,7 +96,8 @@
       "url": "tcp://pred.rt.hsl.fi",
       "topic": "gtfsrt/v2/fi/hsl/tu",
       "feedId": "HSL",
-      "fuzzyTripMatching": true
+      "fuzzyTripMatching": true,
+      "backwardsDelayPropagationType": "ALWAYS"
     },
     {
       "id": "hsl-alerts",
@@ -112,7 +113,8 @@
       "frequencySec": 60,
       "url": "http://digitransit-proxy:8080/out/tyokalu.navici.com/joukkoliikenne/manual-gtfsrt/api/gtfsrt/updates",
       "feedId": "MATKA",
-      "fuzzyTripMatching": true
+      "fuzzyTripMatching": true,
+      "backwardsDelayPropagationType": "ALWAYS"
     },
     {
       "id": "matka-alerts",
@@ -128,7 +130,8 @@
       "frequencySec": 60,
       "url": "http://digitransit-proxy:8080/out/92.62.36.215/RTIX/trip-updates",
       "feedId": "OULU",
-      "fuzzyTripMatching": false
+      "fuzzyTripMatching": false,
+      "backwardsDelayPropagationType": "ALWAYS"
     },
     {
       "id": "oulu-alerts",
@@ -144,7 +147,8 @@
       "frequencySec": 60,
       "url": "https://gtfsrt.blob.core.windows.net/tampere/tripupdate",
       "feedId": "tampere",
-      "fuzzyTripMatching": false
+      "fuzzyTripMatching": false,
+      "backwardsDelayPropagationType": "ALWAYS"
     },
     {
       "id": "tampere-alerts",
@@ -160,7 +164,8 @@
       "frequencySec": 60,
       "url": "http://digitransit-proxy:8080/out/linkki.mattersoft.fi/api/gtfsrealtime/v1.0/feed/tripupdate",
       "feedId": "LINKKI",
-      "fuzzyTripMatching": false
+      "fuzzyTripMatching": false,
+      "backwardsDelayPropagationType": "ALWAYS"
     },
     {
       "id": "linkki-alerts",
@@ -255,7 +260,8 @@
       "frequencySec": 60,
       "url": "http://digitransit-proxy:8080/out/rata.digitraffic.fi/api/v1/trains/gtfs-rt-updates",
       "feedId": "digitraffic",
-      "fuzzyTripMatching": false
+      "fuzzyTripMatching": false,
+      "backwardsDelayPropagationType": "ALWAYS"
     },
     {
       "id": "rauma-trip-updates",
@@ -263,7 +269,8 @@
       "frequencySec": 60,
       "url": "http://digitransit-proxy:8080/out/rauma.mattersoft.fi/api/gtfsrealtime/v1.0/feed/tripupdate",
       "feedId": "Rauma",
-      "fuzzyTripMatching": false
+      "fuzzyTripMatching": false,
+      "backwardsDelayPropagationType": "ALWAYS"
     },
     {
       "id": "rauma-alerts",
