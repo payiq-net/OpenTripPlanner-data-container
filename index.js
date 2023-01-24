@@ -23,7 +23,6 @@ let routers
 if (process.env.ROUTERS) {
   routers = process.env.ROUTERS.replace(/ /g, '').split(',')
 } else {
-  routers = ['finland', 'waltti', 'hsl', 'waltti-alt']
   routers = ['finland', 'waltti', 'hsl', 'waltti-alt', 'varely']
 }
 
