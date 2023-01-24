@@ -66,7 +66,7 @@ elif [ "$ROUTER_NAME" == "waltti" ]; then
     URL="http://$IP:8080/otp/routers/default/plan?fromPlace=60.44638185995603%2C22.244396209716797&toPlace=60.45053041945487%2C22.313575744628906&date=${date}&time=14:00"
 elif [ "$ROUTER_NAME" == "waltti-alt" ]; then
     MAX_WAIT=60
-    URL="http://$IP:8080/otp/routers/default/plan?fromPlace=60.51265301487%2C26.9125556&toPlace=60.462168956%2C26.9432830&date=${date}&time=14:00"
+    URL="http://$IP:8080/otp/routers/default/plan?fromPlace=60.36627023055039%2C23.1210708618164&toPlace=60.40639308599%2C23.185958862&date=${date}&time=14:00"
 elif [ "$ROUTER_NAME" == "varely" ]; then
     MAX_WAIT=60
     URL="http://$IP:8080/otp/routers/default/plan?fromPlace=60.629165131895085%2C22.05413103103638&toPlace=60.44274085084863%2C22.288684844970703&date=${date}&time=14:00"
