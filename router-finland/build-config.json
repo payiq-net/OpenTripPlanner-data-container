@@ -4,6 +4,7 @@
   "staticParkAndRide": false,
   "maxAreaNodes": 1000,
   "maxTransferDurationSeconds": 1550,
+  "maxStopToShapeSnapDistance": 300,
   "transitServiceStart": "-P2W",
   "transitServiceEnd": "P12W",
   "transitModelTimeZone": "Europe/Helsinki",
