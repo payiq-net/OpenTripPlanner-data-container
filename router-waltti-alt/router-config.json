@@ -7,9 +7,13 @@
     "walkReluctance": 1.75,
     "carReluctance": 10.0,
     "stairsReluctance": 1.65,
-    "walkBoardCost": 540,
+    "walkBoardCost": 0,
+    "bikeBoardCost": 0,
     "maxAccessEgressDuration": "45m",
-    "maxDirectStreetDuration": "8h",
+    "maxDirectStreetDuration": "4h",
+    "maxDirectStreetDurationForMode": {
+      "walk": "90m"
+    },
     "maxJourneyDuration": "12h",
     "wheelchairAccessibility": {
       "stop": {
@@ -23,7 +27,7 @@
       "transitGeneralizedCostLimit": {
         "costLimitFunction": "600 + 1.5x"
       },
-      "nonTransitGeneralizedCostLimit": "300 + 1.5x"
+      "nonTransitGeneralizedCostLimit": "180 + 1.2x"
     }
   },
   "streetRoutingTimeout": "8s",
