@@ -240,14 +240,6 @@
       "url": "http://digitransit-proxy:8080/out/stables.donkey.bike/api/public/gbfs/2/donkey_turku/gbfs.json"
     },
     {
-      "id": "kuopio-bike-rental",
-      "type": "vehicle-rental",
-      "sourceType": "vilkku",
-      "url": "http://digitransit-proxy:8080/out/kaupunkipyorat.kuopio.fi/tkhs-export-map.html?format=xml",
-      "frequencySec": 300,
-      "network": "vilkku"
-    },
-    {
       "id": "liipi",
       "type": "vehicle-parking",
       "sourceType": "hsl-park",
