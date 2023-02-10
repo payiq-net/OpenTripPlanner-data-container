@@ -7,8 +7,8 @@
     "walkReluctance": 1.75,
     "carReluctance": 10.0,
     "stairsReluctance": 1.65,
-    "walkBoardCost": 0,
-    "bikeBoardCost": 0,
+    "walkBoardCost": 60,
+    "bikeBoardCost": 60,
     "maxAccessEgressDuration": "45m",
     "maxDirectStreetDuration": "2h",
     "maxDirectStreetDurationForMode": {
