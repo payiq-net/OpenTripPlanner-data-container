@@ -3,7 +3,7 @@
   "areaVisibility": true,
   "staticParkAndRide": false,
   "maxAreaNodes": 1000,
-  "maxTransferDurationSeconds": 1550,
+  "maxTransferDurationSeconds": 2700,
   "maxStopToShapeSnapDistance": 300,
   "transitServiceStart": "-P2W",
   "transitServiceEnd": "P12W",
