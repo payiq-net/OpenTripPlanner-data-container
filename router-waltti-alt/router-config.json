@@ -103,6 +103,23 @@
       "url": "http://digitransit-proxy:8080/out/kajaani.mattersoft.fi/api/gtfsrealtime/v1.0/feed/servicealert",
       "feedId": "Kajaani",
       "fuzzyTripMatching": false
+    },
+    {
+      "id": "oulu-trip-updates",
+      "type": "stop-time-updater",
+      "frequencySec": 60,
+      "sourceType": "gtfs-http",
+      "url": "http://digitransit-proxy:8080/out/oulu.mattersoft.fi/api/gtfsrealtime/v1.0/feed/tripupdate",
+      "feedId": "OULU",
+      "fuzzyTripMatching": false
+    },
+    {
+      "id": "oulu-alerts",
+      "type": "real-time-alerts",
+      "frequencySec": 30,
+      "url": "http://digitransit-proxy:8080/out/oulu.mattersoft.fi/api/gtfsrealtime/v1.0/feed/servicealert",
+      "feedId": "OULU",
+      "fuzzyTripMatching": false
     }
   ]
 }
