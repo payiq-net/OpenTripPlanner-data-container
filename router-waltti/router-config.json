@@ -117,10 +117,10 @@
       "id": "oulu-trip-updates",
       "type": "stop-time-updater",
       "frequencySec": 60,
-      "sourceType": "gtfs-http",
       "url": "http://digitransit-proxy:8080/out/oulu.mattersoft.fi/api/gtfsrealtime/v1.0/feed/tripupdate",
       "feedId": "OULU",
-      "fuzzyTripMatching": false
+      "fuzzyTripMatching": false,
+      "backwardsDelayPropagationType": "ALWAYS"
     },
     {
       "id": "oulu-alerts",
