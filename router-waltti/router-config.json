@@ -97,6 +97,15 @@
   ],
   "updaters": [
     {
+      "id": "digitraffic-trip-updates",
+      "type": "stop-time-updater",
+      "frequencySec": 60,
+      "url": "http://digitransit-proxy:8080/out/rata.digitraffic.fi/api/v1/trains/gtfs-rt-updates",
+      "feedId": "digitraffic",
+      "fuzzyTripMatching": false,
+      "backwardsDelayPropagationType": "ALWAYS"
+    },
+    {
       "id": "foli-trip-updates",
       "type": "stop-time-updater",
       "frequencySec": 60,
