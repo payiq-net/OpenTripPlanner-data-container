@@ -4,7 +4,7 @@ require('./gulpfile')
 const { promisify } = require('util')
 const everySeries = require('async/everySeries')
 const { execFileSync } = require('child_process')
-const { postSlackMessage } = require('./util')
+const { postSlackMessage, updateSlackMessage } = require('./util')
 const CronJob = require('cron').CronJob
 
 const every = promisify((list, task, cb) => {
@@ -42,7 +42,12 @@ start('seed').then(() => {
 })
 
 async function update () {
-  postSlackMessage('Starting data build')
+  const slackResponse = await postSlackMessage('Starting data build', null)
+  let messageTimeStamp
+  if (slackResponse.ok) {
+    messageTimeStamp = slackResponse.ts
+  }
+
   setCurrentConfig(routers.join(',')) // restore used config
 
   await every(updateDEM, function (task, callback) {
@@ -65,8 +70,11 @@ async function update () {
     }
   }
 
+  let osmError = false
+
   if (!global.OTPacceptsFile) {
-    postSlackMessage('OSM data update failed, using previous version :boom:')
+    osmError = true
+    postSlackMessage('OSM data update failed, using previous version :boom:', messageTimeStamp)
   }
 
   await every(updateGTFS, function (task, callback) {
@@ -95,9 +103,14 @@ async function update () {
             stdio: [0, 1, 2]
           }
         )
-        postSlackMessage(`${router} data updated.`)
+        if (osmError) {
+          updateSlackMessage(`${router} data updated, but there was an error updating OSM data. :boom:`, messageTimeStamp)
+        } else {
+          updateSlackMessage(`${router} data updated. :white-check-mark:`, messageTimeStamp)
+        }
       } catch (E) {
-        postSlackMessage(`${router} data update failed: ` + E.message)
+        postSlackMessage(`${router} data update failed: ` + E.message, messageTimeStamp)
+        updateSlackMessage('Something went wrong with the data update. More information in the reply. :boom:', messageTimeStamp)
       }
       callback(null, true)
     })
