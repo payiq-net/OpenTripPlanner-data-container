@@ -35,11 +35,6 @@
     "unpreferredCost": "600 + 3.0x",
     "unpreferred": {
       "routes": [
-        "HSL:2143A",
-        "HSL:2146A",
-        "HSL:2147A",
-        "HSL:2164A",
-        "HSL:2164VA",
         "HSL:7191",
         "HSL:7191A",
         "HSL:7192",
