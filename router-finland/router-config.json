@@ -2,7 +2,7 @@
   "routingDefaults": {
     "searchWindow": "16h",
     "walkSpeed": 1.3,
-    "transferSlack": 120,
+    "transferSlack": 90,
     "waitReluctance": 0.99,
     "bikeReluctance": 3,
     "walkReluctance": 1.75,
@@ -10,6 +10,8 @@
     "stairsReluctance": 1.65,
     "walkBoardCost": 90,
     "bikeBoardCost": 90,
+    "stairsTimeFactor": 2,
+    "elevatorBoardTime": 60,
     "maxAccessEgressDuration": "45m",
     "maxDirectStreetDuration": "100h",
     "maxDirectStreetDurationForMode": {
@@ -111,23 +113,6 @@
       "frequencySec": 30,
       "url": "https://realtime.hsl.fi/realtime/service-alerts/v2/hsl",
       "feedId": "HSL",
-      "fuzzyTripMatching": true
-    },
-    {
-      "id": "matka-trip-updates",
-      "type": "stop-time-updater",
-      "frequencySec": 60,
-      "url": "http://digitransit-proxy:8080/out/tyokalu.navici.com/joukkoliikenne/manual-gtfsrt/api/gtfsrt/updates",
-      "feedId": "MATKA",
-      "fuzzyTripMatching": true,
-      "backwardsDelayPropagationType": "ALWAYS"
-    },
-    {
-      "id": "matka-alerts",
-      "type": "real-time-alerts",
-      "frequencySec": 60,
-      "url": "http://digitransit-proxy:8080/out/tyokalu.navici.com/joukkoliikenne/manual-gtfsrt/api/gtfsrt/alerts",
-      "feedId": "MATKA",
       "fuzzyTripMatching": true
     },
     {
