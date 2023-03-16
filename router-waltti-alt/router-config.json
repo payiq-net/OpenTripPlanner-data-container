@@ -39,8 +39,8 @@
     "dynamicSearchWindow" : {
       "minTransitTimeCoefficient" : 2.5,
       "minWaitTimeCoefficient": 0.5,
-      "minWinTimeMinutes" : 60,
-      "maxWinTimeMinutes" : 1440
+      "minWindow" : "1h",
+      "maxWindow" : "24h"
     }
   },
   "vectorTileLayers": [
