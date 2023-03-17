@@ -7,7 +7,6 @@
       "APIBikeRental": false,
       "SandboxAPIMapboxVectorTilesApi": true,
       "FloatingBike": false,
-      "ActuatorAPI": true,
-      "AsyncGraphQLFetchers": true
+      "ActuatorAPI": true
   }
 }
