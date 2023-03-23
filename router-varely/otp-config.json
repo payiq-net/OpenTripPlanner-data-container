@@ -6,6 +6,7 @@
       "APIUpdaterStatus": false,
       "APIBikeRental": false,
       "SandboxAPIMapboxVectorTilesApi": true,
-      "ActuatorAPI": true
+      "ActuatorAPI": true,
+      "AsyncGraphQLFetchers": true
   }
 }
