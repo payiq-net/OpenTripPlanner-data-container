@@ -22,12 +22,24 @@ const FINLAND_CONFIG = {
   'id': 'finland',
   'src': [
     src('HSL', 'https://infopalvelut.storage.hsldev.com/gtfs/hsl.zip', false, ['router-finland/gtfs-rules/hsl-no-trains.rule', 'router-hsl/gtfs-rules/hsl.rule'], { 'translations.txt': 'translations_new.txt' }),
-    src('MATKA', 'https://gtfsdatav2.blob.core.windows.net/gtfsdata-blob/matka.zip', 'gtfs_shape_mapfit/fit_gtfs_stops.bash', ['router-finland/gtfs-rules/matka.rule']),
+    src('MATKA', 'https://koontikartta.navici.com/tiedostot/gtfs_digitransit.zip', 'gtfs_shape_mapfit/fit_gtfs_stops.bash', ['router-finland/gtfs-rules/matka-cleaned.rule']),
     src('tampere', 'http://ekstrat.tampere.fi/ekstrat/ptdata/tamperefeed_deprecated.zip', false),
     src('LINKKI', 'https://tvv.fra1.digitaloceanspaces.com/209.zip', 'gtfs_shape_mapfit/fit_gtfs_stops.bash'),
     src('OULU', 'https://assets.oulunliikenne.fi/gtfs_google/google_transit.zip', false),
     src('digitraffic', 'https://rata.digitraffic.fi/api/v1/trains/gtfs-passenger-stops.zip', false, undefined, undefined, { gzip: true }),
     src('Rauma', 'http://digitransit-proxy:8080/out/raumaadmin.mattersoft.fi/feeds/233.zip', false)
+    src('Hameenlinna', 'https://tvv.fra1.digitaloceanspaces.com/203.zip', 'gtfs_shape_mapfit/fit_gtfs_stops.bash', ['router-waltti/gtfs-rules/waltti.rule']),
+    src('Kotka', 'https://tvv.fra1.digitaloceanspaces.com/217.zip', 'gtfs_shape_mapfit/fit_gtfs_stops.bash', ['router-waltti/gtfs-rules/waltti.rule']),
+    src('Kouvola', 'https://tvv.fra1.digitaloceanspaces.com/219.zip', 'gtfs_shape_mapfit/fit_gtfs_stops.bash', ['router-waltti/gtfs-rules/waltti.rule']),
+    src('Lappeenranta', 'https://tvv.fra1.digitaloceanspaces.com/225.zip', 'gtfs_shape_mapfit/fit_gtfs_stops.bash', ['router-waltti/gtfs-rules/waltti.rule']),
+    src('Mikkeli', 'https://tvv.fra1.digitaloceanspaces.com/227.zip', 'gtfs_shape_mapfit/fit_gtfs_stops.bash', ['router-waltti/gtfs-rules/waltti.rule'], { 'translations.txt': null }),
+    src('Vaasa', 'https://tvv.fra1.digitaloceanspaces.com/249.zip', 'gtfs_shape_mapfit/fit_gtfs_stops.bash', ['router-waltti/gtfs-rules/waltti.rule'], { 'translations.txt': null }),
+    src('Joensuu', 'https://tvv.fra1.digitaloceanspaces.com/207.zip', 'gtfs_shape_mapfit/fit_gtfs_stops.bash', ['router-waltti/gtfs-rules/waltti.rule'], { 'translations.txt': null }),
+    src('FOLI', 'http://data.foli.fi/gtfs/gtfs.zip', false, ['router-waltti/gtfs-rules/waltti.rule']),
+    src('Lahti', 'https://tvv.fra1.digitaloceanspaces.com/223.zip', 'gtfs_shape_mapfit/fit_gtfs_stops.bash', ['router-waltti/gtfs-rules/waltti.rule']),
+    src('Kuopio', 'http://karttapalvelu.kuopio.fi/google_transit/google_transit.zip', false, ['router-waltti/gtfs-rules/waltti.rule']),
+    src('Rovaniemi', 'https://tvv.fra1.digitaloceanspaces.com/237.zip', 'gtfs_shape_mapfit/fit_gtfs_stops.bash', ['router-waltti/gtfs-rules/waltti.rule']),
+    src('Kajaani', 'https://tvv.fra1.digitaloceanspaces.com/211.zip', 'gtfs_shape_mapfit/fit_gtfs_stops.bash', ['router-waltti/gtfs-rules/waltti.rule'], { 'translations.txt': null })
   ],
   'osm': 'finland'
 }
