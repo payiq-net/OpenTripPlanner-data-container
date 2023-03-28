@@ -106,7 +106,7 @@ async function update () {
         if (osmError) {
           updateSlackMessage(`${router} data updated, but there was an error updating OSM data. :boom:`, messageTimeStamp)
         } else {
-          updateSlackMessage(`${router} data updated. :white-check-mark:`, messageTimeStamp)
+          updateSlackMessage(`${router} data updated. :white_check_mark:`, messageTimeStamp)
         }
       } catch (E) {
         postSlackMessage(`${router} data update failed: ` + E.message, messageTimeStamp)
