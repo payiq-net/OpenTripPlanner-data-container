@@ -6,6 +6,9 @@ module.exports = {
       if (!file.stem.includes('-gtfs')) {
         file.stem = file.stem + '-gtfs'
       }
+      if (file.extname !== '.zip') {
+	file.extname = '.zip';
+      }
       callback(null, file)
     })
   }

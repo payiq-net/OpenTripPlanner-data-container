@@ -59,7 +59,7 @@ module.exports = {
     return through.obj(function (file, encoding, callback) {
       const gtfsFile = file.history[file.history.length - 1]
       const fileName = gtfsFile.split('/').pop()
-      const id = fileName.substring(0, fileName.indexOf('.zip'))
+      const id = fileName.indexOf('.zip') > 0 ? fileName.substring(0, fileName.indexOf('.zip')) : fileName;
       const config = configMap[id]
       const replacements = config.replacements
       if (!replacements) {
