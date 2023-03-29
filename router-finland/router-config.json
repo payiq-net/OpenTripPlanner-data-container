@@ -116,6 +116,15 @@
       "fuzzyTripMatching": true
     },
     {
+      "id": "digitraffic-trip-updates",
+      "type": "stop-time-updater",
+      "frequencySec": 60,
+      "url": "http://digitransit-proxy:8080/out/rata.digitraffic.fi/api/v1/trains/gtfs-rt-updates",
+      "feedId": "digitraffic",
+      "fuzzyTripMatching": false,
+      "backwardsDelayPropagationType": "ALWAYS"
+    },
+    {
       "id": "oulu-trip-updates",
       "type": "stop-time-updater",
       "frequencySec": 60,
@@ -371,6 +380,32 @@
       "fuzzyTripMatching": false
     },
     {
+      "id": "rauma-trip-updates",
+      "type": "stop-time-updater",
+      "frequencySec": 60,
+      "url": "http://digitransit-proxy:8080/out/rauma.mattersoft.fi/api/gtfsrealtime/v1.0/feed/tripupdate",
+      "feedId": "Rauma",
+      "fuzzyTripMatching": false,
+      "backwardsDelayPropagationType": "ALWAYS"
+    },
+    {
+      "id": "rauma-alerts",
+      "type": "real-time-alerts",
+      "frequencySec": 30,
+      "url": "http://digitransit-proxy:8080/out/rauma.mattersoft.fi/api/gtfsrealtime/v1.0/feed/servicealert",
+      "feedId": "Rauma",
+      "fuzzyTripMatching": false
+    },
+    {
+      "id": "salo-trip-updates",
+      "type": "stop-time-updater",
+      "frequencySec": 60,
+      "url": "http://digitransit-proxy:8080/out/paikku.mattersoft.fi/api/gtfsrealtime/v1.0/feed/tripupdate",
+      "feedId": "Salo",
+      "fuzzyTripMatching": false,
+      "backwardsDelayPropagationType": "ALWAYS"
+    },
+    {
       "id": "lappeenranta-bike-rental",
       "type": "vehicle-rental",
       "sourceType": "gbfs",
@@ -441,32 +476,6 @@
       "utilizationsFrequencySec": 600,
       "utilizationsUrl": "http://digitransit-proxy:8080/out/p.hsl.fi/api/v1/utilizations.json?limit=-1",
       "hubsUrl": "http://digitransit-proxy:8080/out/p.hsl.fi/api/v1/hubs.json?limit=-1"
-    },
-    {
-      "id": "digitraffic-trip-updates",
-      "type": "stop-time-updater",
-      "frequencySec": 60,
-      "url": "http://digitransit-proxy:8080/out/rata.digitraffic.fi/api/v1/trains/gtfs-rt-updates",
-      "feedId": "digitraffic",
-      "fuzzyTripMatching": false,
-      "backwardsDelayPropagationType": "ALWAYS"
-    },
-    {
-      "id": "rauma-trip-updates",
-      "type": "stop-time-updater",
-      "frequencySec": 60,
-      "url": "http://digitransit-proxy:8080/out/rauma.mattersoft.fi/api/gtfsrealtime/v1.0/feed/tripupdate",
-      "feedId": "Rauma",
-      "fuzzyTripMatching": false,
-      "backwardsDelayPropagationType": "ALWAYS"
-    },
-    {
-      "id": "rauma-alerts",
-      "type": "real-time-alerts",
-      "frequencySec": 30,
-      "url": "http://digitransit-proxy:8080/out/rauma.mattersoft.fi/api/gtfsrealtime/v1.0/feed/servicealert",
-      "feedId": "Rauma",
-      "fuzzyTripMatching": false
     }
   ]
 }
