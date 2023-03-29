@@ -29,8 +29,8 @@ module.exports = function (entries) {
         return
       }
       const name = entry.url.split('/').pop()
-      const fileExt = name.split('.').pop()
-      const file = new Vinyl({ path: `${entry.id !== undefined ? (entry.id + '.' + fileExt) : name}`, contents: Buffer.from(body) })
+      const fileExt = name.indexOf('.') > 0 ? '.' + name.split('.').pop() : ''
+      const file = new Vinyl({ path: `${entry.id !== undefined ? (entry.id + fileExt) : name}`, contents: Buffer.from(body) })
       stream.push(file)
 
       process.stdout.write(entry.url + ' Download SUCCESS\n')
