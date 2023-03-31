@@ -42,10 +42,9 @@ start('seed').then(() => {
 })
 
 async function update () {
-  const slackResponse = await postSlackMessage('Starting data build', null)
-  let messageTimeStamp
+  const slackResponse = await postSlackMessage('Starting data build')
   if (slackResponse.ok) {
-    messageTimeStamp = slackResponse.ts
+    global.messageTimeStamp = slackResponse.ts
   }
 
   setCurrentConfig(routers.join(',')) // restore used config
@@ -74,17 +73,14 @@ async function update () {
 
   if (!global.OTPacceptsFile) {
     osmError = true
-    postSlackMessage('OSM data update failed, using previous version :boom:', messageTimeStamp)
+    postSlackMessage('OSM data update failed, using previous version :boom:')
   }
 
   await every(updateGTFS, function (task, callback) {
     start(task).then(() => { callback(null, true) })
   })
 
-  // postSlackMessage('GTFS data updated');
-
   await every(routers, function (router, callback) {
-    // postSlackMessage(`Starting build & deploy for ${router}...`);
     setCurrentConfig(router)
     start('router:buildGraph').then(() => {
       try {
@@ -104,17 +100,15 @@ async function update () {
           }
         )
         if (osmError) {
-          updateSlackMessage(`${router} data updated, but there was an error updating OSM data. :boom:`, messageTimeStamp)
+          updateSlackMessage(`${router} data updated, but there was an error updating OSM data. :boom:`)
         } else {
-          updateSlackMessage(`${router} data updated. :white_check_mark:`, messageTimeStamp)
+          updateSlackMessage(`${router} data updated. :white_check_mark:`)
         }
       } catch (E) {
-        postSlackMessage(`${router} data update failed: ` + E.message, messageTimeStamp)
-        updateSlackMessage('Something went wrong with the data update. More information in the reply. :boom:', messageTimeStamp)
+        postSlackMessage(`${router} data update failed: ` + E.message)
+        updateSlackMessage('Something went wrong with the data update. More information in the reply. :boom:')
       }
       callback(null, true)
     })
   })
-
-  // postSlackMessage('Data build completed');
 }
