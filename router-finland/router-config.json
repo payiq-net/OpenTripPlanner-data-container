@@ -410,28 +410,32 @@
       "type": "vehicle-rental",
       "sourceType": "gbfs",
       "frequencySec": 30,
-      "url": "http://digitransit-proxy:8080/out/stables.donkey.bike/api/public/gbfs/2/donkey_lappeenranta/gbfs.json"
+      "url": "http://digitransit-proxy:8080/out/stables.donkey.bike/api/public/gbfs/2/donkey_lappeenranta/gbfs.json",
+      "allowOverloading": true
     },
     {
       "id": "kotka-bike-rental",
       "type": "vehicle-rental",
       "sourceType": "gbfs",
       "frequencySec": 30,
-      "url": "http://digitransit-proxy:8080/out/stables.donkey.bike/api/public/gbfs/2/donkey_kotka/gbfs.json"
+      "url": "http://digitransit-proxy:8080/out/stables.donkey.bike/api/public/gbfs/2/donkey_kotka/gbfs.json",
+      "allowOverloading": true
     },
     {
       "id": "hamina-bike-rental",
       "type": "vehicle-rental",
       "sourceType": "gbfs",
       "frequencySec": 30,
-      "url": "http://digitransit-proxy:8080/out/stables.donkey.bike/api/public/gbfs/2/donkey_hamina/gbfs.json"
+      "url": "http://digitransit-proxy:8080/out/stables.donkey.bike/api/public/gbfs/2/donkey_hamina/gbfs.json",
+      "allowOverloading": true
     },
     {
       "id": "kouvola-bike-rental",
       "type": "vehicle-rental",
       "sourceType": "gbfs",
       "frequencySec": 30,
-      "url": "http://digitransit-proxy:8080/out/stables.donkey.bike/api/public/gbfs/2/donkey_kouvola/gbfs.json"
+      "url": "http://digitransit-proxy:8080/out/stables.donkey.bike/api/public/gbfs/2/donkey_kouvola/gbfs.json",
+      "allowOverloading": true
     },
     {
       "id": "tampere-bike-rental",
@@ -439,7 +443,8 @@
       "sourceType": "gbfs",
       "frequencySec": 30,
       "network": "seatcode_tampere",
-      "url": "http://digitransit-proxy:8080/out/tampere-api.giravolta.io/api-opendata/gbfs/2_3/gbfs"
+      "url": "http://digitransit-proxy:8080/out/tampere-api.giravolta.io/api-opendata/gbfs/2_3/gbfs",
+      "allowOverloading": true
     },
     {
       "id": "vantaa-bike-rental",
@@ -447,7 +452,8 @@
       "sourceType": "gbfs",
       "frequencySec": 30,
       "network": "vantaa",
-      "url": "http://digitransit-proxy:8080/out/vantaa-api.giravolta.io/api-opendata/gbfs/2_3/gbfs"
+      "url": "http://digitransit-proxy:8080/out/vantaa-api.giravolta.io/api-opendata/gbfs/2_3/gbfs",
+      "allowOverloading": true
     },
     {
       "id": "hsl-bike-rental",
@@ -463,7 +469,8 @@
       "type": "vehicle-rental",
       "sourceType": "gbfs",
       "frequencySec": 30,
-      "url": "http://digitransit-proxy:8080/out/stables.donkey.bike/api/public/gbfs/2/donkey_turku/gbfs.json"
+      "url": "http://digitransit-proxy:8080/out/stables.donkey.bike/api/public/gbfs/2/donkey_turku/gbfs.json",
+      "allowOverloading": true
     },
     {
       "id": "liipi",

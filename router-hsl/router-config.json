@@ -160,7 +160,8 @@
       "sourceType": "gbfs",
       "frequencySec": 30,
       "network": "vantaa",
-      "url": "http://digitransit-proxy:8080/out/vantaa-api.giravolta.io/api-opendata/gbfs/2_3/gbfs"
+      "url": "http://digitransit-proxy:8080/out/vantaa-api.giravolta.io/api-opendata/gbfs/2_3/gbfs",
+      "allowOverloading": true
     },
     {
       "id": "hsl-bike-rental",
