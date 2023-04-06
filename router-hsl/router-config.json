@@ -161,7 +161,7 @@
       "frequencySec": 30,
       "network": "vantaa",
       "url": "http://digitransit-proxy:8080/out/vantaa-api.giravolta.io/api-opendata/gbfs/2_3/gbfs",
-      "allowOverloading": true
+      "overloadingAllowed": true
     },
     {
       "id": "hsl-bike-rental",
@@ -170,7 +170,7 @@
       "frequencySec": 30,
       "network": "smoove",
       "url": "http://digitransit-proxy:8080/out/helsinki-fi.smoove.pro/api-public/stations",
-      "allowOverloading": true
+      "overloadingAllowed": true
     }
   ]
 }

@@ -411,7 +411,7 @@
       "sourceType": "gbfs",
       "frequencySec": 30,
       "url": "http://digitransit-proxy:8080/out/stables.donkey.bike/api/public/gbfs/2/donkey_lappeenranta/gbfs.json",
-      "allowOverloading": true
+      "overloadingAllowed": true
     },
     {
       "id": "kotka-bike-rental",
@@ -419,7 +419,7 @@
       "sourceType": "gbfs",
       "frequencySec": 30,
       "url": "http://digitransit-proxy:8080/out/stables.donkey.bike/api/public/gbfs/2/donkey_kotka/gbfs.json",
-      "allowOverloading": true
+      "overloadingAllowed": true
     },
     {
       "id": "hamina-bike-rental",
@@ -427,7 +427,7 @@
       "sourceType": "gbfs",
       "frequencySec": 30,
       "url": "http://digitransit-proxy:8080/out/stables.donkey.bike/api/public/gbfs/2/donkey_hamina/gbfs.json",
-      "allowOverloading": true
+      "overloadingAllowed": true
     },
     {
       "id": "kouvola-bike-rental",
@@ -435,7 +435,7 @@
       "sourceType": "gbfs",
       "frequencySec": 30,
       "url": "http://digitransit-proxy:8080/out/stables.donkey.bike/api/public/gbfs/2/donkey_kouvola/gbfs.json",
-      "allowOverloading": true
+      "overloadingAllowed": true
     },
     {
       "id": "tampere-bike-rental",
@@ -444,7 +444,7 @@
       "frequencySec": 30,
       "network": "seatcode_tampere",
       "url": "http://digitransit-proxy:8080/out/tampere-api.giravolta.io/api-opendata/gbfs/2_3/gbfs",
-      "allowOverloading": true
+      "overloadingAllowed": true
     },
     {
       "id": "vantaa-bike-rental",
@@ -453,7 +453,7 @@
       "frequencySec": 30,
       "network": "vantaa",
       "url": "http://digitransit-proxy:8080/out/vantaa-api.giravolta.io/api-opendata/gbfs/2_3/gbfs",
-      "allowOverloading": true
+      "overloadingAllowed": true
     },
     {
       "id": "hsl-bike-rental",
@@ -462,7 +462,7 @@
       "frequencySec": 30,
       "network": "smoove",
       "url": "http://digitransit-proxy:8080/out/helsinki-fi.smoove.pro/api-public/stations",
-      "allowOverloading": true
+      "overloadingAllowed": true
     },
     {
       "id": "turku-bike-rental",
@@ -470,7 +470,7 @@
       "sourceType": "gbfs",
       "frequencySec": 30,
       "url": "http://digitransit-proxy:8080/out/stables.donkey.bike/api/public/gbfs/2/donkey_turku/gbfs.json",
-      "allowOverloading": true
+      "overloadingAllowed": true
     },
     {
       "id": "liipi",
