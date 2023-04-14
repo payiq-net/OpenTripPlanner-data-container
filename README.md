@@ -45,7 +45,8 @@ It is possible to change the behaviour of the data builder by defining environme
 * (Optional, default ${process.cwd()}/data) "DATA" defines base path for data directories in container's file system.
 * (Optional, default 23:00:00) "BUILD_TIME" defines when data build is being run. Uses UTC time.
 * (Optional, default dev) "BUILDER_TYPE" used as a postfix to slack bot name
-* (Optional) "SLACK_CHANNEL" defines to which slack channel the messages are sent to
+* (Optional) "SLACK_CHANNEL_ID" defines to which slack channel the messages are sent to
+* (Optional) "SLACK_ACCESS_TOKEN" bearer token for slack messaging
 * (Optional, default {}) "EXTRA_SRC" defines gtfs src values that should be overridden or completely new src that should be added with unique id. "routers" is always a mandatory field. Example format:
   - `{"FOLI": {"url": "http://data.foli.fi/gtfs/gtfs.zip",  "fit": false, "rules": ["router-waltti/gtfs-rules/waltti.rule"], "routers": ["hsl", "finland"]}}`
   - You can remove a src by including "remove": true, `{"FOLI": {"remove": true, "routers": ["hsl"]}`
