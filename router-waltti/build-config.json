@@ -3,7 +3,7 @@
   "areaVisibility": true,
   "staticParkAndRide": false,
   "maxAreaNodes": 1000,
-  "maxTransferDurationSeconds": 2700,
+  "maxTransferDuration": "45m",
   "multiThreadElevationCalculations": true,
   "transitServiceStart": "-P2W",
   "transitServiceEnd": "P12W",

@@ -3,7 +3,7 @@
   "areaVisibility": true,
   "elevationUnitMultiplier": 0.1,
   "maxAreaNodes": 1000,
-  "maxTransferDurationSeconds": 1550,
+  "maxTransferDuration": "26m",
   "transitServiceStart": "-P2W",
   "transitServiceEnd": "P12W",
   "transitModelTimeZone": "Europe/Helsinki",
