@@ -41,7 +41,41 @@
       "minWaitTimeCoefficient": 0.5,
       "minWindow" : "1h",
       "maxWindow" : "24h"
-    }
+    },
+    "transferCacheRequests": [
+      {
+        "modes": "WALK",
+        "walkSpeed": 1.2,
+        "walkReluctance": 1.8
+      },
+      {
+        "modes": "WALK",
+        "walkSpeed": 1.2,
+        "walkReluctance": 1.8,
+        "wheelchairAccessibility": {
+          "enabled": true
+        }
+      },
+      {
+        "modes": "BICYCLE_RENT",
+        "walkSpeed": 1.2,
+        "bikeSpeed": 5.55,
+        "walkReluctance": 1.8,
+        "optimize": "GREENWAYS"
+      },
+      {
+        "modes": "WALK",
+        "walkSpeed": 1.67,
+        "walkReluctance": 1.8
+      },
+      {
+        "modes": "BICYCLE_RENT",
+        "walkSpeed": 1.67,
+        "bikeSpeed": 5.55,
+        "walkReluctance": 1.8,
+        "optimize": "GREENWAYS"
+      }
+    ]
   },
   "vectorTileLayers": [
     {
