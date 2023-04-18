@@ -41,7 +41,27 @@
       "minWaitTimeCoefficient": 0.5,
       "minWindow" : "1h",
       "maxWindow" : "24h"
-    }
+    },
+    "transferCacheRequests": [
+      {
+        "modes": "WALK",
+        "walkSpeed": 1.2,
+        "walkReluctance": 1.8
+      },
+      {
+        "modes": "WALK",
+        "walkSpeed": 1.2,
+        "walkReluctance": 1.8,
+        "wheelchairAccessibility": {
+          "enabled": true
+        }
+      },
+      {
+        "modes": "WALK",
+        "walkSpeed": 1.67,
+        "walkReluctance": 1.8
+      }
+    ]
   },
   "vectorTileLayers": [
     {
