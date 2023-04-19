@@ -5,7 +5,7 @@
     "transferSlack": 90,
     "waitReluctance": 0.95,
     "walkReluctance": 1.75,
-    "bikeReluctance": 2.5,
+    "bikeReluctance": 3,
     "carReluctance": 10.0,
     "stairsReluctance": 1.65,
     "stairsTimeFactor": 2,
