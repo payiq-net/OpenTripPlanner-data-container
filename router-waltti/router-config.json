@@ -429,6 +429,15 @@
       "overloadingAllowed": true
     },
     {
+      "id": "vilkku-bike-rental",
+      "network": "freebike_kuopio",
+      "type": "vehicle-rental",
+      "sourceType": "gbfs",
+      "frequencySec": 30,
+      "url": "http://digitransit-proxy:8080/out/tkhskuopiostrg.blob.core.windows.net/gbfs/gbfs.json",
+      "overloadingAllowed": true
+    },
+    {
       "id": "liipi",
       "type": "vehicle-parking",
       "sourceType": "hsl-park",
