@@ -510,6 +510,7 @@
     },
     {
       "id": "vilkku-bike-rental",
+      "network": "freebike_kuopio",
       "type": "vehicle-rental",
       "sourceType": "gbfs",
       "frequencySec": 30,
