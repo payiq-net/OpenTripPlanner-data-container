@@ -90,6 +90,14 @@ const VARELY_CONFIG = {
   'osm': 'finland'
 }
 
+const KELA_CONFIG = {
+  'id': 'kela',
+  'src': [
+    src('kela', 'https://gtfs.perille.fi/fintraffic/pilot/kela/kela-initial-20230426-gtfs.zip', false, undefined, { 'translations.txt': null })
+  ],
+  'osm': 'finland'
+}
+
 let ALL_CONFIGS
 
 const setCurrentConfig = (name) => {
