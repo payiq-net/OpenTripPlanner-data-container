@@ -101,7 +101,7 @@ const KELA_CONFIG = {
 let ALL_CONFIGS
 
 const setCurrentConfig = (name) => {
-  ALL_CONFIGS = [WALTTI_CONFIG, HSL_CONFIG, FINLAND_CONFIG, WALTTI_ALT_CONFIG, VARELY_CONFIG].reduce((acc, nxt) => {
+  ALL_CONFIGS = [WALTTI_CONFIG, HSL_CONFIG, FINLAND_CONFIG, WALTTI_ALT_CONFIG, VARELY_CONFIG, KELA_CONFIG].reduce((acc, nxt) => {
     if ((name && name.split(',').indexOf(nxt.id) !== -1) ||
       name === undefined) {
       acc.push(nxt)
