@@ -1,4 +1,3 @@
-
 /*
  * id = feedid (String)
  * url = feed url (String)
@@ -93,7 +92,7 @@ const VARELY_CONFIG = {
 const KELA_CONFIG = {
   'id': 'kela',
   'src': [
-    src('kela', 'https://gtfs.perille.fi/fintraffic/pilot/kela/kela-initial-20230426-gtfs.zip', false, undefined, { 'translations.txt': null })
+    src('kela', 'https://gtfs.perille.fi/fintraffic/pilot/kela/kela-latest-gtfs.zip', false)
   ],
   'osm': 'finland'
 }
