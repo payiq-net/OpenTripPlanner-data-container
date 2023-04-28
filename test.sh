@@ -27,6 +27,8 @@ docker stop otp-data-waltti-alt || true
 docker stop otp-waltti-alt || true
 docker stop otp-data-varely || true
 docker stop otp-varely || true
+docker stop otp-data-kela || true
+docker stop otp-kela || true
 docker rmi --force $DOCKER_IMAGE || true
 cd data/build/$ROUTER_NAME
 echo "Building data-container image..."

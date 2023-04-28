@@ -1,4 +1,3 @@
-
 /*
  * id = feedid (String)
  * url = feed url (String)
@@ -90,10 +89,18 @@ const VARELY_CONFIG = {
   'osm': 'finland'
 }
 
+const KELA_CONFIG = {
+  'id': 'kela',
+  'src': [
+    src('kela', 'https://gtfs.perille.fi/fintraffic/pilot/kela/kela-latest-gtfs.zip', false)
+  ],
+  'osm': 'finland'
+}
+
 let ALL_CONFIGS
 
 const setCurrentConfig = (name) => {
-  ALL_CONFIGS = [WALTTI_CONFIG, HSL_CONFIG, FINLAND_CONFIG, WALTTI_ALT_CONFIG, VARELY_CONFIG].reduce((acc, nxt) => {
+  ALL_CONFIGS = [WALTTI_CONFIG, HSL_CONFIG, FINLAND_CONFIG, WALTTI_ALT_CONFIG, VARELY_CONFIG, KELA_CONFIG].reduce((acc, nxt) => {
     if ((name && name.split(',').indexOf(nxt.id) !== -1) ||
       name === undefined) {
       acc.push(nxt)
