@@ -18,9 +18,6 @@
       "walk": "90m"
     },
     "maxJourneyDuration": "24h",
-    "maxAccessEgressDurationForMode": {
-      "CAR_TO_PARK": "2h"
-    },
     "wheelchairAccessibility": {
       "stop": {
         "onlyConsiderAccessible": false,
@@ -34,12 +31,6 @@
         "costLimitFunction": "600 + 1.5x"
       },
       "nonTransitGeneralizedCostLimit": "180 + 1.2x"
-    },
-    "boardSlackForMode": {
-      "AIRPLANE": "2700s"
-    },
-    "alightSlackForMode": {
-      "AIRPLANE": "1200s"
     },
     "intersectionTraversalModel": "CONSTANT"
   },
@@ -60,23 +51,9 @@
         }
       },
       {
-        "modes": "BICYCLE_RENT",
-        "walkSpeed": 1.2,
-        "bikeSpeed": 5.55,
-        "walkReluctance": 1.8,
-        "optimize": "GREENWAYS"
-      },
-      {
         "modes": "WALK",
         "walkSpeed": 1.67,
         "walkReluctance": 1.8
-      },
-      {
-        "modes": "BICYCLE_RENT",
-        "walkSpeed": 1.67,
-        "bikeSpeed": 5.55,
-        "walkReluctance": 1.8,
-        "optimize": "GREENWAYS"
       }
     ]
   },
