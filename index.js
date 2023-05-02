@@ -41,6 +41,8 @@ if (!process.env.NOSEED) {
     process.stdout.write(err + '\n')
     process.exit(1)
   })
+} else {
+  update()
 }
 
 async function update () {
