@@ -57,6 +57,7 @@ It is possible to change the behaviour of the data builder by defining environme
 * (Optional) "SKIPPED_SITES" defines a comma-separated list of sites from OTPQA tests that should be skipped. Example format:
   - `"turku.digitransit.fi,reittiopas.hsl.fi"`
 * (Optional) "DISABLE_BLOB_VALIDATION" should be included if blob (OSM) validation should be disabled temporarily.
+* (Optional) "NOSEED" should be included (together with DISABLE_BLOB_VALIDATION) when data loading for a new configuration is run first time and no seed image is available.
 
 #### Data processing steps
 
