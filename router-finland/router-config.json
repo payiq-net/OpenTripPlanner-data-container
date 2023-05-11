@@ -40,8 +40,7 @@
     },
     "alightSlackForMode": {
       "AIRPLANE": "1200s"
-    },
-    "intersectionTraversalModel": "NORWAY"
+    }
   },
   "streetRoutingTimeout": "9s",
   "transit": {
