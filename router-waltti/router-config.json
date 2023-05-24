@@ -381,6 +381,23 @@
       "fuzzyTripMatching": false
     },
     {
+      "id": "pori-trip-updates",
+      "type": "stop-time-updater",
+      "frequencySec": 60,
+      "url": "http://digitransit-proxy:8080/out/pjl.mattersoft.fi/api/gtfsrealtime/v1.0/feed/tripupdate",
+      "feedId": "Pori",
+      "fuzzyTripMatching": false,
+      "backwardsDelayPropagationType": "ALWAYS"
+    },
+    {
+      "id": "pori-alerts",
+      "type": "real-time-alerts",
+      "frequencySec": 30,
+      "url": "http://digitransit-proxy:8080/out/pjl.mattersoft.fi/api/gtfsrealtime/v1.0/feed/servicealert",
+      "feedId": "Pori",
+      "fuzzyTripMatching": false
+    },
+    {
       "id": "lappeenranta-bike-rental",
       "type": "vehicle-rental",
       "sourceType": "gbfs",
