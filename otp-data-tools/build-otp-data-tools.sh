@@ -26,7 +26,7 @@ wget https://bootstrap.pypa.io/pip/2.7/get-pip.py && \
   pip install cffi && \
   pip install utm
 
-ONEBUSAWAY_URL="https://repo.camsys-apps.com/releases/org/onebusaway/onebusaway-gtfs-transformer-cli/1.4.2/onebusaway-gtfs-transformer-cli-1.4.2.jar"
+ONEBUSAWAY_URL="http://nexus.onebusaway.org/service/local/artifact/maven/content?r=public&g=org.onebusaway&a=onebusaway-gtfs-transformer-cli&v=1.3.9"
 
 # shellcheck disable=2015
 mkdir -p one-busaway-gtfs-transformer && \
