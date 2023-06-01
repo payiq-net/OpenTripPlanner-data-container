@@ -34,7 +34,6 @@
       "SUBWAY": 0.9,
       "RAIL": 0.95
     },
-    "intersectionTraversalModel": "NORWAY",
     "unpreferredCost": "1700 + 1.2x",
     "unpreferred": {
       "routes": [
