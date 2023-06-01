@@ -18,6 +18,7 @@
       "walk": "90m"
     },
     "maxJourneyDuration": "12h",
+    "streetRoutingTimeout": "8s",
     "wheelchairAccessibility": {
       "stop": {
         "onlyConsiderAccessible": false,
@@ -33,7 +34,6 @@
       "nonTransitGeneralizedCostLimit": "180 + 1.2x"
     }
   },
-  "streetRoutingTimeout": "8s",
   "transit": {
     "maxNumberOfTransfers" : 12,
     "dynamicSearchWindow" : {

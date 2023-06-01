@@ -21,6 +21,7 @@
     "maxAccessEgressDurationForMode": {
       "CAR_TO_PARK": "2h"
     },
+    "streetRoutingTimeout": "9s",
     "wheelchairAccessibility": {
       "stop": {
         "onlyConsiderAccessible": false,
@@ -42,7 +43,6 @@
       "AIRPLANE": "1200s"
     }
   },
-  "streetRoutingTimeout": "9s",
   "transit": {
     "transferCacheRequests": [
       {
