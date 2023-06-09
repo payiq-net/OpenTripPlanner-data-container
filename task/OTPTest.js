@@ -5,7 +5,7 @@ const through = require('through2')
 const { hostDataDir, dataDir, constants } = require('../config')
 const { postSlackMessage } = require('../util')
 const testTag = process.env.OTP_TAG || 'latest'
-const JAVA_OPTS = process.env.JAVA_OPTS || "-Xmx9g"
+const JAVA_OPTS = process.env.JAVA_OPTS || '-Xmx9g'
 
 /**
  * Builds an OTP graph with a source data file. If the build is succesful we can trust
