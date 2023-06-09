@@ -98,6 +98,7 @@ async function update () {
                 DOCKER_TAG: process.env.DOCKER_TAG,
                 TEST_TAG: process.env.OTP_TAG || '',
                 TOOLS_TAG: process.env.TOOLS_TAG || '',
+                JAVA_OPTS: process.env.JAVA_OPTS,
                 SKIPPED_SITES: process.env.SKIPPED_SITES || ''
               },
             stdio: [0, 1, 2]
