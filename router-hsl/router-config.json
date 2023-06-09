@@ -15,6 +15,7 @@
     "maxAccessEgressDuration": "35m",
     "maxDirectStreetDuration": "90m",
     "maxJourneyDuration": "12h",
+    "streetRoutingTimeout": "6s",
     "wheelchairAccessibility": {
       "stop": {
         "onlyConsiderAccessible": false,
@@ -34,7 +35,6 @@
       "SUBWAY": 0.9,
       "RAIL": 0.95
     },
-    "intersectionTraversalModel": "NORWAY",
     "unpreferredCost": "1700 + 1.2x",
     "unpreferred": {
       "routes": [
@@ -120,7 +120,6 @@
       }
     ]
   },
-  "streetRoutingTimeout": "6s",
   "vectorTileLayers": [
     {
       "name": "stops",

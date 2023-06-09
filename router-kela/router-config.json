@@ -18,6 +18,7 @@
       "walk": "90m"
     },
     "maxJourneyDuration": "24h",
+    "streetRoutingTimeout": "9s",
     "wheelchairAccessibility": {
       "stop": {
         "onlyConsiderAccessible": false,
@@ -34,7 +35,6 @@
     },
     "intersectionTraversalModel": "CONSTANT"
   },
-  "streetRoutingTimeout": "9s",
   "transit": {
     "transferCacheRequests": [
       {

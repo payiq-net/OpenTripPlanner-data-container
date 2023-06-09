@@ -18,6 +18,7 @@
       "walk": "90m"
     },
     "maxJourneyDuration": "12h",
+    "streetRoutingTimeout": "8s",
     "wheelchairAccessibility": {
       "stop": {
         "onlyConsiderAccessible": false,
@@ -31,10 +32,8 @@
         "costLimitFunction": "600 + 1.5x"
       },
       "nonTransitGeneralizedCostLimit": "180 + 1.2x"
-    },
-    "intersectionTraversalModel": "NORWAY"
+    }
   },
-  "streetRoutingTimeout": "8s",
   "transit": {
     "maxNumberOfTransfers" : 12,
     "dynamicSearchWindow" : {
