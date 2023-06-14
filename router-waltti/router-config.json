@@ -135,7 +135,7 @@
     {
       "id": "digitraffic-trip-updates",
       "type": "stop-time-updater",
-      "frequencySec": 60,
+      "frequency": 60s,
       "url": "http://digitransit-proxy:8080/out/rata.digitraffic.fi/api/v1/trains/gtfs-rt-updates",
       "feedId": "digitraffic",
       "fuzzyTripMatching": false,
@@ -144,7 +144,7 @@
     {
       "id": "foli-trip-updates",
       "type": "stop-time-updater",
-      "frequencySec": 60,
+      "frequency": 60s,
       "url": "http://siri2gtfsrt:8080/FOLI",
       "feedId": "FOLI",
       "fuzzyTripMatching": true,
@@ -153,7 +153,7 @@
     {
       "id": "foli-alerts",
       "type": "real-time-alerts",
-      "frequencySec": 30,
+      "frequency": 30s,
       "url": "http://digitransit-proxy:8080/out/data.foli.fi/gtfs-rt/reittiopas",
       "feedId": "FOLI",
       "fuzzyTripMatching": false
@@ -161,7 +161,7 @@
     {
       "id": "oulu-trip-updates",
       "type": "stop-time-updater",
-      "frequencySec": 60,
+      "frequency": 60s,
       "url": "http://digitransit-proxy:8080/out/oulu.mattersoft.fi/api/gtfsrealtime/v1.0/feed/tripupdate",
       "feedId": "OULU",
       "fuzzyTripMatching": false,
@@ -170,7 +170,7 @@
     {
       "id": "oulu-alerts",
       "type": "real-time-alerts",
-      "frequencySec": 30,
+      "frequency": 30s,
       "url": "http://digitransit-proxy:8080/out/oulu.mattersoft.fi/api/gtfsrealtime/v1.0/feed/servicealert",
       "feedId": "OULU",
       "fuzzyTripMatching": false
@@ -178,7 +178,7 @@
     {
       "id": "kuopio-trip-updates",
       "type": "stop-time-updater",
-      "frequencySec": 60,
+      "frequency": 60s,
       "url": "http://digitransit-proxy:8080/out/vilkku.mattersoft.fi/api/gtfsrealtime/v1.0/feed/tripupdate",
       "feedId": "Kuopio",
       "fuzzyTripMatching": false,
@@ -187,7 +187,7 @@
     {
       "id": "joensuu-trip-updates",
       "type": "stop-time-updater",
-      "frequencySec": 60,
+      "frequency": 60s,
       "url": "http://digitransit-proxy:8080/out/jojo.mattersoft.fi/api/gtfsrealtime/v1.0/feed/tripupdate",
       "feedId": "Joensuu",
       "fuzzyTripMatching": false,
@@ -196,7 +196,7 @@
     {
       "id": "joensuu-alerts",
       "type": "real-time-alerts",
-      "frequencySec": 30,
+      "frequency": 30s,
       "url": "http://digitransit-proxy:8080/out/jojo.mattersoft.fi/api/gtfsrealtime/v1.0/feed/servicealert",
       "feedId": "Joensuu",
       "fuzzyTripMatching": false
@@ -204,7 +204,7 @@
     {
       "id": "lappeenranta-trip-updates",
       "type": "stop-time-updater",
-      "frequencySec": 60,
+      "frequency": 60s,
       "url": "http://digitransit-proxy:8080/out/lappeenranta.mattersoft.fi/api/gtfsrealtime/v1.0/feed/tripupdate",
       "feedId": "Lappeenranta",
       "fuzzyTripMatching": false,
@@ -213,7 +213,7 @@
     {
       "id": "lappeenranta-alerts",
       "type": "real-time-alerts",
-      "frequencySec": 30,
+      "frequency": 30s,
       "url": "http://digitransit-proxy:8080/out/lappeenranta.mattersoft.fi/api/gtfsrealtime/v1.0/feed/servicealert",
       "feedId": "Lappeenranta",
       "fuzzyTripMatching": false
@@ -221,7 +221,7 @@
     {
       "id": "tampere-trip-updates",
       "type": "stop-time-updater",
-      "frequencySec": 60,
+      "frequency": 60s,
       "url": "https://gtfsrt.blob.core.windows.net/tampere/tripupdate",
       "feedId": "tampere",
       "fuzzyTripMatching": false,
@@ -230,7 +230,7 @@
     {
       "id": "tampere-alerts",
       "type": "real-time-alerts",
-      "frequencySec": 30,
+      "frequency": 30s,
       "url": "http://digitransit-proxy:8080/out/tre.mattersoft.fi/api/gtfsrealtime/v1.0/feed/servicealert",
       "feedId": "tampere",
       "fuzzyTripMatching": false
@@ -238,7 +238,7 @@
     {
       "id": "linkki-trip-updates",
       "type": "stop-time-updater",
-      "frequencySec": 60,
+      "frequency": 60s,
       "url": "http://digitransit-proxy:8080/out/linkki.mattersoft.fi/api/gtfsrealtime/v1.0/feed/tripupdate",
       "feedId": "LINKKI",
       "fuzzyTripMatching": false,
@@ -247,7 +247,7 @@
     {
       "id": "linkki-alerts",
       "type": "real-time-alerts",
-      "frequencySec": 30,
+      "frequency": 30s,
       "url": "http://digitransit-proxy:8080/out/linkki.mattersoft.fi/api/gtfsrealtime/v1.0/feed/servicealert",
       "feedId": "LINKKI",
       "fuzzyTripMatching": false
@@ -255,7 +255,7 @@
     {
       "id": "lahti-alerts",
       "type": "real-time-alerts",
-      "frequencySec": 30,
+      "frequency": 30s,
       "url": "http://digitransit-proxy:8080/out/lsl.mattersoft.fi/api/gtfsrealtime/v1.0/feed/servicealert",
       "feedId": "Lahti",
       "fuzzyTripMatching": false
@@ -263,7 +263,7 @@
     {
       "id": "lahti-trip-updates",
       "type": "stop-time-updater",
-      "frequencySec": 60,
+      "frequency": 60s,
       "url": "http://digitransit-proxy:8080/out/lsl.mattersoft.fi/api/gtfsrealtime/v1.0/feed/tripupdate",
       "feedId": "Lahti",
       "fuzzyTripMatching": false,
@@ -272,7 +272,7 @@
     {
       "id": "kuopio-alerts",
       "type": "real-time-alerts",
-      "frequencySec": 30,
+      "frequency": 30s,
       "url": "http://digitransit-proxy:8080/out/vilkku.mattersoft.fi/api/gtfsrealtime/v1.0/feed/servicealert",
       "feedId": "Kuopio",
       "fuzzyTripMatching": false
@@ -280,7 +280,7 @@
     {
       "id": "hameenlinna-trip-updates",
       "type": "stop-time-updater",
-      "frequencySec": 60,
+      "frequency": 60s,
       "url": "http://digitransit-proxy:8080/out/hameenlinna.mattersoft.fi/api/gtfsrealtime/v1.0/feed/tripupdate",
       "feedId": "Hameenlinna",
       "fuzzyTripMatching": false,
@@ -289,7 +289,7 @@
     {
       "id": "hameenlinna-alerts",
       "type": "real-time-alerts",
-      "frequencySec": 30,
+      "frequency": 30s,
       "url": "http://digitransit-proxy:8080/out/hameenlinna.mattersoft.fi/api/gtfsrealtime/v1.0/feed/servicealert",
       "feedId": "Hameenlinna",
       "fuzzyTripMatching": false
@@ -297,7 +297,7 @@
     {
       "id": "mikkeli-trip-updates",
       "type": "stop-time-updater",
-      "frequencySec": 60,
+      "frequency": 60s,
       "url": "http://digitransit-proxy:8080/out/mikkeli.mattersoft.fi/api/gtfsrealtime/v1.0/feed/tripupdate",
       "feedId": "Mikkeli",
       "fuzzyTripMatching": false,
@@ -306,7 +306,7 @@
     {
       "id": "mikkeli-alerts",
       "type": "real-time-alerts",
-      "frequencySec": 30,
+      "frequency": 30s,
       "url": "http://digitransit-proxy:8080/out/mikkeli.mattersoft.fi/api/gtfsrealtime/v1.0/feed/servicealert",
       "feedId": "Mikkeli",
       "fuzzyTripMatching": false
@@ -314,7 +314,7 @@
     {
       "id": "vaasa-trip-updates",
       "type": "stop-time-updater",
-      "frequencySec": 60,
+      "frequency": 60s,
       "url": "http://digitransit-proxy:8080/out/lifti.mattersoft.fi/api/gtfsrealtime/v1.0/feed/tripupdate",
       "feedId": "Vaasa",
       "fuzzyTripMatching": false,
@@ -323,7 +323,7 @@
     {
       "id": "vaasa-alerts",
       "type": "real-time-alerts",
-      "frequencySec": 30,
+      "frequency": 30s,
       "url": "http://digitransit-proxy:8080/out/lifti.mattersoft.fi/api/gtfsrealtime/v1.0/feed/servicealert",
       "feedId": "Vaasa",
       "fuzzyTripMatching": false
@@ -331,7 +331,7 @@
     {
       "id": "kouvola-trip-updates",
       "type": "stop-time-updater",
-      "frequencySec": 60,
+      "frequency": 60s,
       "url": "http://digitransit-proxy:8080/out/koutsi.mattersoft.fi/api/gtfsrealtime/v1.0/feed/tripupdate",
       "feedId": "Kouvola",
       "fuzzyTripMatching": false,
@@ -340,7 +340,7 @@
     {
       "id": "kouvola-alerts",
       "type": "real-time-alerts",
-      "frequencySec": 30,
+      "frequency": 30s,
       "url": "http://digitransit-proxy:8080/out/koutsi.mattersoft.fi/api/gtfsrealtime/v1.0/feed/servicealert",
       "feedId": "Kouvola",
       "fuzzyTripMatching": false
@@ -348,7 +348,7 @@
     {
       "id": "kotka-trip-updates",
       "type": "stop-time-updater",
-      "frequencySec": 60,
+      "frequency": 60s,
       "url": "http://digitransit-proxy:8080/out/jonnejaminne.mattersoft.fi/api/gtfsrealtime/v1.0/feed/tripupdate",
       "feedId": "Kotka",
       "fuzzyTripMatching": false,
@@ -357,7 +357,7 @@
     {
       "id": "kotka-alerts",
       "type": "real-time-alerts",
-      "frequencySec": 30,
+      "frequency": 30s,
       "url": "http://digitransit-proxy:8080/out/jonnejaminne.mattersoft.fi/api/gtfsrealtime/v1.0/feed/servicealert",
       "feedId": "Kotka",
       "fuzzyTripMatching": false
@@ -365,7 +365,7 @@
     {
       "id": "rovaniemi-trip-updates",
       "type": "stop-time-updater",
-      "frequencySec": 60,
+      "frequency": 60s,
       "url": "http://digitransit-proxy:8080/out/linkkari.mattersoft.fi/api/gtfsrealtime/v1.0/feed/tripupdate",
       "feedId": "Rovaniemi",
       "fuzzyTripMatching": false,
@@ -374,7 +374,7 @@
     {
       "id": "rovaniemi-alerts",
       "type": "real-time-alerts",
-      "frequencySec": 30,
+      "frequency": 30s,
       "url": "http://digitransit-proxy:8080/out/linkkari.mattersoft.fi/api/gtfsrealtime/v1.0/feed/servicealert",
       "feedId": "Rovaniemi",
       "fuzzyTripMatching": false
@@ -382,7 +382,7 @@
     {
       "id": "pori-trip-updates",
       "type": "stop-time-updater",
-      "frequencySec": 60,
+      "frequency": 60s,
       "url": "http://digitransit-proxy:8080/out/pjl.mattersoft.fi/api/gtfsrealtime/v1.0/feed/tripupdate",
       "feedId": "Pori",
       "fuzzyTripMatching": false,
@@ -391,7 +391,7 @@
     {
       "id": "pori-alerts",
       "type": "real-time-alerts",
-      "frequencySec": 30,
+      "frequency": 30s,
       "url": "http://digitransit-proxy:8080/out/pjl.mattersoft.fi/api/gtfsrealtime/v1.0/feed/servicealert",
       "feedId": "Pori",
       "fuzzyTripMatching": false
@@ -400,7 +400,7 @@
       "id": "lappeenranta-bike-rental",
       "type": "vehicle-rental",
       "sourceType": "gbfs",
-      "frequencySec": 30,
+      "frequency": 30s,
       "url": "http://digitransit-proxy:8080/out/stables.donkey.bike/api/public/gbfs/2/donkey_lappeenranta/gbfs.json",
       "overloadingAllowed": true
     },
@@ -408,7 +408,7 @@
       "id": "kotka-bike-rental",
       "type": "vehicle-rental",
       "sourceType": "gbfs",
-      "frequencySec": 30,
+      "frequency": 30s,
       "url": "http://digitransit-proxy:8080/out/stables.donkey.bike/api/public/gbfs/2/donkey_kotka/gbfs.json",
       "overloadingAllowed": true
     },
@@ -416,7 +416,7 @@
       "id": "kouvola-bike-rental",
       "type": "vehicle-rental",
       "sourceType": "gbfs",
-      "frequencySec": 30,
+      "frequency": 30s,
       "url": "http://digitransit-proxy:8080/out/stables.donkey.bike/api/public/gbfs/2/donkey_kouvola/gbfs.json",
       "overloadingAllowed": true
     },
@@ -424,7 +424,7 @@
       "id": "tampere-bike-rental",
       "type": "vehicle-rental",
       "sourceType": "gbfs",
-      "frequencySec": 30,
+      "frequency": 30s,
       "network": "seatcode_tampere",
       "url": "http://digitransit-proxy:8080/out/tampere-api.giravolta.io/api-opendata/gbfs/2_3/gbfs",
       "overloadingAllowed": true
@@ -433,7 +433,7 @@
       "id": "turku-bike-rental",
       "type": "vehicle-rental",
       "sourceType": "gbfs",
-      "frequencySec": 30,
+      "frequency": 30s,
       "url": "http://digitransit-proxy:8080/out/stables.donkey.bike/api/public/gbfs/2/donkey_turku/gbfs.json",
       "overloadingAllowed": true
     },
@@ -442,7 +442,7 @@
       "network": "freebike_kuopio",
       "type": "vehicle-rental",
       "sourceType": "gbfs",
-      "frequencySec": 30,
+      "frequency": 30s,
       "url": "http://digitransit-proxy:8080/out/tkhskuopiostrg.blob.core.windows.net/gbfs/gbfs.json",
       "overloadingAllowed": true
     },
