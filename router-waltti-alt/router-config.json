@@ -103,7 +103,7 @@
     {
       "id": "salo-trip-updates",
       "type": "stop-time-updater",
-      "frequencySec": 60,
+      "frequency": 60s,
       "url": "http://digitransit-proxy:8080/out/paikku.mattersoft.fi/api/gtfsrealtime/v1.0/feed/tripupdate",
       "feedId": "Salo",
       "fuzzyTripMatching": false,
@@ -112,7 +112,7 @@
     {
       "id": "kajaani-trip-updates",
       "type": "stop-time-updater",
-      "frequencySec": 60,
+      "frequency": 60s,
       "url": "http://digitransit-proxy:8080/out/kajaani.mattersoft.fi/api/gtfsrealtime/v1.0/feed/tripupdate",
       "feedId": "Kajaani",
       "fuzzyTripMatching": false,
@@ -121,7 +121,7 @@
     {
       "id": "kajaani-alerts",
       "type": "real-time-alerts",
-      "frequencySec": 30,
+      "frequency": 30s,
       "url": "http://digitransit-proxy:8080/out/kajaani.mattersoft.fi/api/gtfsrealtime/v1.0/feed/servicealert",
       "feedId": "Kajaani",
       "fuzzyTripMatching": false
