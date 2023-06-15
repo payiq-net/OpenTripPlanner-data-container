@@ -172,7 +172,7 @@ const configMap = ALL_CONFIGS.map(cfg => cfg.src)
 const osm = [
   { id: 'finland', url: 'https://karttapalvelu.storage.hsldev.com/finland.osm/finland.osm.pbf' },
   { id: 'hsl', url: 'https://karttapalvelu.storage.hsldev.com/hsl.osm/hsl.osm.pbf' },
-  { id: 'estonia', url: 'https://download.geofabrik.de/europe/estonia-latest.osm.pbf'}
+  { id: 'estonia', url: 'https://download.geofabrik.de/europe/estonia-latest.osm.pbf' }
 ]
 
 const dem = [
