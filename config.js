@@ -42,9 +42,11 @@ const FINLAND_CONFIG = {
     src('Rovaniemi', 'https://tvv.fra1.digitaloceanspaces.com/237.zip', 'gtfs_shape_mapfit/fit_gtfs_stops.bash'),
     src('Kajaani', 'https://tvv.fra1.digitaloceanspaces.com/211.zip', 'gtfs_shape_mapfit/fit_gtfs_stops.bash'),
     src('Salo', 'https://tvv.fra1.digitaloceanspaces.com/239.zip', 'gtfs_shape_mapfit/fit_gtfs_stops.bash'),
-    src('Pori', 'https://tvv.fra1.digitaloceanspaces.com/231.zip', 'gtfs_shape_mapfit/fit_gtfs_stops.bash')
+    src('Pori', 'https://tvv.fra1.digitaloceanspaces.com/231.zip', 'gtfs_shape_mapfit/fit_gtfs_stops.bash'),
+    src('Viro', 'http://peatus.ee/gtfs/gtfs.zip', false),
+    src('Viking Line', 'https://fgwgtfsprod.blob.core.windows.net/gtfsout/latest_VIKINGLINE.zip', false)
   ],
-  'osm': ['finland']
+  'osm': ['finland', 'estonia']
 }
 
 const WALTTI_CONFIG = {
@@ -169,7 +171,8 @@ const configMap = ALL_CONFIGS.map(cfg => cfg.src)
 
 const osm = [
   { id: 'finland', url: 'https://karttapalvelu.storage.hsldev.com/finland.osm/finland.osm.pbf' },
-  { id: 'hsl', url: 'https://karttapalvelu.storage.hsldev.com/hsl.osm/hsl.osm.pbf' }
+  { id: 'hsl', url: 'https://karttapalvelu.storage.hsldev.com/hsl.osm/hsl.osm.pbf' },
+  { id: 'estonia', url: 'https://download.geofabrik.de/europe/estonia-latest.osm.pbf'}
 ]
 
 const dem = [
