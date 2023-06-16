@@ -22,7 +22,7 @@ const { replaceGTFSFilesTask } = require('./task/GTFSReplace')
  * Download and test new osm data
  */
 gulp.task('osm:update', function () {
-  const osmFiles = [...new Set(config.ALL_CONFIGS().flatMap(cfg => cfg.osm))]
+  const osmFiles = [...new Set(config.ALL_CONFIGS().map(cfg => cfg.osm))]
   const urls = osmFiles.length > 0 ? osmFiles.map(key => config.osmMap[key]) : [config.osmMap['finland']]
   return dl(urls)
     .pipe(gulp.dest(`${config.dataDir}/downloads/osm`))

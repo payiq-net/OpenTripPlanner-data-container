@@ -15,7 +15,7 @@ const HSL_CONFIG = {
     src('HSLlautta', 'https://koontikartta.navici.com/tiedostot/gtfs_lautat_digitransit.zip', false),
     src('Sipoo', 'https://koontikartta.navici.com/tiedostot/rae/sipoon_kunta_sibbo_kommun.zip', false)
   ],
-  'osm': ['hsl'],
+  'osm': 'hsl',
   'dem': 'hsl'
 }
 
@@ -42,11 +42,9 @@ const FINLAND_CONFIG = {
     src('Rovaniemi', 'https://tvv.fra1.digitaloceanspaces.com/237.zip', 'gtfs_shape_mapfit/fit_gtfs_stops.bash'),
     src('Kajaani', 'https://tvv.fra1.digitaloceanspaces.com/211.zip', 'gtfs_shape_mapfit/fit_gtfs_stops.bash'),
     src('Salo', 'https://tvv.fra1.digitaloceanspaces.com/239.zip', 'gtfs_shape_mapfit/fit_gtfs_stops.bash'),
-    src('Pori', 'https://tvv.fra1.digitaloceanspaces.com/231.zip', 'gtfs_shape_mapfit/fit_gtfs_stops.bash'),
-    src('Viro', 'http://peatus.ee/gtfs/gtfs.zip', false),
-    src('Viking Line', 'https://fgwgtfsprod.blob.core.windows.net/gtfsout/latest_VIKINGLINE.zip', false)
+    src('Pori', 'https://tvv.fra1.digitaloceanspaces.com/231.zip', 'gtfs_shape_mapfit/fit_gtfs_stops.bash')
   ],
-  'osm': ['finland', 'estonia']
+  'osm': 'finland'
 }
 
 const WALTTI_CONFIG = {
@@ -71,7 +69,7 @@ const WALTTI_CONFIG = {
     src('Pori', 'https://tvv.fra1.digitaloceanspaces.com/231.zip', 'gtfs_shape_mapfit/fit_gtfs_stops.bash'),
     src('FUNI', 'https://foligtfs.blob.core.windows.net/routeplanner/gtfs-foli-ff.zip', 'gtfs_shape_mapfit/fit_gtfs_stops.bash')
   ],
-  'osm': ['finland'],
+  'osm': 'finland',
   'dem': 'waltti'
 }
 
@@ -82,7 +80,7 @@ const WALTTI_ALT_CONFIG = {
     src('Kajaani', 'https://tvv.fra1.digitaloceanspaces.com/211.zip', 'gtfs_shape_mapfit/fit_gtfs_stops.bash'),
     src('Raasepori', 'https://tvv.fra1.digitaloceanspaces.com/232.zip', 'gtfs_shape_mapfit/fit_gtfs_stops.bash')
   ],
-  'osm': ['finland']
+  'osm': 'finland'
 }
 
 const VARELY_CONFIG = {
@@ -91,7 +89,7 @@ const VARELY_CONFIG = {
     src('VARELY', 'http://digitransit-proxy:8080/out/varelyadmin.mattersoft.fi/feeds/102.zip', false, undefined, { 'translations.txt': null }),
     src('FOLI', 'http://data.foli.fi/gtfs/gtfs.zip', false)
   ],
-  'osm': ['finland']
+  'osm': 'finland'
 }
 
 const KELA_CONFIG = {
@@ -99,7 +97,7 @@ const KELA_CONFIG = {
   'src': [
     src('kela', 'https://gtfs.perille.fi/fintraffic/pilot/kela/kela-latest-gtfs.zip', false)
   ],
-  'osm': ['finland']
+  'osm': 'finland'
 }
 
 let ALL_CONFIGS
@@ -171,8 +169,7 @@ const configMap = ALL_CONFIGS.map(cfg => cfg.src)
 
 const osm = [
   { id: 'finland', url: 'https://karttapalvelu.storage.hsldev.com/finland.osm/finland.osm.pbf' },
-  { id: 'hsl', url: 'https://karttapalvelu.storage.hsldev.com/hsl.osm/hsl.osm.pbf' },
-  { id: 'estonia', url: 'https://download.geofabrik.de/europe/estonia-latest.osm.pbf' }
+  { id: 'hsl', url: 'https://karttapalvelu.storage.hsldev.com/hsl.osm/hsl.osm.pbf' }
 ]
 
 const dem = [
