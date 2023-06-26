@@ -95,7 +95,8 @@ const VARELY_CONFIG = {
 const KELA_CONFIG = {
   'id': 'kela',
   'src': [
-    src('kela', 'https://gtfs.perille.fi/fintraffic/pilot/kela/kela-latest-gtfs.zip', false)
+    src('kela', 'https://koontikartta.navici.com/tiedostot/gtfs_kela.zip', false),
+    src('matkahuolto', 'https://digitransit-proxy:8080/out/minfoapi.matkahuolto.fi/gtfs/kokomaa-fi/gtfs.zip', false)
   ],
   'osm': 'finland'
 }
