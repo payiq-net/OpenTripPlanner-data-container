@@ -3,7 +3,7 @@ const Vinyl = require('vinyl')
 const fs = require('fs')
 const cloneable = require('cloneable-readable')
 const { routerDir } = require('../util')
-const osmFile = (config) => config.osm + '.pbf'
+const osmFiles = (config) => config.osm.map(filename => filename + '.pbf')
 const demFile = (config) => config.dem + '.tif'
 const gtfsFile = (src) => src.id + '-gtfs.zip'
 const { dataDir } = require('../config')
@@ -68,7 +68,9 @@ module.exports = function (configs) {
     stream.push(createFile(config, 'build-config.json', `${routerDir(config)}/build-config.json`))
     stream.push(createFile(config, 'otp-config.json', `${routerDir(config)}/otp-config.json`))
     stream.push(createAndProcessRouterConfig(config))
-    stream.push(createFile(config, osmFile(config), `${dataDir}/ready/osm/${osmFile(config)}`))
+    osmFiles(config).forEach( osmFile => 
+      stream.push(createFile(config, osmFile, `${dataDir}/ready/osm/${osmFile}`))
+    )
     if (config.dem) {
       stream.push(createFile(config, demFile(config), `${dataDir}/ready/dem/${demFile(config)}`))
     }

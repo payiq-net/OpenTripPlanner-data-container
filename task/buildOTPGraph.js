@@ -59,11 +59,18 @@ module.exports = {
       return buildGraph(config).then(({ commit, config }) => {
         const p1 = new Promise((resolve, reject) => {
           process.stdout.write('Creating zip file for router data\n')
+
+          //
+          console.log(config.osm.flatMap(osm =>  `${dataDir}/build/${config.id}/router/${osm}.pbf`))
+          const osmFiles = config.osm.flatMap(osm =>  `${dataDir}/build/${config.id}/router/${osm}.pbf`)
+          console.log(osmFiles)
+          //console.log(`${dataDir}/build/${config.id}/router/${osm}.pbf`)
           // create zip file for the source data
           // include all gtfs + osm + router- + build configs
           zipWithGlob(`${dataDir}/build/${config.id}/router-${config.id}.zip`,
             [`${dataDir}/build/${config.id}/router/*.zip`, `${dataDir}/build/${config.id}/router/*.json`,
-              `${dataDir}/build/${config.id}/router/${config.osm}.pbf`,
+              //`${dataDir}/build/${config.id}/router/${config.osm}.pbf`,
+              ...osmFiles,
               `${dataDir}/build/${config.id}/router/${config.dem}.tif`],
             `router-${config.id}`,
             (err) => {
