@@ -68,7 +68,7 @@ module.exports = function (configs) {
     stream.push(createFile(config, 'build-config.json', `${routerDir(config)}/build-config.json`))
     stream.push(createFile(config, 'otp-config.json', `${routerDir(config)}/otp-config.json`))
     stream.push(createAndProcessRouterConfig(config))
-    osmFiles(config).forEach( osmFile => 
+    osmFiles(config).forEach(osmFile =>
       stream.push(createFile(config, osmFile, `${dataDir}/ready/osm/${osmFile}`))
     )
     if (config.dem) {
