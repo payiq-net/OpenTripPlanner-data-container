@@ -48,7 +48,7 @@ const FINLAND_CONFIG = {
     src('Vikingline', 'https://fgwgtfsprod.blob.core.windows.net/gtfsout/latest_VIKINGLINE.zip', false)
     */
   ],
-  'osm': ['finland' /* , 'estonia' */]
+  'osm': ['finland'] // ['finland', 'estonia']
 }
 
 const WALTTI_CONFIG = {
