@@ -4,7 +4,7 @@
     "walkSpeed": 1.3,
     "transferSlack": 90,
     "waitReluctance": 0.99,
-    "bikeReluctance": 3,
+    "bikeReluctance": 1.7,
     "walkReluctance": 1.75,
     "carReluctance": 10.0,
     "stairsReluctance": 1.65,
@@ -34,7 +34,7 @@
       "transitGeneralizedCostLimit": {
         "costLimitFunction": "600 + 1.5x"
       },
-      "nonTransitGeneralizedCostLimit": "180 + 1.2x"
+      "nonTransitGeneralizedCostLimit": "400 + 1.5x"
     },
     "boardSlackForMode": {
       "AIRPLANE": "2700s"
