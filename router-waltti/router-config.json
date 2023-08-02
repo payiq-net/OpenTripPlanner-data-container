@@ -451,7 +451,7 @@
       "network": "freebike_lahti",
       "type": "vehicle-rental",
       "sourceType": "gbfs",
-      "frequency": 60s,
+      "frequency": "60s",
       "url": "https://tkhslahtistorage.blob.core.windows.net/gbfs/gbfs.json",
       "overloadingAllowed": true
     },
