@@ -452,7 +452,7 @@
       "type": "vehicle-rental",
       "sourceType": "gbfs",
       "frequency": "60s",
-      "url": "https://tkhslahtistorage.blob.core.windows.net/gbfs/gbfs.json",
+      "url": "http://digitransit-proxy:8080/out/tkhslahtistorage.blob.core.windows.net/gbfs/gbfs.json",
       "overloadingAllowed": true
     },
     {
