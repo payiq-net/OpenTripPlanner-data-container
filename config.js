@@ -98,7 +98,7 @@ const KELA_CONFIG = {
   'id': 'kela',
   'src': [
     src('kela', 'https://koontikartta.navici.com/tiedostot/gtfs_kela.zip', false),
-    src('matkahuolto', 'http://digitransit-proxy:8080/out/minfoapi.matkahuolto.fi/gtfs/kokomaa-fi/gtfs.zip', false)
+    src('matkahuolto', 'http://digitransit-proxy:8080/out/minfoapi.matkahuolto.fi/gtfs/kokomaa-fi/gtfs.zip', false, ['router-kela/gtfs-rules/no-onnibus-mega.rule'])
   ],
   'osm': ['finland']
 }
