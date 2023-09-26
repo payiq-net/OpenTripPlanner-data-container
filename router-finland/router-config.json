@@ -550,6 +550,23 @@
       "url": "http://digitransit-proxy:8080/out/bosse.mattersoft.fi/api/gtfsrealtime/v1.0/feed/servicealert",
       "feedId": "Raasepori",
       "fuzzyTripMatching": false
+    },
+    {
+      "id": "varely-trip-updates",
+      "type": "stop-time-updater",
+      "frequency": "60s",
+      "url": "http://digitransit-proxy:8080/out/varely.mattersoft.fi/api/gtfsrealtime/v1.0/feed/tripupdate",
+      "feedId": "VARELY",
+      "fuzzyTripMatching": false,
+      "backwardsDelayPropagationType": "ALWAYS"
+    },
+    {
+      "id": "varely-alerts",
+      "type": "real-time-alerts",
+      "frequency": "30s",
+      "url": "http://digitransit-proxy:8080/out/varely.mattersoft.fi/api/gtfsrealtime/v1.0/feed/servicealert",
+      "feedId": "VARELY",
+      "fuzzyTripMatching": false
     }
   ]
 }
