@@ -46,7 +46,7 @@ const FINLAND_CONFIG = {
     src('Viro', 'http://peatus.ee/gtfs/gtfs.zip', false),
     src('Vikingline', 'https://fgwgtfsprod.blob.core.windows.net/gtfsout/latest_VIKINGLINE.zip', false),
     src('Raasepori', 'https://tvv.fra1.digitaloceanspaces.com/232.zip', 'gtfs_shape_mapfit/fit_gtfs_stops.bash'),
-    src('VARELY', 'http://digitransit-proxy:8080/out/varelyadmin.mattersoft.fi/feeds/102.zip', false, undefined, { 'translations.txt': null }),
+    src('VARELY', 'http://digitransit-proxy:8080/out/varelyadmin.mattersoft.fi/feeds/102.zip', false, undefined, { 'translations.txt': null })
   ],
   'osm': ['finland', 'estonia']
 }
