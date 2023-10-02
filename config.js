@@ -46,7 +46,7 @@ const FINLAND_CONFIG = {
     src('Viro', 'http://peatus.ee/gtfs/gtfs.zip', false),
     src('Vikingline', 'https://fgwgtfsprod.blob.core.windows.net/gtfsout/latest_VIKINGLINE.zip', false),
     src('Raasepori', 'https://tvv.fra1.digitaloceanspaces.com/232.zip', 'gtfs_shape_mapfit/fit_gtfs_stops.bash'),
-    src('VARELY', 'http://digitransit-proxy:8080/out/varelyadmin.mattersoft.fi/feeds/102.zip', false, undefined, { 'translations.txt': null })
+    src('VARELY', 'http://digitransit-proxy:8080/out/varelyadmin.mattersoft.fi/feeds/102.zip', false, undefined)
   ],
   'osm': ['finland', 'estonia']
 }
@@ -91,7 +91,7 @@ const WALTTI_ALT_CONFIG = {
 const VARELY_CONFIG = {
   'id': 'varely',
   'src': [
-    src('VARELY', 'http://digitransit-proxy:8080/out/varelyadmin.mattersoft.fi/feeds/102.zip', false, undefined, { 'translations.txt': null }),
+    src('VARELY', 'http://digitransit-proxy:8080/out/varelyadmin.mattersoft.fi/feeds/102.zip', false, undefined),
     src('FOLI', 'http://data.foli.fi/gtfs/gtfs.zip', false),
     src('Rauma', 'http://digitransit-proxy:8080/out/raumaadmin.mattersoft.fi/feeds/233.zip', false)
   ],
