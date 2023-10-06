@@ -2,8 +2,8 @@ const fs = require('fs')
 const { exec, execSync } = require('child_process')
 const { zipWithGlob, otpMatching, postSlackMessage } = require('../util')
 const { dataDir, hostDataDir, constants } = require('../config.js')
-const graphBuildTag = process.env.OTP_TAG || 'latest'
-const JAVA_OPTS = process.env.JAVA_OPTS || '-Xmx9g'
+const graphBuildTag = process.env.OTP_TAG || 'v2'
+const JAVA_OPTS = process.env.JAVA_OPTS || '-Xmx12g'
 
 /*
  * node.js wrapper for building OTP graph

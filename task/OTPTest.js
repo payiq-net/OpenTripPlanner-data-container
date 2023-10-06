@@ -4,7 +4,7 @@ const exec = require('child_process').exec
 const through = require('through2')
 const { hostDataDir, dataDir, constants } = require('../config')
 const { postSlackMessage } = require('../util')
-const testTag = process.env.OTP_TAG || 'latest'
+const testTag = process.env.OTP_TAG || 'v2'
 const JAVA_OPTS = process.env.JAVA_OPTS || '-Xmx9g'
 
 /**

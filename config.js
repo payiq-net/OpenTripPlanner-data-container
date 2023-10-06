@@ -12,8 +12,8 @@ const HSL_CONFIG = {
   'id': 'hsl',
   'src': [
     src('HSL', 'https://infopalvelut.storage.hsldev.com/gtfs/hsl.zip', false, undefined, { 'translations.txt': 'translations_new.txt', 'trips.txt': 'trips2.txt' }),
-    src('HSLlautta', 'https://koontikartta.navici.com/tiedostot/gtfs_lautat_digitransit.zip', false),
-    src('Sipoo', 'https://koontikartta.navici.com/tiedostot/rae/sipoon_kunta_sibbo_kommun.zip', false)
+    //src('HSLlautta', 'https://koontikartta.navici.com/tiedostot/gtfs_lautat_digitransit.zip', false),
+    //src('Sipoo', 'https://koontikartta.navici.com/tiedostot/rae/sipoon_kunta_sibbo_kommun.zip', false)
   ],
   'osm': ['hsl'],
   'dem': 'hsl'
@@ -199,6 +199,5 @@ module.exports = {
   dataToolImage: `hsldevcom/otp-data-tools:${process.env.TOOLS_TAG || 'latest'}`,
   dataDir: process.env.DATA || `${process.cwd()}/data`,
   hostDataDir: process.env.HOST_DATA || `${process.cwd()}/data`,
-  setCurrentConfig: setCurrentConfig,
   constants
 }

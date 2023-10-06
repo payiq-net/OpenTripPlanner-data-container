@@ -127,11 +127,11 @@ gulp.task('gtfs:filter', gulp.series('copyRouterConfig', function () {
 }))
 
 // move listed packages from seed to ready
-gulp.task('gtfs:fallback', function (feeds) => { // feeds = 'feedi1,feedid2, ...'
-  const feedMatcher = `(${feeds.replaceAll(',','*|')}*)` // e.g. (HSL*|tampere*)
+gulp.task('gtfs:fallback', () => {
+  const feedMatcher = `(${global.failedFeeds.replaceAll(',','*|')}*)` // e.g. (HSL*|tampere*)
   return gulp.src([`${config.dataDir}/seed/gtfs/${feedMatcher}`])
     .pipe(gulp.dest(`${config.dataDir}/ready/gtfs`))
-}))
+})
 
 gulp.task('gtfs:del', () => del([`${config.dataDir}/ready/gtfs`]))
 
