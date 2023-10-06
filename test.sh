@@ -7,7 +7,6 @@ JAVA_OPTS=${JAVA_OPTS:--Xmx9g}
 ROUTER_NAME=${1:-hsl}
 TEST_TAG=${2:-latest}
 TOOLS_TAG=${3:-latest}
-SKIPPED_SITES="$4"
 DOCKER_IMAGE=$ORG/opentripplanner-data-container-$ROUTER_NAME:test
 
 function shutdown() {
@@ -15,29 +14,6 @@ function shutdown() {
   docker stop otp-data-$ROUTER_NAME || true
   docker stop otp-$ROUTER_NAME || true
 }
-
-echo "Making sure there are no old test containers or image available"
-docker stop otp-data-finland || true
-docker stop otp-finland || true
-docker stop otp-data-waltti || true
-docker stop otp-waltti || true
-docker stop otp-data-hsl || true
-docker stop otp-hsl || true
-docker stop otp-data-waltti-alt || true
-docker stop otp-waltti-alt || true
-docker stop otp-data-varely || true
-docker stop otp-varely || true
-docker stop otp-data-kela || true
-docker stop otp-kela || true
-docker rmi --force $DOCKER_IMAGE || true
-cd data/build/$ROUTER_NAME
-echo "Building data-container image..."
-docker build -t $DOCKER_IMAGE -f Dockerfile.data-container .
-
-if [ -n "$SKIPPED_SITES" ] && [ $SKIPPED_SITES == "all" ]; then
-    echo "*** Skipping all tests"
-    exit 0;
-fi
 
 echo -e "\n##### Testing $ROUTER_NAME ($DOCKER_IMAGE)#####\n"
 
@@ -110,14 +86,12 @@ echo "running otpqa"
 docker pull $ORG/otp-data-tools:$TOOLS_TAG
 docker run --rm --name otp-data-tools $ORG/otp-data-tools:$TOOLS_TAG /bin/sh -c "cd OTPQA; python otpprofiler_json.py http://$IP:8080/otp/routers/default $ROUTER_NAME $SKIPPED_SITES"
 if [ $? == 0 ]; then
-  echo "OK"
+  docker cp otp-data-tools:/OTPQA/failed_feeds.txt .
   shutdown
-  exit 0;
+  exit 0
 else
-  echo "ERROR"
   shutdown
-  exit 1;
+  exit 1
 fi
 
-shutdown
-exit 1;
+

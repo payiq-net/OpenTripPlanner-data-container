@@ -1,8 +1,7 @@
 #!/bin/bash
-#builds tests and deploys data container from prepared data
+#deploys data container from prepared data
 
-
-# Set these environment variables
+#Set these environment variables
 #DOCKER_USER // dockerhub credentials
 #DOCKER_AUTH
 set -e
@@ -14,8 +13,6 @@ ORG=${ORG:-hsldevcom}
 CONTAINER=opentripplanner-data-container
 DOCKER_IMAGE=$ORG/$CONTAINER-$ROUTER_NAME
 DOCKER_TEST_IMAGE=$DOCKER_IMAGE:test
-
-./test.sh $ROUTER_NAME $TEST_TAG $TOOLS_TAG $SKIPPED_SITES
 
 docker login -u $DOCKER_USER -p $DOCKER_AUTH
 
