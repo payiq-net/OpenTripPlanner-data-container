@@ -104,8 +104,7 @@ gulp.task('hslHack', function () {
   return hslHackTask()
 })
 
-// Run MapFit on gtfs files (based on config) and moves files to directory
-// 'filter'
+// Run MapFit on gtfs files (based on config) and moves files to directory 'filter'
 gulp.task('gtfs:fit', gulp.series('del:filter', 'hslHack', function () {
   return gulp.src([`${config.dataDir}/fit/gtfs/*`])
     .pipe(fitGTFSTask(config.configMap))
@@ -125,6 +124,13 @@ gulp.task('gtfs:filter', gulp.series('copyRouterConfig', function () {
     .pipe(OBAFilterTask(config.configMap))
     // .pipe(vinylPaths(del))
     .pipe(gulp.dest(`${config.dataDir}/id/gtfs`))
+}))
+
+// move listed packages from seed to ready
+gulp.task('gtfs:fallback', function (feeds) => { // feeds = 'feedi1,feedid2, ...'
+  const feedMatcher = `(${feeds.replaceAll(',','*|')}*)` // e.g. (HSL*|tampere*)
+  return gulp.src([`${config.dataDir}/seed/gtfs/${feedMatcher}`])
+    .pipe(gulp.dest(`${config.dataDir}/ready/gtfs`))
 }))
 
 gulp.task('gtfs:del', () => del([`${config.dataDir}/ready/gtfs`]))
