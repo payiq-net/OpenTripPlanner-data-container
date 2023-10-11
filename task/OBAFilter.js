@@ -56,7 +56,7 @@ function OBAFilter (src, dst, rule) {
 }
 
 module.exports = {
-  OBAFilterTask: (configs) => {
+  OBAFilterTask: (config) => {
     return through.obj(function (file, encoding, callback) {
       const gtfsFile = file.history[file.history.length - 1]
       const fileName = gtfsFile.split('/').pop()
@@ -67,14 +67,6 @@ module.exports = {
         callback(null, null)
         return
       }
-      const id = fileName.substring(0, fileName.indexOf('-gtfs'))
-      const config = configs[id]
-      if (config === undefined) {
-        process.stdout.write(`${gtfsFile} Could not find config for Id:${id}, ignoring filter...\n`)
-        callback(null, null)
-        return
-      }
-
       if (config.rules !== undefined) {
         const src = `${relativeFilename}`
         const dst = `${relativeFilename}-filtered`

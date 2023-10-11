@@ -57,18 +57,11 @@ module.exports = {
     return run('gtfs_shape_mapfit/fit_gtfs.bash', osmExtract, src, dst)
   },
 
-  fitGTFSTask: (configs) => {
+  fitGTFSTask: (config) => {
     return through.obj(function (file, encoding, callback) {
       const gtfsFile = file.history[file.history.length - 1]
       const fileName = gtfsFile.split('/').pop()
       const relativeFilename = path.relative(process.cwd(), gtfsFile)
-      const id = fileName.substring(0, fileName.indexOf('-gtfs'))
-      const config = configs[id]
-      if (config === undefined) {
-        process.stdout.write(`${gtfsFile} Could not find config for Id:${id}, ignoring fit...\n`)
-        callback(null, null)
-        return
-      }
       const osmFile = `${dataDir}/ready/osm/finland.pbf`
 
       if (config.fit === false) {
