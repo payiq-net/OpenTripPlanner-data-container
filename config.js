@@ -8,7 +8,7 @@
  */
 const src = (id, url, fit, rules, replacements, requestOptions) => ({ id, url, fit, rules, replacements, requestOptions })
 
-const configs = {
+const routers = {
   hsl: {
     'id': 'hsl',
     'src': [
@@ -109,8 +109,8 @@ const configs = {
   }
 }
 
-const currentConfig = configs[process.env.ROUTER]
-if (!currentConfig) {
+const router = routers[process.env.ROUTER]
+if (!router) {
     process.stdout.write('Invalid ROUTER variable \n')
     process.exit(1)
 }
@@ -123,7 +123,7 @@ const extraSrc = process.env.EXTRA_SRC !== undefined ? JSON.parse(process.env.EX
 let usedSrc = []
 
 // add config to every source and override config values if they are defined in extraSrc
-const cfg = currentConfig
+const cfg = router
 const cfgSrc = cfg.src
 for (let j = cfgSrc.length - 1; j >= 0; j--) {
   const src = cfgSrc[j]
@@ -135,16 +135,16 @@ for (let j = cfgSrc.length - 1; j >= 0; j--) {
       continue
     }
     cfgSrc[j] = { ...src, ...extraSrc[src.id] }
-    }
+  }
   cfgSrc[j].config = cfg
 }
 
 // Go through extraSrc keys to find keys that don't already exist in src and add those as new src
 Object.keys(extraSrc).forEach(id => {
   if (!usedSrc.includes(id)) {
-    const routers = extraSrc[id].routers
-    if(routers.includes(currentConfig.id)) {
-        currentConfig.src.push({ ...extraSrc[id], id })
+    const targets = extraSrc[id].routers
+    if(targets.includes(router.id)) {
+      router.src.push({ ...extraSrc[id], id })
     }
   }
 })
@@ -164,10 +164,8 @@ const constants = {
   BUFFER_SIZE: 1024 * 1024 * 32
 }
 
-/*
 module.exports = {
-  current: currentConfig,
-  configMap,
+  router,
   osm,
   osmMap: osm.reduce((acc, val) => { acc[val.id] = val; return acc }, {}),
   dem,
@@ -177,4 +175,3 @@ module.exports = {
   hostDataDir: process.env.HOST_DATA || `${process.cwd()}/data`,
   constants
 }
-*/
