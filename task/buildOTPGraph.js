@@ -17,7 +17,7 @@ const buildGraph = function (config) {
       lastLog.splice(0, 1)
     }
   }
-  const p = new Promise((resolve, reject) => {
+  return new Promise((resolve, reject) => {
     const version = execSync(`docker pull hsldevcom/opentripplanner:${graphBuildTag};docker run --rm --entrypoint /bin/bash hsldevcom/opentripplanner:${graphBuildTag}  -c "java -jar otp-shaded.jar --version"`)
     const commit = version.toString().match(/commit: ([0-9a-f]+)/)[1]
 
@@ -49,39 +49,34 @@ const buildGraph = function (config) {
       fs.closeSync(buildLog)
     })
   })
-  return p
 }
 
-module.exports = {
+const packData = function (commit, config) {
+  const p1 = new Promise((resolve, reject) => {
+    process.stdout.write('Creating zip file for router data\n')
 
-  buildOTPGraphTask: (configs) => {
-    return Promise.all(configs.map(config => {
-      return buildGraph(config).then(({ commit, config }) => {
-        const p1 = new Promise((resolve, reject) => {
-          process.stdout.write('Creating zip file for router data\n')
+    const osmFiles = config.osm.map(osm => `${dataDir}/build/${config.id}/router/${osm}.pbf`)
 
-          const osmFiles = config.osm.flatMap(osm => `${dataDir}/build/${config.id}/router/${osm}.pbf`)
-
-          // create zip file for the source data
-          // include all gtfs + osm + router- + build configs
-          zipWithGlob(`${dataDir}/build/${config.id}/router-${config.id}.zip`,
-            [`${dataDir}/build/${config.id}/router/*.zip`, `${dataDir}/build/${config.id}/router/*.json`,
-              ...osmFiles,
-              `${dataDir}/build/${config.id}/router/${config.dem}.tif`],
-            `router-${config.id}`,
-            (err) => {
+    // create zip file for the source data
+    // include all gtfs + osm + router- + build configs
+    zipWithGlob(`${dataDir}/build/${config.id}/router-${config.id}.zip`,
+	  [`${dataDir}/build/${config.id}/router/*.zip`, `${dataDir}/build/${config.id}/router/*.json`,
+           ...osmFiles,
+           `${dataDir}/build/${config.id}/router/${config.dem}.tif`],
+           `router-${config.id}`,
+           (err) => {
               if (err) {
                 reject(err)
               } else {
                 resolve()
               }
             })
-        })
-        const p2 = new Promise((resolve, reject) => {
-          process.stdout.write('Creating zip file for otp graph\n')
-          // create zip file for the graph:
-          // include  graph.obj + router-config.json
-          zipWithGlob(`${dataDir}/build/${config.id}/graph-${config.id}-${commit}.zip`,
+  })
+  const p2 = new Promise((resolve, reject) => {
+    process.stdout.write('Creating zip file for otp graph\n')
+    // create zip file for the graph:
+    // include  graph.obj + router-config.json
+    zipWithGlob(`${dataDir}/build/${config.id}/graph-${config.id}-${commit}.zip`,
             [`${dataDir}/build/${config.id}/router/graph.obj`, `${dataDir}/build/${config.id}/router/router-*.json`, `${dataDir}/build/${config.id}/router/otp-config.json`],
             config.id,
             (err) => {
@@ -91,20 +86,25 @@ module.exports = {
                 resolve()
               }
             })
-        })
-
-        const p3 = new Promise((resolve, reject) => {
-          fs.writeFile(`${dataDir}/build/${config.id}/version.txt`, new Date().toISOString(), function (err) {
-            if (err) {
-              reject(err)
-            } else {
-              resolve()
-            }
-          })
-        })
-        return Promise.all([p1, p2, p3]).then(() => otpMatching(`${dataDir}/build/${config.id}/router`))
-      })
-    })).then(() => {
-      process.stdout.write('Created SUCCESS\n')
+  })
+  const p3 = new Promise((resolve, reject) => {
+    fs.writeFile(`${dataDir}/build/${config.id}/version.txt`, new Date().toISOString(), function (err) {
+      if (err) {
+        reject(err)
+      } else {
+        resolve()
+      }
     })
-  } }
+  })
+  return Promise.all([p1, p2, p3])
+}
+
+module.exports = {
+  buildOTPGraphTask: config => {
+    return buildGraph(config)
+      .then(packData)
+      .then(() => otpMatching(`${dataDir}/build/${config.id}/router`))
+      .then(() => {
+	process.stdout.write('Graph build SUCCESS\n')
+      })
+  }}

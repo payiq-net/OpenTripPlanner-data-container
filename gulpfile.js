@@ -72,10 +72,10 @@ gulp.task('del:id', () => del([`${config.dataDir}/id`]))
  * 4. copy to id dir if test is succesful
  */
 gulp.task('gtfs:dl', gulp.series('del:id', function () {
-  const files = config.current.src.map(entry => entry.url)
-  
+  const files = config.config.src.map(entry => entry.url)
+
   return dl(files)
-    .pipe(replaceGTFSFilesTask(config.current))
+    .pipe(replaceGTFSFilesTask(config.config))
     .pipe(renameGTFSFile())
     .pipe(gulp.dest(`${config.dataDir}/downloads/gtfs`))
   //    .pipe(vinylPaths(del))
@@ -98,7 +98,7 @@ gulp.task('hslHack', function () {
 // Run MapFit on gtfs files (based on config) and moves files to directory 'filter'
 gulp.task('gtfs:fit', gulp.series('del:filter', 'hslHack', function () {
   return gulp.src([`${config.dataDir}/fit/gtfs/*`])
-    .pipe(fitGTFSTask(config.current))
+    .pipe(fitGTFSTask(config.config))
     // .pipe(vinylPaths(del))
     .pipe(gulp.dest(`${config.dataDir}/filter/gtfs`))
 }))
@@ -112,7 +112,7 @@ gulp.task('copyRouterConfig', function () {
 // directory 'ready'
 gulp.task('gtfs:filter', gulp.series('copyRouterConfig', function () {
   return gulp.src([`${config.dataDir}/filter/gtfs/*`])
-    .pipe(OBAFilterTask(config.current))
+    .pipe(OBAFilterTask(config.config))
     // .pipe(vinylPaths(del))
     .pipe(gulp.dest(`${config.dataDir}/id/gtfs`))
 }))
