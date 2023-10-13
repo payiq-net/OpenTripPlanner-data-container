@@ -57,14 +57,21 @@ module.exports = {
     return run('gtfs_shape_mapfit/fit_gtfs.bash', osmExtract, src, dst)
   },
 
-  fitGTFSTask: (config) => {
+  fitGTFSTask: gtfsMap => {
     return through.obj(function (file, encoding, callback) {
       const gtfsFile = file.history[file.history.length - 1]
       const fileName = gtfsFile.split('/').pop()
       const relativeFilename = path.relative(process.cwd(), gtfsFile)
+      const id = fileName.substring(0, fileName.indexOf('-gtfs'))
+      const source = gtfsMap[id]
+      if (source === undefined) {
+        process.stdout.write(`${gtfsFile} Could not find source for Id:${id}, ignoring fit...\n`)
+        callback(null, null)
+        return
+      }
       const osmFile = `${dataDir}/ready/osm/finland.pbf`
 
-      if (config.fit === false) {
+      if (source.fit === false) {
         process.stdout.write(gtfsFile + ' fit skipped\n')
         callback(null, file)
         return
@@ -77,10 +84,10 @@ module.exports = {
       }
 
       let script = ''
-      if (config.fit === true) {
+      if (source.fit === true) {
         script = 'gtfs_shape_mapfit/fit_gtfs.bash'
       } else {
-        script = config.fit
+        script = source.fit
       }
       const src = `${relativeFilename}`
       const dst = `${relativeFilename}-fitted`

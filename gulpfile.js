@@ -71,7 +71,7 @@ gulp.task('gtfs:dl', gulp.series('del:id', function () {
   const files = config.router.src.map(entry => entry.url)
 
   return dl(files)
-    .pipe(replaceGTFSFilesTask(config.router.gtfsMap))
+    .pipe(replaceGTFSFilesTask(config.gtfsMap))
     .pipe(renameGTFSFile())
     .pipe(gulp.dest(`${config.dataDir}/downloads/gtfs`))
   //    .pipe(vinylPaths(del))
@@ -94,7 +94,7 @@ gulp.task('hslHack', function () {
 // Run MapFit on gtfs files (based on config) and moves files to directory 'filter'
 gulp.task('gtfs:fit', gulp.series('del:filter', 'hslHack', function () {
   return gulp.src([`${config.dataDir}/fit/gtfs/*`])
-    .pipe(fitGTFSTask(config.router))
+    .pipe(fitGTFSTask(config.gtfsMap))
     // .pipe(vinylPaths(del))
     .pipe(gulp.dest(`${config.dataDir}/filter/gtfs`))
 }))
