@@ -150,14 +150,14 @@ Object.keys(extraSrc).forEach(id => {
 })
 
 const osm = [
-  { id: 'finland', url: 'https://karttapalvelu.storage.hsldev.com/finland.osm/finland.osm.pbf' },
-  { id: 'hsl', url: 'https://karttapalvelu.storage.hsldev.com/hsl.osm/hsl.osm.pbf' },
-  { id: 'estonia', url: 'https://download.geofabrik.de/europe/estonia-latest.osm.pbf' }
+  finland: 'https://karttapalvelu.storage.hsldev.com/finland.osm/finland.osm.pbf',
+  hsl: 'https://karttapalvelu.storage.hsldev.com/hsl.osm/hsl.osm.pbf',
+  estonia: 'https://download.geofabrik.de/europe/estonia-latest.osm.pbf'
 ]
 
 const dem = [
-  { id: 'waltti', url: 'https://elevdata.blob.core.windows.net/elevation/waltti/waltti-10m-elevation-model_20190927.tif' },
-  { id: 'hsl', url: 'https://elevdata.blob.core.windows.net/elevation/hsl/hsl-10m-elevation-model_20190920.tif' }
+  'waltti': 'https://elevdata.blob.core.windows.net/elevation/waltti/waltti-10m-elevation-model_20190927.tif',
+  'hsl': 'https://elevdata.blob.core.windows.net/elevation/hsl/hsl-10m-elevation-model_20190920.tif'
 ]
 
 const constants = {
@@ -166,10 +166,8 @@ const constants = {
 
 module.exports = {
   router,
-  osm,
-  osmMap: osm.reduce((acc, val) => { acc[val.id] = val; return acc }, {}),
-  dem,
-  demMap: dem.reduce((acc, val) => { acc[val.id] = val; return acc }, {}),
+  osmMap: router.osm.map(id => {id, url: osm[id]}), // array of id, url pairs
+  demMap: router.dem ? router.dem.map(id => {id, url: dem[id]}) : null,
   dataToolImage: `hsldevcom/otp-data-tools:${process.env.TOOLS_TAG || 'latest'}`,
   dataDir: process.env.DATA || `${process.cwd()}/data`,
   hostDataDir: process.env.HOST_DATA || `${process.cwd()}/data`,

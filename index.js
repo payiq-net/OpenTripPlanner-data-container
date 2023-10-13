@@ -6,6 +6,7 @@ const { execFileSync } = require('child_process')
 const { postSlackMessage, updateSlackMessage } = require('./util')
 const CronJob = require('cron').CronJob
 const fs = require('fs')
+const { router } = require('./config')
 
 const every = promisify((list, task, cb) => {
   everySeries(list, task, function (err, result) {
@@ -18,8 +19,6 @@ const start = promisify((task, cb) => gulp.series(task)(cb))
 const updateDEM = ['dem:update']
 const updateOSM = ['osm:update']
 const updateGTFS = ['gtfs:dl', 'gtfs:fit', 'gtfs:filter', 'gtfs:id']
-
-const router = process.env.ROUTER
 
 if (!process.env.NOSEED) {
   start('seed').then(() => {
@@ -78,16 +77,17 @@ async function update () {
   })
 
   try {
+    const name = router.id
     await start('router:buildGraph');
     process.stdout.write('Build docker image.\n')
-    execFileSync('./build.sh', [router], {stdio: [0, 1, 2]})
+    execFileSync('./build.sh', [name], {stdio: [0, 1, 2]})
     if (process.env.SKIPPED_SITES  === "all" ) {
       process.stdout.write('Skipping all tests')
     } else {
       process.stdout.write('Test docker image.\n')
       execFileSync(
         './test.sh',
-        [router, process.env.OTP_TAG || 'v2', process.env.TOOLS_TAG || ''],
+        [name, process.env.OTP_TAG || 'v2', process.env.TOOLS_TAG || ''],
         {stdio: [0, 1, 2]}
       )
     }
@@ -107,10 +107,10 @@ async function update () {
       await start('router:buildGraph')
 
       process.stdout.write('Rebuild docker image.\n')
-      execFileSync('./build.sh', [router], {stdio: [0, 1, 2]})
+      execFileSync('./build.sh', [name], {stdio: [0, 1, 2]})
     }
     process.stdout.write('Deploy docker image.\n')
-    execFileSync('./deploy.sh', [router], {
+    execFileSync('./deploy.sh', [name], {
       env: {
         DOCKER_USER: process.env.DOCKER_USER,
         DOCKER_AUTH: process.env.DOCKER_AUTH,
@@ -119,12 +119,12 @@ async function update () {
       stdio: [0, 1, 2]
     })
     if (osmError || hasFailures) {
-      updateSlackMessage(`${router} data updated, but part of new data was rejected. :boom:`)
+      updateSlackMessage(`${name} data updated, but part of new data was rejected. :boom:`)
     } else {
-      updateSlackMessage(`${router} data updated. :white_check_mark:`)
+      updateSlackMessage(`${name} data updated. :white_check_mark:`)
     }
   } catch (E) {
-    postSlackMessage(`${router} data update failed: ` + E.message)
+    postSlackMessage(`${name} data update failed: ` + E.message)
     updateSlackMessage('Something went wrong with the data update. More information in the reply. :boom:')
   }
 }
