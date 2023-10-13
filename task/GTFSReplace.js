@@ -55,13 +55,17 @@ const replaceGTFSFiles = (fileContents, replacements, fileName, cb) => {
 }
 
 module.exports = {
-  replaceGTFSFilesTask: config => {
+  replaceGTFSFilesTask: (configMap) => {
     return through.obj(function (file, encoding, callback) {
-      const replacements = config.replacements
+      const gtfsFile = file.history[file.history.length - 1]
+      const fileName = gtfsFile.split('/').pop()
+      const id = fileName.indexOf('.zip') > 0 ? fileName.substring(0, fileName.indexOf('.zip')) : fileName
+      process.stdout.write('replace id =' + id + ' ')
+      const config = configMap[id]
+      const replacements = config ? config.replacements : null
       if (!replacements) {
         callback(null, file)
       } else {
-	process.stdout.write('replace id =' + config.id + ' ')
         replaceGTFSFiles(file.contents, replacements, fileName, (err, newContents) => {
           if (newContents) {
             file.contents = newContents

@@ -149,6 +149,12 @@ Object.keys(extraSrc).forEach(id => {
   }
 })
 
+// create id->src-entry map
+const gtfsMap = {}
+router.src.forEach(src => {
+  gtfsMap[src.id] = src
+})
+
 const osm = [
   finland: 'https://karttapalvelu.storage.hsldev.com/finland.osm/finland.osm.pbf',
   hsl: 'https://karttapalvelu.storage.hsldev.com/hsl.osm/hsl.osm.pbf',
@@ -166,6 +172,7 @@ const constants = {
 
 module.exports = {
   router,
+  gtfsMap,
   osmMap: router.osm.map(id => {id, url: osm[id]}), // array of id, url pairs
   demMap: router.dem ? router.dem.map(id => {id, url: dem[id]}) : null,
   dataToolImage: `hsldevcom/otp-data-tools:${process.env.TOOLS_TAG || 'latest'}`,

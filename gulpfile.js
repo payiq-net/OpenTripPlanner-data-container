@@ -71,7 +71,7 @@ gulp.task('gtfs:dl', gulp.series('del:id', function () {
   const files = config.router.src.map(entry => entry.url)
 
   return dl(files)
-    .pipe(replaceGTFSFilesTask(config.router))
+    .pipe(replaceGTFSFilesTask(config.router.gtfsMap))
     .pipe(renameGTFSFile())
     .pipe(gulp.dest(`${config.dataDir}/downloads/gtfs`))
   //    .pipe(vinylPaths(del))
