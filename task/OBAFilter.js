@@ -56,7 +56,7 @@ function OBAFilter (src, dst, rule) {
 }
 
 module.exports = {
-  OBAFilterTask: (config) => {
+  OBAFilterTask: (gtfsMap) => {
     return through.obj(function (file, encoding, callback) {
       const gtfsFile = file.history[file.history.length - 1]
       const fileName = gtfsFile.split('/').pop()
@@ -67,13 +67,21 @@ module.exports = {
         callback(null, null)
         return
       }
-      if (config.rules !== undefined) {
+      const id = fileName.substring(0, fileName.indexOf('-gtfs'))
+      const source = gtfsMap[id]
+      if (!source) {
+        process.stdout.write(`${gtfsFile} Could not find source for Id:${id}, ignoring filter...\n`)
+        callback(null, null)
+        return
+      }
+
+      if (source.rules !== undefined) {
         const src = `${relativeFilename}`
         const dst = `${relativeFilename}-filtered`
 
         const dstDir = `${dataDir}/${dst}`
         let hasFailures = false
-        const functions = config.rules.map((rule) => (done) => {
+        const functions = source.rules.map((rule) => (done) => {
           OBAFilter(src, dst, rule).then((success) => {
             if (success) {
               fs.unlinkSync(`${dataDir}/${src}`)

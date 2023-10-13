@@ -108,7 +108,7 @@ gulp.task('copyRouterConfig', function () {
 // directory 'ready'
 gulp.task('gtfs:filter', gulp.series('copyRouterConfig', function () {
   return gulp.src([`${config.dataDir}/filter/gtfs/*`])
-    .pipe(OBAFilterTask(config.router))
+    .pipe(OBAFilterTask(config.gtfsMap))
     // .pipe(vinylPaths(del))
     .pipe(gulp.dest(`${config.dataDir}/id/gtfs`))
 }))
