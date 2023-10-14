@@ -8,7 +8,7 @@ const { OBAFilterTask } = require('./task/OBAFilter')
 const { fitGTFSTask } = require('./task/MapFit')
 const { validateBlobSize } = require('./task/BlobValidation')
 const { testOTPFile } = require('./task/OTPTest')
-const Seed = require('./task/Seed')
+const seed = require('./task/Seed')
 const prepareRouterData = require('./task/prepareRouterData')
 const del = require('del')
 const config = require('./config')
@@ -22,7 +22,7 @@ const { replaceGTFSFilesTask } = require('./task/GTFSReplace')
  * Download and test new osm data
  */
 gulp.task('osm:update', function () {
-  return dl(config.osmMap)
+  return dl(config.osm)
     .pipe(gulp.dest(`${config.dataDir}/downloads/osm`))
     .pipe(validateBlobSize())
     .pipe(testOTPFile())
@@ -33,7 +33,7 @@ gulp.task('osm:update', function () {
  * Download and test new dem data
  */
 gulp.task('dem:update', function () {
-  if (!config.demMap) {
+  if (!config.dem) {
     return Promise.resolve()
   }
   const demDownloadDir = `${config.dataDir}/downloads/dem/`
@@ -44,7 +44,7 @@ gulp.task('dem:update', function () {
   if (!fs.existsSync(demReadyDir)) {
     execSync(`mkdir -p ${demReadyDir}`)
   }
-  const promises = dlBlob(config.demMap)
+  const promises = dlBlob(config.dem)
   return Promise.all(promises)
     .catch((err) => {
       if (err === 'fail') {
@@ -68,9 +68,7 @@ gulp.task('del:id', () => del([`${config.dataDir}/id`]))
  * 4. copy to id dir if test is succesful
  */
 gulp.task('gtfs:dl', gulp.series('del:id', function () {
-  const files = config.router.src.map(entry => entry.url)
-
-  return dl(files)
+  return dl(config.router.src)
     .pipe(replaceGTFSFilesTask(config.gtfsMap))
     .pipe(renameGTFSFile())
     .pipe(gulp.dest(`${config.dataDir}/downloads/gtfs`))
@@ -116,34 +114,33 @@ gulp.task('gtfs:filter', gulp.series('copyRouterConfig', function () {
 // move listed packages from seed to ready
 gulp.task('gtfs:fallback', () => {
   const feedMatcher = `(${global.failedFeeds.replaceAll(',','*|')}*)` // e.g. (HSL*|tampere*)
-  return gulp.src([`${config.dataDir}/seed/gtfs/${feedMatcher}`])
-    .pipe(gulp.dest(`${config.dataDir}/ready/gtfs`))
+  return gulp.src(`${config.dataDir}/seed/gtfs/${feedMatcher}`)
+    .pipe(gulp.dest(`${config.dataDir}/ready/gtfs`, {overwrite: true}))
 })
 
 gulp.task('gtfs:del', () => del([`${config.dataDir}/ready/gtfs`]))
 
-gulp.task('gtfs:seed', gulp.series('gtfs:del', function () {
-  return Seed(config.router, /\.zip/).pipe(renameGTFSFile()).pipe(gulp.dest(`${config.dataDir}/ready/gtfs`))
-}))
+gulp.task('gtfs:seed', () => gulp.series('gtfs:del',
+  gulp.src(`${config.dataDir}/root/*-gtfs.zip`).pipe(gulp.dest(`${config.dataDir}/seed/gtfs`)).pipe(gulp.dest(`${config.dataDir}/ready/gtfs`))))
 
 gulp.task('osm:del', () => del([`${config.dataDir}/ready/osm`]))
 
-gulp.task('osm:seed', gulp.series('osm:del', function () {
-  return Seed(config.router, /.pbf/).pipe(gulp.dest(`${config.dataDir}/ready/osm`))
-}))
+gulp.task('osm:seed', () => gulp.series('osm:del',
+  gulp.src(`${config.dataDir}/root/*.pbf`).pipe(gulp.dest(`${config.dataDir}/seed/osm`)).pipe(gulp.dest(`${config.dataDir}/ready/osm`))))
 
 gulp.task('dem:del', () => del([`${config.dataDir}/ready/dem`]))
 
-gulp.task('dem:seed', gulp.series('dem:del', function () {
-  return Seed(config.router, /.tif/).pipe(gulp.dest(`${config.dataDir}/ready/dem`))
-}))
+gulp.task('dem:seed', () => gulp.series('dem:del',
+  gulp.src(`${config.dataDir}/root/*.tif`).pipe(gulp.dest(`${config.dataDir}/seed/dem`)).pipe(gulp.dest(`${config.dataDir}/ready/dem`))))
 
 /**
  * Seed DEM, GTFS & OSM data with data from previous data-containes to allow
  * continuous flow of data into production when one or more updated data files
  * are broken.
  */
-gulp.task('seed', gulp.series('dem:seed', 'osm:seed', 'gtfs:seed'))
+gulp.task('copySeedData', gulp.series('dem:seed', 'osm:seed', 'gtfs:seed'))
+
+gulp.task('seed', seed)
 
 gulp.task('router:del', () => del([`${config.dataDir}/build`]))
 

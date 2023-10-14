@@ -109,11 +109,11 @@ const routers = {
   }
 }
 
-const router = routers[process.env.ROUTER]
-if (!router) {
+if (!process.env.ROUTER || !routers[process.env.ROUTER]) {
     process.stdout.write('Invalid ROUTER variable \n')
     process.exit(1)
 }
+const router = routers[process.env.ROUTER]
 
 // EXTRA_SRC format should be {"FOLI": {"url": "http://data.foli.fi/gtfs/gtfs.zip",  "fit": false, "rules": ["router-waltti/gtfs-rules/waltti.rule"], "routers": ["hsl", "finland"]}}
 // but you can only define, for example, new url and the other key value pairs will remain the same as they are defined in this file. "routers" is always a mandatory field.
@@ -151,20 +151,18 @@ Object.keys(extraSrc).forEach(id => {
 
 // create id->src-entry map
 const gtfsMap = {}
-router.src.forEach(src => {
-  gtfsMap[src.id] = src
-})
+router.src.forEach(src => gtfsMap[src.id] = src)
 
-const osm = [
+const osm = {
   finland: 'https://karttapalvelu.storage.hsldev.com/finland.osm/finland.osm.pbf',
   hsl: 'https://karttapalvelu.storage.hsldev.com/hsl.osm/hsl.osm.pbf',
   estonia: 'https://download.geofabrik.de/europe/estonia-latest.osm.pbf'
-]
+}
 
-const dem = [
+const dem = {
   'waltti': 'https://elevdata.blob.core.windows.net/elevation/waltti/waltti-10m-elevation-model_20190927.tif',
   'hsl': 'https://elevdata.blob.core.windows.net/elevation/hsl/hsl-10m-elevation-model_20190920.tif'
-]
+}
 
 const constants = {
   BUFFER_SIZE: 1024 * 1024 * 32
@@ -173,8 +171,8 @@ const constants = {
 module.exports = {
   router,
   gtfsMap,
-  osmMap: router.osm.map(id => {id, url: osm[id]}), // array of id, url pairs
-  demMap: router.dem ? router.dem.map(id => {id, url: dem[id]}) : null,
+  osm: router.osm.map(id => {return {id, url: osm[id]}}), // array of id, url pairs
+  dem: router.dem ? [{id: router.dem, url: dem[router.dem]}] : null, // currently only one DEM file is used
   dataToolImage: `hsldevcom/otp-data-tools:${process.env.TOOLS_TAG || 'latest'}`,
   dataDir: process.env.DATA || `${process.cwd()}/data`,
   hostDataDir: process.env.HOST_DATA || `${process.cwd()}/data`,
