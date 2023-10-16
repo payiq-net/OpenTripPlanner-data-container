@@ -98,7 +98,6 @@ const VARELY_CONFIG = {
   'osm': ['finland']
 }
 
-
 // matkahuolto data source often fails when accessed through digitransit proxy
 // here we exceptionally set up direct calls with basic auth
 let mhAddress
