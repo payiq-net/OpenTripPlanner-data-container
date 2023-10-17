@@ -61,22 +61,20 @@ function createAndProcessRouterConfig (config) {
 /**
  * Make router data ready for inclusion in data container.
  */
-module.exports = function (configs) {
+module.exports = function (config) {
   const stream = through.obj()
 
-  configs.forEach(config => {
-    stream.push(createFile(config, 'build-config.json', `${routerDir(config)}/build-config.json`))
-    stream.push(createFile(config, 'otp-config.json', `${routerDir(config)}/otp-config.json`))
-    stream.push(createAndProcessRouterConfig(config))
-    osmFiles(config).forEach(osmFile =>
-      stream.push(createFile(config, osmFile, `${dataDir}/ready/osm/${osmFile}`))
-    )
-    if (config.dem) {
-      stream.push(createFile(config, demFile(config), `${dataDir}/ready/dem/${demFile(config)}`))
-    }
-    config.src.forEach(src => {
-      stream.push(createFile(config, gtfsFile(src), `${dataDir}/ready/gtfs/${gtfsFile(src)}`))
-    })
+  stream.push(createFile(config, 'build-config.json', `${routerDir(config)}/build-config.json`))
+  stream.push(createFile(config, 'otp-config.json', `${routerDir(config)}/otp-config.json`))
+  stream.push(createAndProcessRouterConfig(config))
+  osmFiles(config).forEach(osmFile =>
+    stream.push(createFile(config, osmFile, `${dataDir}/ready/osm/${osmFile}`))
+  )
+  if (config.dem) {
+    stream.push(createFile(config, demFile(config), `${dataDir}/ready/dem/${demFile(config)}`))
+  }
+  config.src.forEach(src => {
+    stream.push(createFile(config, gtfsFile(src), `${dataDir}/ready/gtfs/${gtfsFile(src)}`))
   })
   stream.end()
 
