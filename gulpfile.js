@@ -1,4 +1,4 @@
-const fs = require('fs')
+updateconst fs = require('fs')
 const { execSync } = require('child_process')
 const gulp = require('gulp')
 const dl = require('./task/Download')
@@ -13,7 +13,6 @@ const prepareRouterData = require('./task/prepareRouterData')
 const del = require('del')
 const config = require('./config')
 const { buildOTPGraphTask } = require('./task/buildOTPGraph')
-const hslHackTask = require('./task/hslHackTask')
 const { postSlackMessage } = require('./util')
 const { renameGTFSFile } = require('./task/GTFSRename')
 const { replaceGTFSFilesTask } = require('./task/GTFSReplace')
@@ -72,7 +71,6 @@ gulp.task('gtfs:dl', gulp.series('del:id', function () {
     .pipe(replaceGTFSFilesTask(config.gtfsMap))
     .pipe(renameGTFSFile())
     .pipe(gulp.dest(`${config.dataDir}/downloads/gtfs`))
-  //    .pipe(vinylPaths(del))
     .pipe(testOTPFile())
     .pipe(gulp.dest(`${config.dataDir}/fit/gtfs`))
 }))
@@ -81,7 +79,6 @@ gulp.task('gtfs:dl', gulp.series('del:id', function () {
 gulp.task('gtfs:id', function () {
   return gulp.src([`${config.dataDir}/id/gtfs/*`])
     .pipe(setFeedIdTask())
-  //    .pipe(vinylPaths(del))
     .pipe(gulp.dest(`${config.dataDir}/ready/gtfs`))
 })
 
@@ -90,10 +87,9 @@ gulp.task('hslHack', function () {
 })
 
 // Run MapFit on gtfs files (based on config) and moves files to directory 'filter'
-gulp.task('gtfs:fit', gulp.series('del:filter', 'hslHack', function () {
+gulp.task('gtfs:fit', gulp.series('del:filter', function () {
   return gulp.src([`${config.dataDir}/fit/gtfs/*`])
     .pipe(fitGTFSTask(config.gtfsMap))
-    // .pipe(vinylPaths(del))
     .pipe(gulp.dest(`${config.dataDir}/filter/gtfs`))
 }))
 
