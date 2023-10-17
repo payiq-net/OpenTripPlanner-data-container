@@ -19,6 +19,7 @@ const { postSlackMessage } = require('../util')
  */
 function OBAFilter (src, dst, rule) {
   process.stdout.write(`filtering ${src} with ${rule}...\n`)
+  console.log('OBAFilter', src)
   const p = new Promise((resolve) => {
     let success = true
     let lastLog = []
@@ -60,6 +61,7 @@ module.exports = {
     return through.obj(function (file, encoding, callback) {
       const gtfsFile = file.history[file.history.length - 1]
       const fileName = gtfsFile.split('/').pop()
+      console.log('OBaFIleter fileName', fileName)
       const relativeFilename = path.relative(dataDir, gtfsFile)
       if (fs.lstatSync(gtfsFile).isDirectory()) {
         process.stdout.write(`${gtfsFile} not a file, deleting...\n`)
