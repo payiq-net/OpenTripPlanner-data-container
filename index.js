@@ -45,17 +45,14 @@ async function update () {
     global.messageTimeStamp = slackResponse.ts
   }
 
-  await every(updateDEM, function (task, callback) {
-    start(task).then(() => { callback(null, true) })
-  })
+  await start('dem:update')
 
   for (let i = 0; i < 3; i++) {
     global.blobSizeOk = false // ugly hack but gulp does not return any values from tasks
     global.OTPacceptsFile = false
 
-    await every(updateOSM, function (task, callback) {
-      start(task).then(() => { callback(null, true) })
-    })
+    await start('osm:update')
+
     if (global.blobSizeOk) {
       break
     }
