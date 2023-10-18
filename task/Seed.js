@@ -1,15 +1,15 @@
 const execSync = require('child_process').execSync
 const fs = require('fs')
 const { router, dataDir } = require('../config.js')
-const seedTag = process.env.SEED_TAG || 'latest'
+const seedTag = process.env.SEED_TAG || 'v3'
 
 /**
  * Download seed data from previous data containers.
  */
 module.exports = function () {
   return new Promise((resolve, reject) => {
-    if (!fs.existsSync(`${dataDir}/root`)) {
-      fs.mkdirSync(`${dataDir}/root`)
+    if (!fs.existsSync(`${dataDir}`)) {
+      fs.mkdirSync(`${dataDir}`)
     }
     try {
       const container = `hsldevcom/opentripplanner-data-container-${router.id}:${seedTag}`

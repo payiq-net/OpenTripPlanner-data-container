@@ -108,34 +108,36 @@ gulp.task('gtfs:fallback', () => {
     .pipe(gulp.dest(`${config.dataDir}/ready/gtfs`, { overwrite: true }))
 })
 
-gulp.task('gtfs:del', () => del(`${config.dataDir}/ready/gtfs`))
+gulp.task('gtfs:del', () => del([`${config.dataDir}/ready/gtfs`, `${config.dataDir}/ready/gtfs`]))
 
-gulp.task('gtfs:seed', () => gulp.series('gtfs:del',
+gulp.task('gtfs:seed', gulp.series('gtfs:del', () =>
   gulp.src(`${routerDir}/*-gtfs.zip`).pipe(gulp.dest(`${config.dataDir}/seed/gtfs`)).pipe(gulp.dest(`${config.dataDir}/ready/gtfs`))))
 
 gulp.task('osm:del', () => del(`${config.dataDir}/ready/osm`))
 
-gulp.task('osm:seed', () => gulp.series('osm:del',
-  gulp.src(`${routerDir}/*.pbf`).pipe(gulp.dest(`${config.dataDir}/seed/osm`)).pipe(gulp.dest(`${config.dataDir}/ready/osm`))))
+gulp.task('osm:seed', gulp.series('osm:del', () =>
+  gulp.src(`${routerDir}/*.pbf`).pipe(gulp.dest(`${config.dataDir}/ready/osm`))))
 
 gulp.task('dem:del', () => del(`${config.dataDir}/ready/dem`))
 
-gulp.task('dem:seed', () => gulp.series('dem:del',
-  gulp.src(`${routerDir}/*.tif`).pipe(gulp.dest(`${config.dataDir}/seed/dem`)).pipe(gulp.dest(`${config.dataDir}/ready/dem`))))
+gulp.task('dem:seed', gulp.series('dem:del', () =>
+  gulp.src(`${routerDir}/*.tif`).pipe(gulp.dest(`${config.dataDir}/ready/dem`))))
+
+gulp.task('seed:cleanup', () => del([routerDir, `${config.dataDir}/*.zip`]))
 
 /**
  * Seed DEM, GTFS & OSM data with data from previous data-containes to allow
  * continuous flow of data into production when one or more updated data files
  * are broken.
  */
-gulp.task('seed', gulp.series(seed, 'dem:seed', 'osm:seed', 'gtfs:seed'))
+gulp.task('seed', gulp.series(seed, 'dem:seed', 'osm:seed', 'gtfs:seed', 'seed:cleanup'))
 
 gulp.task('router:del', () => del(`${config.dataDir}/build`))
 
 gulp.task('router:copy', gulp.series('router:del',
   () => prepareRouterData(config.router).pipe(gulp.dest(`${config.dataDir}/build`))))
 
-gulp.task('foo', () => gulp.src('otp-data-container/*').pipe(gulp.dest(`${config.dataDir}`)))
+gulp.task('foo', gulp.series('router:del', 'osm:del'))
 
 gulp.task('router:buildGraph', gulp.series('router:copy', () => {
   gulp.src('otp-data-container/*')
