@@ -60,32 +60,32 @@ const packData = function (commit, router) {
     // create zip file for the source data
     // include all gtfs + osm + router- + build configs
     zipWithGlob(`${dataDir}/build/${router.id}/router-${router.id}.zip`,
-	  [`${dataDir}/build/${router.id}/router/*.zip`, `${dataDir}/build/${router.id}/router/*.json`,
-           ...osmFiles,
-           `${dataDir}/build/${router.id}/router/${router.dem}.tif`],
-           `router-${router.id}`,
-           (err) => {
-              if (err) {
-                reject(err)
-              } else {
-                resolve()
-              }
-            })
+      [`${dataDir}/build/${router.id}/router/*.zip`, `${dataDir}/build/${router.id}/router/*.json`,
+        ...osmFiles,
+        `${dataDir}/build/${router.id}/router/${router.dem}.tif`],
+      `router-${router.id}`,
+      (err) => {
+        if (err) {
+          reject(err)
+        } else {
+          resolve()
+        }
+      })
   })
   const p2 = new Promise((resolve, reject) => {
     process.stdout.write('Creating zip file for otp graph\n')
     // create zip file for the graph
     // include  graph.obj, router-config.json and otp-config.json
     zipWithGlob(`${dataDir}/build/${router.id}/graph-${router.id}-${commit}.zip`,
-            [`${dataDir}/build/${router.id}/router/graph.obj`, `${dataDir}/build/${router.id}/router/router-*.json`, `${dataDir}/build/${router.id}/router/otp-config.json`],
-            router.id,
-            (err) => {
-              if (err) {
-                reject(err)
-              } else {
-                resolve()
-              }
-            })
+      [`${dataDir}/build/${router.id}/router/graph.obj`, `${dataDir}/build/${router.id}/router/router-*.json`, `${dataDir}/build/${router.id}/router/otp-config.json`],
+      router.id,
+      (err) => {
+        if (err) {
+          reject(err)
+        } else {
+          resolve()
+        }
+      })
   })
   const p3 = new Promise((resolve, reject) => {
     fs.writeFile(`${dataDir}/build/${router.id}/version.txt`, new Date().toISOString(), function (err) {
@@ -105,6 +105,6 @@ module.exports = {
       .then(packData)
       .then(() => otpMatching(`${dataDir}/build/${router.id}/router`))
       .then(() => {
-	process.stdout.write('Graph build SUCCESS\n')
+        process.stdout.write('Graph build SUCCESS\n')
       })
-  }}
+  } }

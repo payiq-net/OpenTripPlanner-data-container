@@ -16,8 +16,6 @@ const every = promisify((list, task, cb) => {
 
 const start = promisify((task, cb) => gulp.series(task)(cb))
 
-const updateDEM = ['dem:update']
-const updateOSM = ['osm:update']
 const updateGTFS = ['gtfs:dl', 'gtfs:fit', 'gtfs:filter', 'gtfs:id']
 
 if (!process.env.NOSEED) {
@@ -73,22 +71,22 @@ async function update () {
     start(task).then(() => { callback(null, true) })
   })
 
+  const name = router.id
   try {
-    const name = router.id
-    await start('router:buildGraph');
+    await start('router:buildGraph')
     process.stdout.write('Build docker image.\n')
-    execFileSync('./build.sh', [name], {stdio: [0, 1, 2]})
-    if (process.env.SKIPPED_SITES  === "all" ) {
+    execFileSync('./build.sh', [name], { stdio: [0, 1, 2] })
+    if (process.env.SKIPPED_SITES === 'all') {
       process.stdout.write('Skipping all tests')
     } else {
       process.stdout.write('Test docker image.\n')
       execFileSync(
         './test.sh',
         [name, process.env.OTP_TAG || 'v2', process.env.TOOLS_TAG || ''],
-        {stdio: [0, 1, 2]}
+        { stdio: [0, 1, 2] }
       )
     }
-    let hasFailures=false
+    let hasFailures = false
     const logFile = 'failed_feeds.txt'
 
     if (fs.existsSync(logFile)) {
@@ -104,7 +102,7 @@ async function update () {
       await start('router:buildGraph')
 
       process.stdout.write('Rebuild docker image.\n')
-      execFileSync('./build.sh', [name], {stdio: [0, 1, 2]})
+      execFileSync('./build.sh', [name], { stdio: [0, 1, 2] })
     }
     process.stdout.write('Deploy docker image.\n')
     execFileSync('./deploy.sh', [name], {

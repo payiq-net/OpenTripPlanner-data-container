@@ -12,9 +12,9 @@ const routers = {
   hsl: {
     'id': 'hsl',
     'src': [
-      src('HSL', 'https://infopalvelut.storage.hsldev.com/gtfs/hsl.zip', false, undefined, { 'translations.txt': 'translations_new.txt', 'trips.txt': 'trips2.txt' }),
-      //src('HSLlautta', 'https://koontikartta.navici.com/tiedostot/gtfs_lautat_digitransit.zip', false),
-      //src('Sipoo', 'https://koontikartta.navici.com/tiedostot/rae/sipoon_kunta_sibbo_kommun.zip', false)
+      src('HSL', 'https://infopalvelut.storage.hsldev.com/gtfs/hsl.zip', false, undefined, { 'translations.txt': 'translations_new.txt', 'trips.txt': 'trips2.txt' })
+      // src('HSLlautta', 'https://koontikartta.navici.com/tiedostot/gtfs_lautat_digitransit.zip', false),
+      // src('Sipoo', 'https://koontikartta.navici.com/tiedostot/rae/sipoon_kunta_sibbo_kommun.zip', false)
     ],
     'osm': ['hsl'],
     'dem': 'hsl'
@@ -103,15 +103,15 @@ const routers = {
     'id': 'kela',
     'src': [
       src('kela', 'https://koontikartta.navici.com/tiedostot/gtfs_kela.zip', false),
-      src('matkahuolto', 'http://digitransit-proxy:8080/out/minfoapi.matkahuolto.fi/gtfs/kokomaa-fi/gtfs.zip', false, ['router-kela/gtfs-rules/no-onnibus-mega.rule'], { 'transfers.txt':   null })
+      src('matkahuolto', 'http://digitransit-proxy:8080/out/minfoapi.matkahuolto.fi/gtfs/kokomaa-fi/gtfs.zip', false, ['router-kela/gtfs-rules/no-onnibus-mega.rule'], { 'transfers.txt': null })
     ],
     'osm': ['finland']
   }
 }
 
 if (!process.env.ROUTER || !routers[process.env.ROUTER]) {
-    process.stdout.write('Invalid ROUTER variable \n')
-    process.exit(1)
+  process.stdout.write('Invalid ROUTER variable \n')
+  process.exit(1)
 }
 const router = routers[process.env.ROUTER]
 
@@ -143,7 +143,7 @@ for (let j = cfgSrc.length - 1; j >= 0; j--) {
 Object.keys(extraSrc).forEach(id => {
   if (!usedSrc.includes(id)) {
     const targets = extraSrc[id].routers
-    if(targets.includes(router.id)) {
+    if (targets.includes(router.id)) {
       router.src.push({ ...extraSrc[id], id })
     }
   }
@@ -151,7 +151,7 @@ Object.keys(extraSrc).forEach(id => {
 
 // create id->src-entry map
 const gtfsMap = {}
-router.src.forEach(src => gtfsMap[src.id] = src)
+router.src.forEach(src => { gtfsMap[src.id] = src })
 
 const osm = {
   finland: 'https://karttapalvelu.storage.hsldev.com/finland.osm/finland.osm.pbf',
@@ -171,8 +171,8 @@ const constants = {
 module.exports = {
   router,
   gtfsMap,
-  osm: router.osm.map(id => {return {id, url: osm[id]}}), // array of id, url pairs
-  dem: router.dem ? [{id: router.dem, url: dem[router.dem]}] : null, // currently only one DEM file is used
+  osm: router.osm.map(id => { return { id, url: osm[id] } }), // array of id, url pairs
+  dem: router.dem ? [{ id: router.dem, url: dem[router.dem] }] : null, // currently only one DEM file is used
   dataToolImage: `hsldevcom/otp-data-tools:${process.env.TOOLS_TAG || 'latest'}`,
   dataDir: process.env.DATA || `${process.cwd()}/data`,
   hostDataDir: process.env.HOST_DATA || `${process.cwd()}/data`,

@@ -9,13 +9,13 @@ const seedTag = process.env.SEED_TAG || 'latest'
 module.exports = function () {
   return new Promise((resolve, reject) => {
     if (!fs.existsSync(`${dataDir}/root`)) {
-        fs.mkdirSync(`${dataDir}/root`)
+      fs.mkdirSync(`${dataDir}/root`)
     }
     try {
       const container = `hsldevcom/opentripplanner-data-container-${router.id}:${seedTag}`
       process.stdout.write(`extracting data from ${container}...\n`)
       const script =
-       `cd ${dataDir}/root
+       `cd ${dataDir}
         docker login -u ${process.env.DOCKER_USER} -p ${process.env.DOCKER_AUTH} || true;
         docker rmi --force ${container} || true;
         docker rm data-extract-${router.id} || true;
@@ -26,10 +26,10 @@ module.exports = function () {
 
       execSync(script)
       execSync(
-	`cd ${dataDir}/root && unzip router-${router.id}.zip`
+        `cd ${dataDir} && unzip -o router-${router.id}.zip`
       )
       resolve()
-    } catch(err) {
+    } catch (err) {
       reject(err)
     }
   })
