@@ -18,8 +18,6 @@ const { postSlackMessage } = require('./util')
 const { renameGTFSFile } = require('./task/GTFSRename')
 const { replaceGTFSFilesTask } = require('./task/GTFSReplace')
 const { moveTask } = require('./task/MoveTask')
-const path = require('path');
-
 /**
  * Download and test new osm data
  */
@@ -123,7 +121,6 @@ gulp.task('copyRouterConfig', function () {
 // Run one of more filter runs on gtfs files(based on config) and moves files to
 // directory 'ready'
 gulp.task('gtfs:filter', gulp.series('copyRouterConfig', function () {
-
   return gulp.src([`${config.dataDir}/filter/gtfs/*`])
     .pipe(moveTask(config.filesToCache, true, `${config.dataDir}/filter/gtfs/`))
     .pipe(OBAFilterTask(config.configMap))

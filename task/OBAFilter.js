@@ -19,7 +19,6 @@ const { postSlackMessage } = require('../util')
  */
 function OBAFilter (src, dst, rule) {
   process.stdout.write(`filtering ${src} with ${rule}...\n`)
-  console.log('OBAFilter', src)
   const p = new Promise((resolve) => {
     let success = true
     let lastLog = []
