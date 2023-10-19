@@ -56,18 +56,16 @@ gulp.task('dem:update', () => {
 })
 
 gulp.task('del:filter', () => del(`${config.dataDir}/filter`))
-
+gulp.task('del:fit', () => del(`${config.dataDir}/fit`))
 gulp.task('del:id', () => del(`${config.dataDir}/id`))
 
 /**
- * download and test new gtfs data:
- * clear download & stage dir
  * 1. download
- * 2. name zip as <id>-gtfs.zip (in dir download)
- * 3. test zip loads with OpenTripPlanner
- * 4. copy to id dir if test is succesful
+ * 2. name zip as <id>-gtfs.zip (in dir 'download')
+ * 3. test zip with OpenTripPlanner
+ * 4. copy to fit dir if test is succesful
  */
-gulp.task('gtfs:dl', gulp.series('del:id', () =>
+gulp.task('gtfs:dl', gulp.series('del:fit', () =>
   dl(config.router.src)
     .pipe(replaceGTFSFilesTask(config.gtfsMap))
     .pipe(renameGTFSFile())
@@ -76,7 +74,7 @@ gulp.task('gtfs:dl', gulp.series('del:id', () =>
     .pipe(gulp.dest(`${config.dataDir}/fit/gtfs`))
 ))
 
-// Add feedId to gtfs files in id dir, and moves files to directory 'fit'
+// Add feedId to gtfs files in id dir, and moves files to directory 'ready'
 gulp.task('gtfs:id', () =>
   gulp.src(`${config.dataDir}/id/gtfs/*`)
     .pipe(setFeedIdTask())
@@ -92,23 +90,21 @@ gulp.task('copyRouterConfig', () =>
   gulp.src([`router-${config.router.id}/*.json`]).pipe(gulp.dest(config.dataDir))
 )
 
-// Run one of more filter runs on gtfs files(based on config) and moves files to
-// directory 'ready'
+// Filter gtfs files and move result to directory 'id'
 gulp.task('gtfs:filter', gulp.series('copyRouterConfig',
   () => gulp.src(`${config.dataDir}/filter/gtfs/*`)
     .pipe(OBAFilterTask(config.gtfsMap))
-    // .pipe(vinylPaths(del))
     .pipe(gulp.dest(`${config.dataDir}/id/gtfs`))
 ))
 
 // move listed packages from seed to ready
 gulp.task('gtfs:fallback', () => {
-  const feedMatcher = `(${global.failedFeeds.replaceAll(',', '*|')}*)` // e.g. (HSL*|tampere*)
+  const feedMatcher = `(${global.failedFeeds?.replaceAll(',', '*|')}*)` // e.g. (HSL*|tampere*)
   return gulp.src(`${config.dataDir}/seed/gtfs/${feedMatcher}`)
-    .pipe(gulp.dest(`${config.dataDir}/ready/gtfs`, { overwrite: true }))
+    .pipe(gulp.dest(`${config.dataDir}/ready/gtfs`))
 })
 
-gulp.task('gtfs:del', () => del([`${config.dataDir}/ready/gtfs`, `${config.dataDir}/ready/gtfs`]))
+gulp.task('gtfs:del', () => del([`${config.dataDir}/seed/gtfs`, `${config.dataDir}/ready/gtfs`]))
 
 gulp.task('gtfs:seed', gulp.series('gtfs:del', () =>
   gulp.src(`${routerDir}/*-gtfs.zip`).pipe(gulp.dest(`${config.dataDir}/seed/gtfs`)).pipe(gulp.dest(`${config.dataDir}/ready/gtfs`))))
