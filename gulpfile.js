@@ -123,12 +123,11 @@ gulp.task('copyRouterConfig', function () {
 // Run one of more filter runs on gtfs files(based on config) and moves files to
 // directory 'ready'
 gulp.task('gtfs:filter', gulp.series('copyRouterConfig', function () {
-  const cahceFiles = [`emissions.txt`]
 
   return gulp.src([`${config.dataDir}/filter/gtfs/*`])
-    .pipe(moveTask(cahceFiles, true, null))
+    .pipe(moveTask(config.filesToCache, true, `${config.dataDir}/filter/gtfs/`))
     .pipe(OBAFilterTask(config.configMap))
-    .pipe(moveTask(cahceFiles, false, `${config.dataDir}/filter/gtfs/`))
+    .pipe(moveTask(config.filesToCache, false, `${config.dataDir}/filter/gtfs/`))
     // .pipe(vinylPaths(del))
     .pipe(gulp.dest(`${config.dataDir}/id/gtfs`))
 }))

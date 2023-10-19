@@ -200,5 +200,6 @@ module.exports = {
   dataDir: process.env.DATA || `${process.cwd()}/data`,
   hostDataDir: process.env.HOST_DATA || `${process.cwd()}/data`,
   setCurrentConfig: setCurrentConfig,
-  constants
+  constants,
+  filesToCache: process.env.CACHE_FILES
 }

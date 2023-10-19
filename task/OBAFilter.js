@@ -61,7 +61,6 @@ module.exports = {
     return through.obj(function (file, encoding, callback) {
       const gtfsFile = file.history[file.history.length - 1]
       const fileName = gtfsFile.split('/').pop()
-      console.log('OBaFIleter fileName', fileName)
       const relativeFilename = path.relative(dataDir, gtfsFile)
       if (fs.lstatSync(gtfsFile).isDirectory()) {
         process.stdout.write(`${gtfsFile} not a file, deleting...\n`)

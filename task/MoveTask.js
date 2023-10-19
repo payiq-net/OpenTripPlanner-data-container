@@ -2,36 +2,54 @@ const fs = require('fs')
 const through = require('through2')
 const path = require('path');
 const JSZip = require('jszip');
+const del = require('del')
 
-
-function moveFilesFromCache(zipFile, folderPath, filesToAdd) {
+/**
+* Moves files from cache to a zip file.
+* @param {string} zipFile - The path to the zip file.
+* @param {string} dataDir - The path to the data directory.
+* @param {string[]} filesToAdd - An array of filenames to add to the zip file.
+* @returns {Promise} A Promise that resolves when the operation is complete.
+*/
+function moveFilesFromCache(zipFile, dataDir, filesToAdd) {
     const p = new Promise((resolve, reject) => {
-    const Azip = new JSZip();
+    const newZip = new JSZip();
     fs.readFile(zipFile, function(err,data) {
-        if(err) {
-            process.stdout.write('Error reading file: ', err)
-        }
-    Azip.loadAsync(data).then((zip) => {
-    filesToAdd.forEach((file) => {
-        const filePath = `/tmp/${file}`;
 
-        const fileData = fs.readFileSync(filePath);
-        if(fileData)  {
-            zip.file(`HSL-gtfs/${file}`, fileData);
-        }
+    if(err) {
+        process.stdout.write('Error reading file: ', err)
+        reject()
+    } else {
+        newZip.loadAsync(data).then((zip) => {
+        filesToAdd.forEach((file) => {
+            const filePath = `${dataDir}/tmp/${file}`;
+            const folder = path.parse(zipFile).name
+            const fileData = fs.readFileSync(filePath);
+            if(fileData)  {
+                zip.file(`${folder}/${file}`, fileData);
+            }
+        });
+        const zFileName = path.basename(zipFile)
+        zip.generateAsync({ type: 'nodebuffer' }).then((content) => {
+            fs.writeFileSync(`${dataDir}/${zFileName}`, content);
+            resolve()
 
-      });
-      zip.generateAsync({ type: 'nodebuffer' }).then((content) => {
-        fs.writeFileSync(`${folderPath}/HSL-gtfs.zip`, content);
-        resolve()
-
-      }).catch(e => reject(e));
-    })
+        }).catch(e => reject(e));
+        })
+}
     })
 })
     return p
 }
-function store(filePath, filesToExtract) {
+
+/**
+ * Extracts files from a zip archive and saves them to disk.
+ * @param {string} filePath - The path to the zip archive.
+ * @param {string[]} filesToExtract - An array of filenames to extract from the archive.
+ * @param {string} dataDir - The path to the data directory.
+ * @returns {Promise} A Promise that resolves when the operation is complete.
+ */
+function storeFiles(filePath, filesToExtract, dataDir) {
     if(filePath) {
         const zip = new JSZip();
         zip.loadAsync(fs.readFileSync(filePath)).then(() => {
@@ -39,7 +57,7 @@ function store(filePath, filesToExtract) {
             const file = Object.keys(zip.files).find((name) => name.endsWith(`/${fileName}`));
             if (file) {
                 zip.file(file).async('nodebuffer').then((fileData) => {
-                    fs.writeFileSync(`/tmp/${fileName}`, fileData);
+                    fs.writeFileSync(`${dataDir}/tmp/${fileName}`, fileData);
                     process.stdout.write('File extracted and moved to /tmp/');
                 });
             } else {
@@ -47,11 +65,9 @@ function store(filePath, filesToExtract) {
                 return Promise.resolve();
             }
         });
-
         return Promise.all(promises)
-
         })
-        
+
         return Promise.resolve(false)
     } else {
         process.stdout.write('No file ', filePath, ' found')
@@ -61,18 +77,31 @@ function store(filePath, filesToExtract) {
 
 module.exports = {
     moveTask: (cacheFiles, cache, dataDir) => {
-        if(!cache) {
-            return through.obj(function (file, encoding, callback) {
-                const folderPath = `${dataDir}${path.basename(file.history[file.history.length - 1])}`
-                moveFilesFromCache(folderPath,dataDir,cacheFiles).then(() => {
-                    //TODO REMOVE TEMP?
+        if(!cacheFiles) {
+            return through.obj(function (file, encoding, callback) {  
                 callback(null, file)
             })
         }
-    )}
+        const cacheArray = cacheFiles.split(',')
+        if(!cache) {
+            return through.obj(function (file, encoding, callback) {
+                const folderPath = `${dataDir}${path.basename(file.history[file.history.length - 1])}`
+                moveFilesFromCache(folderPath,dataDir,cacheArray).then(() => {
+                del([`${dataDir}/tmp/**`]);
+    
+                callback(null, file)
+            })
+        }
+        )}
+
         return through.obj(function (file, encoding, callback) {
+            // Create a temp fle for files to be cached.
+            if (!fs.existsSync(`${dataDir}/tmp`)) {
+                fs.mkdirSync(`${dataDir}/tmp`)
+            }
+
             let localFile = file.history[file.history.length - 1]
-            store(localFile, cacheFiles).then( () => callback(null, file))
+            storeFiles(localFile, cacheArray, dataDir).then(() => callback(null, file))
         })
     }
 }
