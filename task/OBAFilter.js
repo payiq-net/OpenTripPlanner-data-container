@@ -88,7 +88,7 @@ module.exports = {
 
               /* create zip named src from files in dst */
               zipDir(`${dataDir}/${src}`, `${dataDir}/${dst}`, () => {
-                del([`${dataDir}/${dst}`])
+                del(`${dataDir}/${dst}`)
                 process.stdout.write(rule + ' ' + gtfsFile + ' filter SUCCESS\n')
                 done()
               })
