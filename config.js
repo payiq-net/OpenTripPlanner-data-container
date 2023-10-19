@@ -7,6 +7,7 @@
  * request options = optional special options for request
  */
 const src = (id, url, fit, rules, replacements, requestOptions) => ({ id, url, fit, rules, replacements, requestOptions })
+const passOBAfilter = ['emissions.txt']
 
 const HSL_CONFIG = {
   'id': 'hsl',
@@ -201,5 +202,5 @@ module.exports = {
   hostDataDir: process.env.HOST_DATA || `${process.cwd()}/data`,
   setCurrentConfig: setCurrentConfig,
   constants,
-  filesToCache: process.env.CACHE_FILES
+  passOBAfilter
 }

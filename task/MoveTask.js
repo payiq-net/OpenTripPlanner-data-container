@@ -21,11 +21,15 @@ function moveFilesFromCache (zipFile, dataDir, filesToAdd) {
       } else {
         newZip.loadAsync(data).then((zip) => {
           filesToAdd.forEach((file) => {
-            const filePath = `${dataDir}/tmp/${file}`
-            const folder = path.parse(zipFile).name
-            const fileData = fs.readFileSync(filePath)
-            if (fileData) {
-              zip.file(`${folder}/${file}`, fileData)
+            try {
+              const filePath = `${dataDir}/tmp/${file}`
+              const folder = path.parse(zipFile).name
+              const fileData = fs.readFileSync(filePath)
+              if (fileData) {
+                zip.file(`${folder}/${file}`, fileData)
+              }
+            } catch (e) {
+              resolve(e)
             }
           })
           const zFileName = path.basename(zipFile)
@@ -74,19 +78,17 @@ function storeFiles (filePath, filesToExtract, dataDir) {
 }
 
 module.exports = {
-  moveTask: (cacheFiles, cache, dataDir) => {
-    if (!cacheFiles) {
+  moveTask: (passOBAfilter, cache, dataDir) => {
+    if (!passOBAfilter.length) {
       return through.obj(function (file, encoding, callback) {
         callback(null, file)
       })
     }
-    const cacheArray = cacheFiles.split(',')
     if (!cache) {
       return through.obj(function (file, encoding, callback) {
         const folderPath = `${dataDir}${path.basename(file.history[file.history.length - 1])}`
-        moveFilesFromCache(folderPath, dataDir, cacheArray).then(() => {
+        moveFilesFromCache(folderPath, dataDir, passOBAfilter).then(() => {
           del([`${dataDir}/tmp/**`])
-
           callback(null, file)
         })
       }
@@ -100,7 +102,9 @@ module.exports = {
       }
 
       let localFile = file.history[file.history.length - 1]
-      storeFiles(localFile, cacheArray, dataDir).then(() => callback(null, file))
+      storeFiles(localFile, passOBAfilter, dataDir).then((status) => {
+        callback(null, file)
+      })
     })
   }
 }

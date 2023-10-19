@@ -122,9 +122,9 @@ gulp.task('copyRouterConfig', function () {
 // directory 'ready'
 gulp.task('gtfs:filter', gulp.series('copyRouterConfig', function () {
   return gulp.src([`${config.dataDir}/filter/gtfs/*`])
-    .pipe(moveTask(config.filesToCache, true, `${config.dataDir}/filter/gtfs/`))
+    .pipe(moveTask(config.passOBAfilter, true, `${config.dataDir}/filter/gtfs/`))
     .pipe(OBAFilterTask(config.configMap))
-    .pipe(moveTask(config.filesToCache, false, `${config.dataDir}/filter/gtfs/`))
+    .pipe(moveTask(config.passOBAfilter, false, `${config.dataDir}/filter/gtfs/`))
     // .pipe(vinylPaths(del))
     .pipe(gulp.dest(`${config.dataDir}/id/gtfs`))
 }))
