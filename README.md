@@ -43,7 +43,7 @@ It is possible to change the behaviour of the data builder by defining environme
 * (Optional, default ${process.cwd()}/data) "HOST_DATA" defines base path for volume directories.
 * (Optional, default 'finland, waltti, hsl, waltti-alt') "ROUTERS" defines which data containers are being built and deployed.
 * (Optional, default ${process.cwd()}/data) "DATA" defines base path for data directories in container's file system.
-* (Optional, default 23:00:00) "BUILD_TIME" defines when data build is being run. Uses UTC time.
+* (Optional, default '0 0 3 * * *' "CRON" defines cronjob pattern when data build is being run. Uses local time.
 * (Optional, default dev) "BUILDER_TYPE" used as a postfix to slack bot name
 * (Optional) "SLACK_CHANNEL_ID" defines to which slack channel the messages are sent to
 * (Optional) "SLACK_ACCESS_TOKEN" bearer token for slack messaging
@@ -66,12 +66,9 @@ Seed data can be retrieved with a single gulp command:
 
 1. seed
 
-Downloads previous data containers (env variable SEED_TAG can be used to customize which tag is pulled)
-and extracts osm and gtfs data from there and places it in 'data/ready' directory.
+Downloads previous data container (env variable SEED_TAG can be used to customize which tag is pulled)
+and extracts osm, dem and gtfs data from there and places it in 'data/seed' and 'data/ready' directories.
 Old data acts as backup in case fetching/validating new data fails.
-
-Currently there is single processing step for OSM data. Because gtfs processing steps require osm data,
-the osm data must be available before running the gtfs:fit stage later below.
 
 2. osm:update
 
