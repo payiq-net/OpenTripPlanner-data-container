@@ -86,13 +86,13 @@ gulp.task('gtfs:fit', gulp.series('del:filter', () =>
     .pipe(fitGTFSTask(config.gtfsMap))
     .pipe(gulp.dest(`${config.dataDir}/filter/gtfs`))))
 
-gulp.task('copyRouterConfig', () =>
-  gulp.src([`router-${config.router.id}/*.json`]).pipe(gulp.dest(config.dataDir))
+gulp.task('copyRules', () =>
+  gulp.src(`router-${config.router.id}/gtfs-rules/*`).pipe(gulp.dest(`${routerDir}/gtfs-rules`))
 )
 
 // Filter gtfs files and move result to directory 'id'
-gulp.task('gtfs:filter', gulp.series('copyRouterConfig',
-  () => gulp.src(`${config.dataDir}/filter/gtfs/*`)
+gulp.task('gtfs:filter', gulp.series('copyRules',
+  () => gulp.src(`${config.dataDir}/filter/gtfs/*.zip`)
     .pipe(OBAFilterTask(config.gtfsMap))
     .pipe(gulp.dest(`${config.dataDir}/id/gtfs`))
 ))
