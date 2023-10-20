@@ -16,6 +16,7 @@ const { buildOTPGraphTask } = require('./task/BuildOTPGraph')
 const { postSlackMessage } = require('./util')
 const { renameGTFSFile } = require('./task/GTFSRename')
 const { replaceGTFSFilesTask } = require('./task/GTFSReplace')
+const { moveTask } = require('./task/MoveTask')
 
 const routerDir = `${config.dataDir}/router-${config.router.id}` // e.g. data/router-hsl
 
@@ -91,10 +92,13 @@ gulp.task('copyRules', () =>
 )
 
 // Filter gtfs files and move result to directory 'id'
-gulp.task('gtfs:filter', gulp.series('copyRules',
+gulp.task('gtfs:filter', gulp.series(
+  'copyRules',
   () => gulp.src(`${config.dataDir}/filter/gtfs/*.zip`)
+    .pipe(moveTask(config.passOBAfilter, true, config.dataDir))
     .pipe(OBAFilterTask(config.gtfsMap))
-    .pipe(gulp.dest(`${config.dataDir}/id/gtfs`))
+    .pipe(moveTask(config.passOBAfilter, false, config.dataDir)),
+    () => gulp.src(`${config.dataDir}/filter/gtfs/*.zip`).pipe(gulp.dest(`${config.dataDir}/id/gtfs`))
 ))
 
 // move listed packages from seed to ready

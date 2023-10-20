@@ -7,6 +7,7 @@
  * request options = optional special options for request
  */
 const src = (id, url, fit, rules, replacements, requestOptions) => ({ id, url, fit, rules, replacements, requestOptions })
+const passOBAfilter = ['emissions.txt']
 
 const routers = {
   hsl: {
@@ -176,5 +177,6 @@ module.exports = {
   dataToolImage: `hsldevcom/otp-data-tools:${process.env.TOOLS_TAG || 'latest'}`,
   dataDir: process.env.DATA || `${process.cwd()}/data`,
   hostDataDir: process.env.HOST_DATA || `${process.cwd()}/data`,
-  constants
+  constants,
+  passOBAfilter
 }
