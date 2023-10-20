@@ -3,9 +3,6 @@ const Vinyl = require('vinyl')
 const fs = require('fs')
 const cloneable = require('cloneable-readable')
 const { routerDir } = require('../util')
-const osmFiles = (config) => config.osm.map(filename => filename + '.pbf')
-const demFile = (config) => config.dem + '.tif'
-const gtfsFile = (src) => src.id + '-gtfs.zip'
 const { dataDir } = require('../config')
 
 function createFile (config, fileName, source) {
@@ -42,7 +39,7 @@ function createAndProcessRouterConfig (config) {
       usedPatches.push(updaterId)
     }
   }
-  Object.keys(extraUpdaters).forEach((id) => {
+  Object.keys(extraUpdaters).forEach(id => {
     if (!usedPatches.includes(id)) {
       const routers = extraUpdaters[id].routers
       if (routers !== undefined && routers.includes(config.id)) {
@@ -67,14 +64,17 @@ module.exports = function (config) {
   stream.push(createFile(config, 'build-config.json', `${routerDir(config)}/build-config.json`))
   stream.push(createFile(config, 'otp-config.json', `${routerDir(config)}/otp-config.json`))
   stream.push(createAndProcessRouterConfig(config))
-  osmFiles(config).forEach(osmFile =>
-    stream.push(createFile(config, osmFile, `${dataDir}/ready/osm/${osmFile}`))
-  )
+  config.osm.forEach(osmId => {
+    const name = osmId + '.pbf'
+    stream.push(createFile(config, name, `${dataDir}/ready/osm/${name}`))
+  })
   if (config.dem) {
-    stream.push(createFile(config, demFile(config), `${dataDir}/ready/dem/${demFile(config)}`))
+    const name = config.dem + '.tif'
+    stream.push(createFile(config, name, `${dataDir}/ready/dem/${name}`))
   }
   config.src.forEach(src => {
-    stream.push(createFile(config, gtfsFile(src), `${dataDir}/ready/gtfs/${gtfsFile(src)}`))
+    const name =  src.id + '-gtfs.zip'
+    stream.push(createFile(config, name, `${dataDir}/ready/gtfs/${name}`))
   })
   stream.end()
 
