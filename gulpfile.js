@@ -120,14 +120,14 @@ gulp.task('copyRouterConfig', function () {
 
 // Run one of more filter runs on gtfs files(based on config) and moves files to
 // directory 'ready'
-gulp.task('gtfs:filter', gulp.series('copyRouterConfig', function () {
-  return gulp.src([`${config.dataDir}/filter/gtfs/*`])
+gulp.task('gtfs:filter', gulp.series(
+  'copyRouterConfig',
+  () => gulp.src(`${config.dataDir}/filter/gtfs/*.zip`)
     .pipe(moveTask(config.passOBAfilter, true, `${config.dataDir}/`))
     .pipe(OBAFilterTask(config.configMap))
-    .pipe(moveTask(config.passOBAfilter, false, `${config.dataDir}/`))
-    // .pipe(vinylPaths(del))
-    .pipe(gulp.dest(`${config.dataDir}/id/gtfs`))
-}))
+    .pipe(moveTask(config.passOBAfilter, false, `${config.dataDir}/`)),
+  () => gulp.src(`${config.dataDir}/filter/gtfs/*.zip`).pipe(gulp.dest(`${config.dataDir}/id/gtfs`))
+))
 
 gulp.task('gtfs:del', () => del([`${config.dataDir}/ready/gtfs`]))
 
