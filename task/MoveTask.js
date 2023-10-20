@@ -1,6 +1,5 @@
 const fs = require('fs')
 const through = require('through2')
-const path = require('path')
 const JSZip = require('jszip')
 const del = require('del')
 
