@@ -223,6 +223,17 @@
       "network": "smoove",
       "url": "http://digitransit-proxy:8080/out/helsinki-fi.smoove.pro/api-public/stations",
       "overloadingAllowed": true
+    },
+    {
+      "type" : "vehicle-positions",
+      "url" : "https://realtime.hsl.fi/realtime/vehicle-positions/v2/hsl",
+      "feedId" : "HSL",
+      "frequency" : "30s",
+      "fuzzyTripMatching" : true,
+      "features" : [
+        "stop-position",
+        "occupancy"
+      ]
     }
   ]
 }
