@@ -23,10 +23,9 @@ function restoreFiles (zipFile, dataDir, filesToAdd) {
           filesToAdd.forEach((file) => {
             try {
               const filePath = `${dataDir}/tmp/${file}`
-              const folder = path.parse(zipFile).name
               const fileData = fs.readFileSync(filePath)
               if (fileData) {
-                zip.file(`${folder}/${file}`, fileData)
+                zip.file(`${file}`, fileData)
               }
             } catch (e) {
               resolve(e)
