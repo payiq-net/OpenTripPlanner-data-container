@@ -11,7 +11,7 @@ const del = require('del')
 * @param {string[]} filesToAdd - An array of filenames to add to the zip file.
 * @returns {Promise} A Promise that resolves when the operation is complete.
 */
-function moveFilesFromCache (zipFile, dataDir, filesToAdd) {
+function restoreFiles (zipFile, dataDir, filesToAdd) {
   const p = new Promise((resolve, reject) => {
     const newZip = new JSZip()
     fs.readFile(zipFile, function (err, data) {
@@ -34,7 +34,7 @@ function moveFilesFromCache (zipFile, dataDir, filesToAdd) {
           })
           const zFileName = path.basename(zipFile)
           zip.generateAsync({ type: 'nodebuffer' }).then((content) => {
-            fs.writeFileSync(`${dataDir}/${zFileName}`, content)
+            fs.writeFileSync(zipFile, content)
             resolve()
           }).catch(e => reject(e))
         })
@@ -51,12 +51,12 @@ function moveFilesFromCache (zipFile, dataDir, filesToAdd) {
  * @param {string} dataDir - The path to the data directory.
  * @returns {Promise} A Promise that resolves when the operation is complete.
  */
-function storeFiles (filePath, filesToExtract, dataDir) {
+function backupFiles (filePath, filesToExtract, dataDir) {
   if (filePath) {
     const zip = new JSZip()
     zip.loadAsync(fs.readFileSync(filePath)).then(() => {
       const promises = filesToExtract.map(fileName => {
-        const file = Object.keys(zip.files).find((name) => name.endsWith(`/${fileName}`))
+        const file = Object.keys(zip.files).find((name) => name.endsWith(`${fileName}`))
         if (file) {
           zip.file(file).async('nodebuffer').then((fileData) => {
             fs.writeFileSync(`${dataDir}/tmp/${fileName}`, fileData)
@@ -86,8 +86,8 @@ module.exports = {
     }
     if (!cache) {
       return through.obj(function (file, encoding, callback) {
-        const folderPath = `${dataDir}${path.basename(file.history[file.history.length - 1])}`
-        moveFilesFromCache(folderPath, dataDir, passOBAfilter).then(() => {
+        const localFile = file.history[file.history.length - 1]
+        restoreFiles(localFile, dataDir, passOBAfilter).then(() => {
           del([`${dataDir}/tmp/**`])
           callback(null, file)
         })
@@ -101,8 +101,8 @@ module.exports = {
         fs.mkdirSync(`${dataDir}/tmp`)
       }
 
-      let localFile = file.history[file.history.length - 1]
-      storeFiles(localFile, passOBAfilter, dataDir).then((status) => {
+      const localFile = file.history[file.history.length - 1]
+      backupFiles(localFile, passOBAfilter, dataDir).then((status) => {
         callback(null, file)
       })
     })
