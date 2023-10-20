@@ -5,7 +5,7 @@ const JSZip = require('jszip')
 const del = require('del')
 
 /**
-* Moves files from cache to a zip file.
+* Moves files from backup to a zip file.
 * @param {string} zipFile - The path to the zip file.
 * @param {string} dataDir - The path to the data directory.
 * @param {string[]} filesToAdd - An array of filenames to add to the zip file.
@@ -32,7 +32,6 @@ function restoreFiles (zipFile, dataDir, filesToAdd) {
               resolve(e)
             }
           })
-          const zFileName = path.basename(zipFile)
           zip.generateAsync({ type: 'nodebuffer' }).then((content) => {
             fs.writeFileSync(zipFile, content)
             resolve()
@@ -78,13 +77,13 @@ function backupFiles (filePath, filesToExtract, dataDir) {
 }
 
 module.exports = {
-  moveTask: (passOBAfilter, cache, dataDir) => {
+  moveTask: (passOBAfilter, backup, dataDir) => {
     if (!passOBAfilter.length) {
       return through.obj(function (file, encoding, callback) {
         callback(null, file)
       })
     }
-    if (!cache) {
+    if (!backup) {
       return through.obj(function (file, encoding, callback) {
         const localFile = file.history[file.history.length - 1]
         restoreFiles(localFile, dataDir, passOBAfilter).then(() => {
@@ -96,7 +95,7 @@ module.exports = {
     }
 
     return through.obj(function (file, encoding, callback) {
-      // Create a temp fle for files to be cached.
+      // Create a temp fle for files to be backed up.
       if (!fs.existsSync(`${dataDir}/tmp`)) {
         fs.mkdirSync(`${dataDir}/tmp`)
       }
