@@ -19,13 +19,13 @@ const { postSlackMessage } = require('../util')
  */
 function OBAFilter (src, dst, rule) {
   process.stdout.write(`filtering ${src} with ${rule}...\n`)
-  const p = new Promise((resolve) => {
+  const p = new Promise(resolve => {
     let success = true
     let lastLog = []
     const cmd = `docker pull ${dataToolImage}; docker run -v ${hostDataDir}:/data --rm ${dataToolImage} java -Xmx6g -jar one-busaway-gtfs-transformer/onebusaway-gtfs-transformer-cli.jar --transform=/data/${rule} /data/${src} /data/${dst}`
     const filterProcess = exec(cmd)
 
-    const checkError = (data) => {
+    const checkError = data => {
       debug(data)
       lastLog.push(data.toString())
       if (lastLog.length > 20) {
@@ -56,17 +56,11 @@ function OBAFilter (src, dst, rule) {
 }
 
 module.exports = {
-  OBAFilterTask: (gtfsMap) => {
+  OBAFilterTask: gtfsMap => {
     return through.obj(function (file, encoding, callback) {
       const gtfsFile = file.history[file.history.length - 1]
       const fileName = gtfsFile.split('/').pop()
       const relativeFilename = path.relative(dataDir, gtfsFile)
-      if (fs.lstatSync(gtfsFile).isDirectory()) {
-        process.stdout.write(`${gtfsFile} not a file, deleting...\n`)
-        fs.removeSync(gtfsFile)
-        callback(null, null)
-        return
-      }
       const id = fileName.substring(0, fileName.indexOf('-gtfs'))
       const source = gtfsMap[id]
       if (!source) {
@@ -81,8 +75,8 @@ module.exports = {
 
         const dstDir = `${dataDir}/${dst}`
         let hasFailures = false
-        const functions = source.rules.map((rule) => (done) => {
-          OBAFilter(src, dst, rule).then((success) => {
+        const functions = source.rules.map(rule => (done) => {
+          OBAFilter(src, dst, rule).then(success => {
             if (success) {
               fs.unlinkSync(`${dataDir}/${src}`)
 
