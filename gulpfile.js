@@ -66,13 +66,12 @@ gulp.task('del:id', () => del(`${config.dataDir}/id`))
  * 3. test zip with OpenTripPlanner
  * 4. copy to fit dir if test is succesful
  */
-gulp.task('gtfs:dl', gulp.series('del:fit', () =>
-  dl(config.router.src)
-    .pipe(replaceGTFSFilesTask(config.gtfsMap))
-    .pipe(renameGTFSFile())
-    .pipe(gulp.dest(`${config.dataDir}/downloads/gtfs`))
-    .pipe(testOTPFile())
-    .pipe(gulp.dest(`${config.dataDir}/fit/gtfs`))
+gulp.task('gtfs:dl', gulp.series('del:fit', () => dl(config.router.src)
+  .pipe(replaceGTFSFilesTask(config.gtfsMap))
+  .pipe(renameGTFSFile())
+  .pipe(gulp.dest(`${config.dataDir}/downloads/gtfs`))
+  .pipe(testOTPFile())
+  .pipe(gulp.dest(`${config.dataDir}/fit/gtfs`))
 ))
 
 // Add feedId to gtfs files in id dir, and moves files to directory 'ready'
@@ -98,14 +97,15 @@ gulp.task('gtfs:filter', gulp.series(
     .pipe(moveTask(config.passOBAfilter, true, config.dataDir))
     .pipe(OBAFilterTask(config.gtfsMap))
     .pipe(moveTask(config.passOBAfilter, false, config.dataDir)),
-    () => gulp.src(`${config.dataDir}/filter/gtfs/*.zip`).pipe(gulp.dest(`${config.dataDir}/id/gtfs`))
+  () => gulp.src(`${config.dataDir}/filter/gtfs/*.zip`).pipe(gulp.dest(`${config.dataDir}/id/gtfs`))
 ))
 
 // move listed packages from seed to ready
 gulp.task('gtfs:fallback', () => {
-  const feedMatcher = `(${global.failedFeeds?.replaceAll(',', '*|')}*)` // e.g. (HSL*|tampere*)
-  return gulp.src(`${config.dataDir}/seed/gtfs/${feedMatcher}`)
-    .pipe(gulp.dest(`${config.dataDir}/ready/gtfs`))
+  if (global.failedFeeds) { // comma separated list of feed ids
+    const feedMatcher = `(${global.failedFeeds.replaceAll(',', '*|')}*)` // e.g. (HSL*|tampere*)
+    gulp.src(`${config.dataDir}/seed/gtfs/${feedMatcher}`).pipe(gulp.dest(`${config.dataDir}/ready/gtfs`))
+  }
 })
 
 gulp.task('gtfs:del', () => del([`${config.dataDir}/seed/gtfs`, `${config.dataDir}/ready/gtfs`]))

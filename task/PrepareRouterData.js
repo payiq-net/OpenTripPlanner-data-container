@@ -73,7 +73,7 @@ module.exports = function (config) {
     stream.push(createFile(config, name, `${dataDir}/ready/dem/${name}`))
   }
   config.src.forEach(src => {
-    const name =  src.id + '-gtfs.zip'
+    const name = src.id + '-gtfs.zip'
     stream.push(createFile(config, name, `${dataDir}/ready/gtfs/${name}`))
   })
   stream.end()
