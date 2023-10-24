@@ -170,7 +170,6 @@ module.exports = {
     zipWithGlob(zipFile, [`${dir}/*`], undefined, cb)
   },
   zipWithGlob,
-  routerDir: (config) => `router-${config.id}`,
   postSlackMessage,
   updateSlackMessage,
   compareSizes,

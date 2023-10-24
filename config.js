@@ -24,8 +24,8 @@ const routers = {
   finland: {
     'id': 'finland',
     'src': [
-      src('HSL', 'https://infopalvelut.storage.hsldev.com/gtfs/hsl.zip', false, ['router-finland/gtfs-rules/hsl-no-trains.rule', 'router-hsl/gtfs-rules/hsl.rule'], { 'translations.txt': 'translations_new.txt', 'trips.txt': 'trips2.txt' }),
-      src('MATKA', 'https://koontikartta.navici.com/tiedostot/gtfs_digitransit.zip', 'gtfs_shape_mapfit/fit_gtfs_stops.bash', ['router-finland/gtfs-rules/matka-cleaned.rule']),
+      src('HSL', 'https://infopalvelut.storage.hsldev.com/gtfs/hsl.zip', false, ['finland/gtfs-rules/hsl-no-trains.rule', 'hsl/gtfs-rules/hsl.rule'], { 'translations.txt': 'translations_new.txt', 'trips.txt': 'trips2.txt' }),
+      src('MATKA', 'https://koontikartta.navici.com/tiedostot/gtfs_digitransit.zip', 'gtfs_shape_mapfit/fit_gtfs_stops.bash', ['finland/gtfs-rules/matka-cleaned.rule']),
       src('tampere', 'http://ekstrat.tampere.fi/ekstrat/ptdata/tamperefeed_deprecated.zip', false),
       src('LINKKI', 'https://tvv.fra1.digitaloceanspaces.com/209.zip', 'gtfs_shape_mapfit/fit_gtfs_stops.bash'),
       src('OULU', 'https://tvv.fra1.digitaloceanspaces.com/229.zip', false),
@@ -104,7 +104,7 @@ const routers = {
     'id': 'kela',
     'src': [
       src('kela', 'https://koontikartta.navici.com/tiedostot/gtfs_kela.zip', false),
-      src('matkahuolto', 'http://digitransit-proxy:8080/out/minfoapi.matkahuolto.fi/gtfs/kokomaa-fi/gtfs.zip', false, ['router-kela/gtfs-rules/no-onnibus-mega.rule'], { 'transfers.txt': null })
+      src('matkahuolto', 'http://digitransit-proxy:8080/out/minfoapi.matkahuolto.fi/gtfs/kokomaa-fi/gtfs.zip', false, ['kela/gtfs-rules/no-onnibus-mega.rule'], { 'transfers.txt': null })
     ],
     'osm': ['finland']
   }
@@ -116,7 +116,7 @@ if (!process.env.ROUTER || !routers[process.env.ROUTER]) {
 }
 const router = routers[process.env.ROUTER]
 
-// EXTRA_SRC format should be {"FOLI": {"url": "http://data.foli.fi/gtfs/gtfs.zip",  "fit": false, "rules": ["router-waltti/gtfs-rules/waltti.rule"], "routers": ["hsl", "finland"]}}
+// EXTRA_SRC format should be {"FOLI": {"url": "http://data.foli.fi/gtfs/gtfs.zip",  "fit": false, "rules": ["waltti/gtfs-rules/waltti.rule"], "routers": ["hsl", "finland"]}}
 // but you can only define, for example, new url and the other key value pairs will remain the same as they are defined in this file. "routers" is always a mandatory field.
 // It is also possible to add completely new src by defining object with unused id or to remove a src by defining "remove": true
 const extraSrc = process.env.EXTRA_SRC !== undefined ? JSON.parse(process.env.EXTRA_SRC) : {}
