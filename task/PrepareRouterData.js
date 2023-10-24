@@ -18,8 +18,9 @@ function createFile (config, fileName, sourcePath) {
 const extraUpdaters = process.env.EXTRA_UPDATERS !== undefined ? JSON.parse(process.env.EXTRA_UPDATERS) : {}
 
 // Prepares router-config.json data for data container and applies edits/additions made in EXTRA_UPDATERS env var
-function createAndProcessRouterConfig (configName) {
+function createAndProcessRouterConfig (router) {
   process.stdout.write(`copying router-config.json...\n`)
+  const configName = `${router.id}/router-config.json`
   const routerConfig = JSON.parse(fs.readFileSync(configName, 'utf8'))
   const updaters = routerConfig.updaters
   let usedPatches = []
@@ -62,14 +63,14 @@ module.exports = function (router) {
 
   stream.push(createFile(router, 'build-config.json', router.id))
   stream.push(createFile(router, 'otp-config.json', router.id))
-  stream.push(createAndProcessRouterConfig(`${router.id}/router-config.json`))
+  stream.push(createAndProcessRouterConfig(router))
   router.osm.forEach(osmId => {
     const name = osmId + '.pbf'
     stream.push(createFile(router, name, `${dataDir}/ready/osm`))
   })
   if (router.dem) {
     const name = router.dem + '.tif'
-    stream.push(createFile(router, name, `${dataDir}/ready/dem`)
+    stream.push(createFile(router, name, `${dataDir}/ready/dem`))
   }
   router.src.forEach(src => {
     const name = src.id + '-gtfs.zip'
