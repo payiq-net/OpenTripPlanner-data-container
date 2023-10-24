@@ -87,7 +87,7 @@ gulp.task('gtfs:fit', gulp.series('del:filter', () =>
     .pipe(gulp.dest(`${config.dataDir}/filter/gtfs`))))
 
 gulp.task('copyRules', () =>
-  gulp.src(`router-${config.router.id}/gtfs-rules/*`).pipe(gulp.dest(`${routerDir}/gtfs-rules`))
+  gulp.src(`${config.router.id}/gtfs-rules/*`).pipe(gulp.dest(`${routerDir}/gtfs-rules`))
 )
 
 // Filter gtfs files and move result to directory 'id'
@@ -135,7 +135,7 @@ gulp.task('seed', gulp.series(seed, 'dem:seed', 'osm:seed', 'gtfs:seed', 'seed:c
 gulp.task('router:del', () => del(`${config.dataDir}/build`))
 
 gulp.task('router:copy', gulp.series('router:del',
-  () => prepareRouterData(config.router).pipe(gulp.dest(`${config.dataDir}/build`))))
+  () => prepareRouterData(config.router).pipe(gulp.dest(`${config.dataDir}/build/${config.router.id}`))))
 
 gulp.task('foo', gulp.series('router:del', 'osm:del'))
 

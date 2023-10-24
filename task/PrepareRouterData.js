@@ -2,11 +2,11 @@ const through = require('through2')
 const Vinyl = require('vinyl')
 const fs = require('fs')
 const cloneable = require('cloneable-readable')
-const { routerDir } = require('../util')
 const { dataDir } = require('../config')
 
-function createFile (config, fileName, source) {
-  const name = `${config.id}/router/${fileName}`
+function createFile (config, fileName, sourcePath) {
+  const name = `$router/${fileName}`
+  const source = `${sourcePath}/${fileName}`
   process.stdout.write(`copying ${fileName}...\n`)
   const file = new Vinyl({ path: name, contents: cloneable(fs.createReadStream(source)) })
   return file
@@ -18,16 +18,15 @@ function createFile (config, fileName, source) {
 const extraUpdaters = process.env.EXTRA_UPDATERS !== undefined ? JSON.parse(process.env.EXTRA_UPDATERS) : {}
 
 // Prepares router-config.json data for data container and applies edits/additions made in EXTRA_UPDATERS env var
-function createAndProcessRouterConfig (config) {
+function createAndProcessRouterConfig (configName) {
   process.stdout.write(`copying router-config.json...\n`)
-  const source = `${routerDir(config)}/router-config.json`
-  const routerConfig = JSON.parse(fs.readFileSync(source, 'utf8'))
+  const routerConfig = JSON.parse(fs.readFileSync(configName, 'utf8'))
   const updaters = routerConfig.updaters
   let usedPatches = []
   for (let i = updaters.length - 1; i >= 0; i--) {
     const updaterId = updaters[i].id
     const updaterPatch = extraUpdaters[updaterId]
-    if (updaterPatch !== undefined && updaterPatch.routers !== undefined && updaterPatch.routers.includes(config.id)) {
+    if (updaterPatch !== undefined && updaterPatch.routers !== undefined && updaterPatch.routers.includes(router.id)) {
       if (updaterPatch.remove === true) {
         updaters.splice(i, 1)
       } else {
@@ -42,7 +41,7 @@ function createAndProcessRouterConfig (config) {
   Object.keys(extraUpdaters).forEach(id => {
     if (!usedPatches.includes(id)) {
       const routers = extraUpdaters[id].routers
-      if (routers !== undefined && routers.includes(config.id)) {
+      if (routers !== undefined && routers.includes(router.id)) {
         let patchClone = Object.assign({}, extraUpdaters[id])
         delete patchClone.remove
         delete patchClone.routers
@@ -50,7 +49,7 @@ function createAndProcessRouterConfig (config) {
       }
     }
   })
-  const name = `${config.id}/router/router-config.json`
+  const name = 'router/router-config.json'
   const file = new Vinyl({ path: name, contents: Buffer.from(JSON.stringify(routerConfig, null, 2)) })
   return file
 }
@@ -58,23 +57,23 @@ function createAndProcessRouterConfig (config) {
 /**
  * Make router data ready for inclusion in data container.
  */
-module.exports = function (config) {
+module.exports = function (router) {
   const stream = through.obj()
 
-  stream.push(createFile(config, 'build-config.json', `${routerDir(config)}/build-config.json`))
-  stream.push(createFile(config, 'otp-config.json', `${routerDir(config)}/otp-config.json`))
-  stream.push(createAndProcessRouterConfig(config))
-  config.osm.forEach(osmId => {
+  stream.push(createFile(router, 'build-config.json', router.id))
+  stream.push(createFile(router, 'otp-config.json', router.id))
+  stream.push(createAndProcessRouterConfig(`${router.id}/router-config.json`))
+  router.osm.forEach(osmId => {
     const name = osmId + '.pbf'
-    stream.push(createFile(config, name, `${dataDir}/ready/osm/${name}`))
+    stream.push(createFile(router, name, `${dataDir}/ready/osm`))
   })
-  if (config.dem) {
-    const name = config.dem + '.tif'
-    stream.push(createFile(config, name, `${dataDir}/ready/dem/${name}`))
+  if (router.dem) {
+    const name = router.dem + '.tif'
+    stream.push(createFile(router, name, `${dataDir}/ready/dem`)
   }
-  config.src.forEach(src => {
+  router.src.forEach(src => {
     const name = src.id + '-gtfs.zip'
-    stream.push(createFile(config, name, `${dataDir}/ready/gtfs/${name}`))
+    stream.push(createFile(router, name, `${dataDir}/ready/gtfs`))
   })
   stream.end()
 
