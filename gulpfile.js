@@ -87,7 +87,7 @@ gulp.task('gtfs:fit', gulp.series('del:filter', () =>
     .pipe(gulp.dest(`${config.dataDir}/filter/gtfs`))))
 
 gulp.task('copyRules', () =>
-  gulp.src(`${config.router.id}/gtfs-rules/*`).pipe(gulp.dest(`${routerDir}/gtfs-rules`))
+  gulp.src(`${config.router.id}/gtfs-rules/*`).pipe(gulp.dest(`${config.dataDir}/${config.router.id}/gtfs-rules`))
 )
 
 // Filter gtfs files and move result to directory 'id'
