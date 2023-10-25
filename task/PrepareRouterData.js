@@ -5,7 +5,7 @@ const cloneable = require('cloneable-readable')
 const { dataDir } = require('../config')
 
 function createFile (config, fileName, sourcePath) {
-  const name = `$router/${fileName}`
+  const name = `router/${fileName}`
   const source = `${sourcePath}/${fileName}`
   process.stdout.write(`copying ${fileName}...\n`)
   const file = new Vinyl({ path: name, contents: cloneable(fs.createReadStream(source)) })
