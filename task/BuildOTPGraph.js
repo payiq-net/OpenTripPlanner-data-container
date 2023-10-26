@@ -5,10 +5,6 @@ const { dataDir, constants } = require('../config.js')
 const graphBuildTag = process.env.OTP_TAG || 'v2'
 const JAVA_OPTS = process.env.JAVA_OPTS || '-Xmx12g'
 
-/*
- * node.js wrapper for building OTP graph
- */
-
 const buildGraph = function (router) {
   let lastLog = []
   const collectLog = (data) => {
@@ -21,7 +17,7 @@ const buildGraph = function (router) {
     const version = execSync(`docker pull hsldevcom/opentripplanner:${graphBuildTag};docker run --rm --entrypoint /bin/bash hsldevcom/opentripplanner:${graphBuildTag}  -c "java -jar otp-shaded.jar --version"`)
     const commit = version.toString().match(/commit: ([0-9a-f]+)/)[1]
 
-    const buildGraph = exec(`docker run -v ${dataDir}/build:/opt/opentripplanner/graphs --mount type=bind,source=/Users/vesameskanen/digitransit/otp/logback-include-extensions.xml,target=/opt/opentripplanner/logback-include-extensions.xml -e ROUTER_NAME=${process.env.ROUTER_NAME} --rm --entrypoint /bin/bash hsldevcom/opentripplanner:${graphBuildTag}  -c "java ${JAVA_OPTS} -jar otp-shaded.jar --build --save ./graphs/${router.id}/router"`, { maxBuffer: constants.BUFFER_SIZE })
+    const buildGraph = exec(`docker run -v ${dataDir}/build:/opt/opentripplanner/graphs --mount type=bind,source=/Users/vesameskanen/digitransit/otp/logback-include-extensions.xml,target=/opt/opentripplanner/logback-include-extensions.xml -e ROUTER_NAME=${process.env.ROUTER_NAME} --rm --entrypoint /bin/bash hsldevcom/opentripplanner:${graphBuildTag}  -c "java ${JAVA_OPTS} -jar otp-shaded.jar --build --save ./graphs/${router.id}"`, { maxBuffer: constants.BUFFER_SIZE })
     // const buildGraph = exec('ls -la');
     const buildLog = fs.openSync(`${dataDir}/build/${router.id}/build.log`, 'w+')
 
@@ -51,17 +47,16 @@ const buildGraph = function (router) {
 }
 
 const packData = function (commit, router) {
-  const dstPath = `${dataDir}/build/${router.id}`
-  const srcPath = `${dstPath}/router`
+  const path = `${dataDir}/build/${router.id}`
 
   const p1 = new Promise((resolve, reject) => {
     process.stdout.write('Creating zip file for router data\n')
-    const osmFiles = router.osm.map(osm => `${dataDir}/build/${router.id}/router/${osm}.pbf`)
+    const osmFiles = router.osm.map(osm => `${path}/${osm}.pbf`)
 
-    // create zip file for the source data
-    // include all gtfs, osm, dem data and otp configs
-    zipWithGlob(`${dstPath}/router-${router.id}.zip`,
-      [`${srcPath}/*.zip`, `${srcPath}/*.json`, ...osmFiles, `${srcPath}/${router.dem}.tif`],
+    // create a zip file which includes all data required
+    // for graph build and routing: gtfs, osm, dem + otp configs
+    zipWithGlob(`${path}/router-${router.id}.zip`,
+      [`${path}/*gtfs.zip`, `${path}/*.json`, ...osmFiles, `${path}/${router.dem}.tif`],
       `router-${router.id}`,
       (err) => {
         if (err) {
@@ -73,10 +68,10 @@ const packData = function (commit, router) {
   })
   const p2 = new Promise((resolve, reject) => {
     process.stdout.write('Creating zip file for otp graph\n')
-    // create zip file for the graph
+    // create a zip file for routing only
     // include  graph.obj, router-config.json and otp-config.json
-    zipWithGlob(`${dstPath}/graph-${router.id}-${commit}.zip`,
-      [`${srcPath}/graph.obj`, `${srcPath}/router-config.json`, `${srcPath}/otp-config.json`],
+    zipWithGlob(`${path}/graph-${router.id}-${commit}.zip`,
+      [`${path}/graph.obj`, `${path}/router-config.json`, `${path}/otp-config.json`],
       router.id,
       (err) => {
         if (err) {
@@ -87,7 +82,7 @@ const packData = function (commit, router) {
       })
   })
   const p3 = new Promise((resolve, reject) => {
-    fs.writeFile(`${dstPath}/version.txt`, new Date().toISOString(), function (err) {
+    fs.writeFile(`${path}/version.txt`, new Date().toISOString(), function (err) {
       if (err) {
         reject(err)
       } else {
@@ -101,6 +96,6 @@ const packData = function (commit, router) {
 module.exports = {
   buildOTPGraphTask: router => buildGraph(router)
     .then(resp => packData(resp.commit, resp.router))
-    .then(() => otpMatching(`${dataDir}/build/${router.id}/router`))
+    .then(() => otpMatching(`${dataDir}/build/${router.id}`))
     .then(() => process.stdout.write('Graph build SUCCESS\n'))
 }

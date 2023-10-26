@@ -5,11 +5,8 @@ const cloneable = require('cloneable-readable')
 const { dataDir } = require('../config')
 
 function createFile (config, fileName, sourcePath) {
-  const name = `router/${fileName}`
-  const source = `${sourcePath}/${fileName}`
   process.stdout.write(`copying ${fileName}...\n`)
-  const file = new Vinyl({ path: name, contents: cloneable(fs.createReadStream(source)) })
-  return file
+  return new Vinyl({ path: fileName, contents: cloneable(fs.createReadStream(`${sourcePath}/${fileName}`)) })
 }
 
 // EXTRA_UPDATERS format should be {"turku-alerts": {"type": "real-time-alerts", "frequencySec": 30, "url": "https://foli-beta.nanona.fi/gtfs-rt/reittiopas", "feedId": "FOLI", "fuzzyTripMatching": true, "routers": ["waltti"]}}
@@ -50,8 +47,7 @@ function createAndProcessRouterConfig (router) {
       }
     }
   })
-  const name = 'router/router-config.json'
-  const file = new Vinyl({ path: name, contents: Buffer.from(JSON.stringify(routerConfig, null, 2)) })
+  const file = new Vinyl({ path: 'router-config.json', contents: Buffer.from(JSON.stringify(routerConfig, null, 2)) })
   return file
 }
 
