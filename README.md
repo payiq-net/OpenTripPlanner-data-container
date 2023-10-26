@@ -1,4 +1,4 @@
-# Build process for OpenTripPlanner-data-container 
+# Build process for OpenTripPlanner-data-container
 
 [![Build](https://github.com/hsldevcom/OpenTripPlanner-data-container/workflows/Process%20master%20push%20or%20pr/badge.svg?branch=master)](https://github.com/HSLdevcom/OpenTripPlanner-data-container/actions)
 
@@ -28,11 +28,12 @@ update osm data:
   `gulp osm:update`
 
 download new gtfs data for waltti:
-  `ROUTERS=waltti gulp gtfs:dl`
+  `ROUTER_NAME=waltti gulp gtfs:dl`
 
 #### Configuration
 It is possible to change the behaviour of the data builder by defining environment variables.
 
+* "ROUTER_NAME" defines which data container will be built and deployed.
 * "DOCKER_USER" defines username for authenticating to docker hub.
 * "DOCKER_AUTH" defines password for authenticating to docker hub.
 * (Optional, default latest and tag based on date) "DOCKER_TAG" defines what will be the updated docker tag of the data container images in the remote container registry.
@@ -40,9 +41,7 @@ It is possible to change the behaviour of the data builder by defining environme
 * (Optional, default latest) "SEED_TAG" defines what version of data container should be used for seeding.
 * (Optional, default latest) "OTP_TAG" defines what version of OTP is used for testing and building graphs.
 * (Optional, default latest) "TOOLS_TAG" defines what version of otp-data-tools image is used for testing.
-* (Optional, default 'finland, waltti, hsl, waltti-alt') "ROUTERS" defines which data containers are being built and deployed.
-* (Optional, default ${process.cwd()}/data) "DATA" defines base path for data directories in container's file system.
-* (Optional, default '0 0 3 * * *' "CRON" defines cronjob pattern when data build is being run. Uses local time.
+* (Optional) "CRON" defines cronjob pattern when data build is being run. Uses local time.
 * (Optional, default dev) "BUILDER_TYPE" used as a postfix to slack bot name
 * (Optional) "SLACK_CHANNEL_ID" defines to which slack channel the messages are sent to
 * (Optional) "SLACK_ACCESS_TOKEN" bearer token for slack messaging
