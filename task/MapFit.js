@@ -2,7 +2,7 @@ const through = require('through2')
 const fs = require('fs')
 const path = require('path')
 const cloneable = require('cloneable-readable')
-const { dataDir, hostDataDir, dataToolImage, constants } = require('../config.js')
+const { dataDir, dataToolImage, constants } = require('../config.js')
 const debug = require('debug')('MAPFit')
 const { postSlackMessage } = require('../util')
 /*
@@ -15,7 +15,7 @@ const run = function (cmd, osmExtract, src, dst) {
   const lastLog = []
   let success = true
   const p = new Promise((resolve) => {
-    const dcmd = `docker pull ${dataToolImage}; docker run --rm -e TCMALLOC_LARGE_ALLOC_REPORT_THRESHOLD=2147483648 -v ${hostDataDir}:/data --rm ${dataToolImage} ${cmd} ${osmExtract} +init=epsg:3067 /${src} /${dst}`
+    const dcmd = `docker pull ${dataToolImage}; docker run --rm -e TCMALLOC_LARGE_ALLOC_REPORT_THRESHOLD=2147483648 -v ${dataDir}:/data --rm ${dataToolImage} ${cmd} ${osmExtract} +init=epsg:3067 /${src} /${dst}`
     const fit = exec(dcmd, { maxBuffer: constants.BUFFER_SIZE })
 
     const checkError = (data) => {

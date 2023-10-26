@@ -40,7 +40,6 @@ It is possible to change the behaviour of the data builder by defining environme
 * (Optional, default latest) "SEED_TAG" defines what version of data container should be used for seeding.
 * (Optional, default latest) "OTP_TAG" defines what version of OTP is used for testing and building graphs.
 * (Optional, default latest) "TOOLS_TAG" defines what version of otp-data-tools image is used for testing.
-* (Optional, default ${process.cwd()}/data) "HOST_DATA" defines base path for volume directories.
 * (Optional, default 'finland, waltti, hsl, waltti-alt') "ROUTERS" defines which data containers are being built and deployed.
 * (Optional, default ${process.cwd()}/data) "DATA" defines base path for data directories in container's file system.
 * (Optional, default '0 0 3 * * *' "CRON" defines cronjob pattern when data build is being run. Uses local time.
