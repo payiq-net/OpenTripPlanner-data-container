@@ -3,7 +3,7 @@ set +e
 
 # set defaults
 ORG=${ORG:-hsldevcom}
-ROUTER_NAME=${1:-hsl}
+ROUTER_NAME=${ROUTER_NAME:-hsl}
 DOCKER_IMAGE=$ORG/opentripplanner-data-container-$ROUTER_NAME:test
 
 echo "Making sure there are no old test containers or image available"

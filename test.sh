@@ -4,10 +4,11 @@ set +e
 # set defaults
 ORG=${ORG:-hsldevcom}
 JAVA_OPTS=${JAVA_OPTS:--Xmx9g}
-ROUTER_NAME=${1:-hsl}
-TEST_TAG=${2:-v2}
-TOOLS_TAG=${3:-v3}
+ROUTER_NAME=${ROUTER_NAME:-hsl}
+OTP_TAG=${OTP_TAG:-v2}
+TOOLS_TAG=${TOOLS_TAG=:-v3}
 DOCKER_IMAGE=$ORG/opentripplanner-data-container-$ROUTER_NAME:test
+[name, process.env.OTP_TAG || 'v2', process.env.TOOLS_TAG || ''],
 
 function shutdown() {
   echo shutting down
@@ -23,7 +24,7 @@ sleep 120
 
 echo "Starting otp..."
 
-docker run --rm --name otp-$ROUTER_NAME -e ROUTER_NAME=$ROUTER_NAME -e JAVA_OPTS="$JAVA_OPTS" -e ROUTER_DATA_CONTAINER_URL=http://otp-data:8080/ --link otp-data-$ROUTER_NAME:otp-data $ORG/opentripplanner:$TEST_TAG > /dev/stdout &
+docker run --rm --name otp-$ROUTER_NAME -e ROUTER_NAME=$ROUTER_NAME -e JAVA_OPTS="$JAVA_OPTS" -e ROUTER_DATA_CONTAINER_URL=http://otp-data:8080/ --link otp-data-$ROUTER_NAME:otp-data $ORG/opentripplanner:$OTP_TAG > /dev/stdout &
 
 sleep 5
 

@@ -6,7 +6,7 @@
 #DOCKER_AUTH
 set -e
 
-ROUTER_NAME=${1:-hsl}
+ROUTER_NAME=${ROUTER_NAME:-hsl}
 DATE=$(date +"%Y-%m-%dT%H.%M.%S")
 
 ORG=${ORG:-hsldevcom}
