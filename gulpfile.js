@@ -75,14 +75,13 @@ gulp.task('gtfs:dl', gulp.series('del:fit', () => dl(config.router.src)
 ))
 
 // Add feedId to gtfs files in id dir, and moves files to directory 'ready'
-gulp.task('gtfs:id', () =>
-  gulp.src(`${config.dataDir}/id/gtfs/*`)
-    .pipe(setFeedIdTask())
-    .pipe(gulp.dest(`${config.dataDir}/ready/gtfs`)))
+gulp.task('gtfs:id', () => gulp.src(`${config.dataDir}/id/gtfs/*`)
+  .pipe(setFeedIdTask())
+  .pipe(gulp.dest(`${config.dataDir}/ready/gtfs`)))
 
 // Run MapFit on gtfs files (based on config) and moves files to directory 'filter'
-gulp.task('gtfs:fit', gulp.series('del:filter', () =>
-  gulp.src(`${config.dataDir}/fit/gtfs/*`)
+gulp.task('gtfs:fit', gulp.series('del:filter',
+  () => gulp.src(`${config.dataDir}/fit/gtfs/*`)
     .pipe(fitGTFSTask(config.gtfsMap))
     .pipe(gulp.dest(`${config.dataDir}/filter/gtfs`))))
 
@@ -110,18 +109,18 @@ gulp.task('gtfs:fallback', () => {
 
 gulp.task('gtfs:del', () => del([`${config.dataDir}/seed/gtfs`, `${config.dataDir}/ready/gtfs`]))
 
-gulp.task('gtfs:seed', gulp.series('gtfs:del', () =>
-  gulp.src(`${seedSourceDir}/*-gtfs.zip`).pipe(gulp.dest(`${config.dataDir}/seed/gtfs`)).pipe(gulp.dest(`${config.dataDir}/ready/gtfs`))))
+gulp.task('gtfs:seed', gulp.series('gtfs:del',
+  () => gulp.src(`${seedSourceDir}/*-gtfs.zip`).pipe(gulp.dest(`${config.dataDir}/seed/gtfs`)).pipe(gulp.dest(`${config.dataDir}/ready/gtfs`))))
 
 gulp.task('osm:del', () => del(`${config.dataDir}/ready/osm`))
 
-gulp.task('osm:seed', gulp.series('osm:del', () =>
-  gulp.src(`${seedSourceDir}/*.pbf`).pipe(gulp.dest(`${config.dataDir}/ready/osm`))))
+gulp.task('osm:seed', gulp.series('osm:del',
+  () => gulp.src(`${seedSourceDir}/*.pbf`).pipe(gulp.dest(`${config.dataDir}/ready/osm`))))
 
 gulp.task('dem:del', () => del(`${config.dataDir}/ready/dem`))
 
-gulp.task('dem:seed', gulp.series('dem:del', () =>
-  gulp.src(`${seedSourceDir}/*.tif`).pipe(gulp.dest(`${config.dataDir}/ready/dem`))))
+gulp.task('dem:seed', gulp.series('dem:del',
+  () => gulp.src(`${seedSourceDir}/*.tif`).pipe(gulp.dest(`${config.dataDir}/ready/dem`))))
 
 gulp.task('seed:cleanup', () => del([seedSourceDir, `${config.dataDir}/*.zip`]))
 
@@ -140,7 +139,6 @@ gulp.task('router:copy', gulp.series('router:del',
 gulp.task('foo', gulp.series('router:del', 'osm:del'))
 
 gulp.task('router:buildGraph', gulp.series('router:copy', () => {
-  gulp.src('otp-data-container/*')
-    .pipe(gulp.dest(`${config.dataDir}/build/${config.router.id}`))
+  gulp.src('otp-data-container/*').pipe(gulp.dest(`${config.dataDir}/build/${config.router.id}`))
   return buildOTPGraphTask(config.router)
 }))
