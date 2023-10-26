@@ -13,6 +13,6 @@ RUN printf '#!/bin/sh\ngrep -v "#" /etc/lighttpd/lighttpd.conf |grep port > /dev
 ENV PORT="8080"
 EXPOSE 8080
 
-ADD * /var/www/localhost/htdocs/
+ADD . /var/www/localhost/htdocs/
 
 CMD /bin/ash -c "/usr/sbin/startlighttpd"
