@@ -1,4 +1,5 @@
 const fs = require('fs')
+const del = require('del')
 const { exec, execSync } = require('child_process')
 const { zipWithGlob, otpMatching, postSlackMessage } = require('../util')
 const { dataDir, constants } = require('../config.js')
@@ -77,6 +78,7 @@ const packData = function (commit, router) {
         if (err) {
           reject(err)
         } else {
+          del(`${path}/graph.obj`) // no longer needed
           resolve()
         }
       })
