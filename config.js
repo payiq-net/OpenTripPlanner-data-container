@@ -110,11 +110,11 @@ const routers = {
   }
 }
 
-if (!process.env.ROUTER || !routers[process.env.ROUTER]) {
+if (!process.env.ROUTER_NAME || !routers[process.env.ROUTER_NAME]) {
   process.stdout.write('Invalid ROUTER variable \n')
   process.exit(1)
 }
-const router = routers[process.env.ROUTER]
+const router = routers[process.env.ROUTER_NAME]
 
 // EXTRA_SRC format should be {"FOLI": {"url": "http://data.foli.fi/gtfs/gtfs.zip",  "fit": false, "rules": ["waltti/gtfs-rules/waltti.rule"], "routers": ["hsl", "finland"]}}
 // but you can only define, for example, new url and the other key value pairs will remain the same as they are defined in this file. "routers" is always a mandatory field.
