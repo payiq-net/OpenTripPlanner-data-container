@@ -18,7 +18,7 @@ const { renameGTFSFile } = require('./task/GTFSRename')
 const { replaceGTFSFilesTask } = require('./task/GTFSReplace')
 const { moveTask } = require('./task/MoveTask')
 
-const routerDir = `${config.dataDir}/router-${config.router.id}` // e.g. data/router-hsl
+const seedSourceDir = `${config.dataDir}/router-${config.router.id}` // e.g. data/router-hsl
 
 /**
  * Download and test new osm data
@@ -111,19 +111,19 @@ gulp.task('gtfs:fallback', () => {
 gulp.task('gtfs:del', () => del([`${config.dataDir}/seed/gtfs`, `${config.dataDir}/ready/gtfs`]))
 
 gulp.task('gtfs:seed', gulp.series('gtfs:del', () =>
-  gulp.src(`${routerDir}/*-gtfs.zip`).pipe(gulp.dest(`${config.dataDir}/seed/gtfs`)).pipe(gulp.dest(`${config.dataDir}/ready/gtfs`))))
+  gulp.src(`${seedSourceDir}/*-gtfs.zip`).pipe(gulp.dest(`${config.dataDir}/seed/gtfs`)).pipe(gulp.dest(`${config.dataDir}/ready/gtfs`))))
 
 gulp.task('osm:del', () => del(`${config.dataDir}/ready/osm`))
 
 gulp.task('osm:seed', gulp.series('osm:del', () =>
-  gulp.src(`${routerDir}/*.pbf`).pipe(gulp.dest(`${config.dataDir}/ready/osm`))))
+  gulp.src(`${seedSourceDir}/*.pbf`).pipe(gulp.dest(`${config.dataDir}/ready/osm`))))
 
 gulp.task('dem:del', () => del(`${config.dataDir}/ready/dem`))
 
 gulp.task('dem:seed', gulp.series('dem:del', () =>
-  gulp.src(`${routerDir}/*.tif`).pipe(gulp.dest(`${config.dataDir}/ready/dem`))))
+  gulp.src(`${seedSourceDir}/*.tif`).pipe(gulp.dest(`${config.dataDir}/ready/dem`))))
 
-gulp.task('seed:cleanup', () => del([routerDir, `${config.dataDir}/*.zip`]))
+gulp.task('seed:cleanup', () => del([seedSourceDir, `${config.dataDir}/*.zip`]))
 
 /**
  * Seed DEM, GTFS & OSM data with data from previous data-containes to allow
