@@ -5,8 +5,8 @@ set +e
 ORG=${ORG:-hsldevcom}
 JAVA_OPTS=${JAVA_OPTS:--Xmx9g}
 ROUTER_NAME=${1:-hsl}
-TEST_TAG=${2:-latest}
-TOOLS_TAG=${3:-latest}
+TEST_TAG=${2:-v2}
+TOOLS_TAG=${3:-v3}
 DOCKER_IMAGE=$ORG/opentripplanner-data-container-$ROUTER_NAME:test
 
 function shutdown() {
@@ -20,14 +20,13 @@ echo -e "\n##### Testing $ROUTER_NAME ($DOCKER_IMAGE)#####\n"
 echo "Starting data container..."
 docker run --rm --name otp-data-$ROUTER_NAME $DOCKER_IMAGE > /dev/stdout &
 sleep 120
+
 echo "Starting otp..."
-if [ -v TEST_TAG ] && [ "$TEST_TAG" != "undefined" ]; then
-  docker run --rm --name otp-$ROUTER_NAME -e ROUTER_NAME=$ROUTER_NAME -e JAVA_OPTS="$JAVA_OPTS" -e ROUTER_DATA_CONTAINER_URL=http://otp-data:8080/ --link otp-data-$ROUTER_NAME:otp-data $ORG/opentripplanner:$TEST_TAG > /dev/stdout &
-  sleep 5
-else
-  docker run --rm --name otp-$ROUTER_NAME -e ROUTER_NAME=$ROUTER_NAME -e JAVA_OPTS="$JAVA_OPTS" -e ROUTER_DATA_CONTAINER_URL=http://otp-data:8080/ --link otp-data-$ROUTER_NAME:otp-data $ORG/opentripplanner:latest > /dev/stdout &
-  sleep 5
-fi
+
+docker run --rm --name otp-$ROUTER_NAME -e ROUTER_NAME=$ROUTER_NAME -e JAVA_OPTS="$JAVA_OPTS" -e ROUTER_DATA_CONTAINER_URL=http://otp-data:8080/ --link otp-data-$ROUTER_NAME:otp-data $ORG/opentripplanner:$TEST_TAG > /dev/stdout &
+
+sleep 5
+
 echo "Getting otp ip.."
 timeout=$(($(date +%s) + 480))
 until IP=$(docker inspect --format '{{ .NetworkSettings.IPAddress }}' otp-$ROUTER_NAME) || [[ $(date +%s) -gt $timeout ]]; do sleep 1;done;

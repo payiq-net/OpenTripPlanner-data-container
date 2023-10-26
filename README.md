@@ -38,9 +38,9 @@ It is possible to change the behaviour of the data builder by defining environme
 * "DOCKER_AUTH" defines password for authenticating to docker hub.
 * (Optional, default latest and tag based on date) "DOCKER_TAG" defines what will be the updated docker tag of the data container images in the remote container registry.
 * (Optional, default hsldevcom) "ORG" defines what organization images belong to in the remote container registry.
-* (Optional, default latest) "SEED_TAG" defines what version of data container should be used for seeding.
-* (Optional, default latest) "OTP_TAG" defines what version of OTP is used for testing and building graphs.
-* (Optional, default latest) "TOOLS_TAG" defines what version of otp-data-tools image is used for testing.
+* (Optional, default v3) "SEED_TAG" defines what version of data container should be used for seeding.
+* (Optional, default v2) "OTP_TAG" defines what version of OTP is used for testing and building graphs.
+* (Optional, default v3) "TOOLS_TAG" defines what version of otp-data-tools image is used for testing.
 * (Optional) "CRON" defines cronjob pattern when data build is being run. Uses local time.
 * (Optional, default dev) "BUILDER_TYPE" used as a postfix to slack bot name
 * (Optional) "SLACK_CHANNEL_ID" defines to which slack channel the messages are sent to
