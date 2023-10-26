@@ -108,7 +108,7 @@ to verify that the data container looks ok. If tests pass the fresh data contain
 Normally when the application is running (as a container) the index.js is used.
 It runs the data updating process on a schedule specified as a cron pattern. Data build can be executed immediately
 by attaching to the builder container with bash 'docker exec -i -t <dockerid> /bin/bash' and then
-exexuting the command 'node index.js once'. The end result of the build is 2 docker containers uploaded into dockerhub.
+exexuting the command 'node index.js'. The end result of the build is 2 docker containers uploaded into dockerhub.
 Digitransit-deployer detects the changes and restarts OTP instances, so that new data becomes in use.
 
 Each data container image runs a http server listening to port 8080, serving both a gtfs data bundle and a pre-built graph:

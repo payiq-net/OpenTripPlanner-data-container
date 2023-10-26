@@ -19,4 +19,4 @@ ADD otp-data-container /opt/otp-data-builder/otp-data-container
 
 RUN npm install
 
-CMD ( dockerd-entrypoint.sh & ) && sleep 30 && unset DOCKER_HOST && node index.js once
+CMD ( dockerd-entrypoint.sh & ) && sleep 30 && unset DOCKER_HOST && node index.js
