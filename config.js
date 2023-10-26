@@ -178,7 +178,7 @@ module.exports = {
   osm: router.osm.map(id => { return { id, url: osm[id] } }), // array of id, url pairs
   dem: router.dem ? [{ id: router.dem, url: dem[router.dem] }] : null, // currently only one DEM file is used
   dataToolImage: `hsldevcom/otp-data-tools:${process.env.TOOLS_TAG || 'latest'}`,
-  dataDir: process.env.DATA || `${process.cwd()}/data`,
+  dataDir: `${process.cwd()}/data`,
   constants,
   passOBAfilter
 }
