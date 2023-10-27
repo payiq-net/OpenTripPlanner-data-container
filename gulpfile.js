@@ -100,12 +100,9 @@ gulp.task('gtfs:filter', gulp.series(
 ))
 
 // move listed packages from seed to ready
-gulp.task('gtfs:fallback', () => {
-  if (global.failedFeeds) { // comma separated list of feed ids
-    const feedMatcher = `(${global.failedFeeds.replaceAll(',', '*|')}*)` // e.g. (HSL*|tampere*)
-    gulp.src(`${config.dataDir}/seed/gtfs/${feedMatcher}`).pipe(gulp.dest(`${config.dataDir}/ready/gtfs`))
-  }
-})
+gulp.task('gtfs:fallback', () =>
+    gulp.src(`${config.dataDir}/seed/gtfs/${global.failedFeeds}`).pipe(gulp.dest(`${config.dataDir}/ready/gtfs`))
+)
 
 gulp.task('gtfs:del', () => del([`${config.dataDir}/seed/gtfs`, `${config.dataDir}/ready/gtfs`]))
 

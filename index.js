@@ -86,9 +86,11 @@ async function update () {
     if (fs.existsSync(logFile)) {
       hasFailures = true
       global.failedFeeds = fs.readdirSync(logFile)
-      postSlackMessage(`GTFS packages ${global.failedFeeds} rejected, using old data`)
+      postSlackMessage(`GTFS packages ${global.failedFeeds} rejected, keep current data`)
 
       // use seeded packages for failed feeds
+      const feeds = fs.readFileSync(logFile, 'utf8') // comma separated list of feed ids
+      global.failedFeeds = `(${feeds.replace(/,/g, '*|')}*)` // e.g. (HSL*|tampere*)
       await start('gtfs:fallback')
 
       // rebuild the graph
