@@ -21,12 +21,12 @@ const updateGTFS = ['gtfs:dl', 'gtfs:fit', 'gtfs:filter', 'gtfs:id']
 if (!process.env.NOSEED) {
   start('seed').then(() => {
     process.stdout.write('Seeded.\n')
-      if (process.env.CRON) {
-	process.stdout.write(`Starting timer with pattern: ${process.env.CRON}\n`)
+    if (process.env.CRON) {
+      process.stdout.write(`Starting timer with pattern: ${process.env.CRON}\n`)
 	new CronJob(process.env.CRON, update, null, true, 'Europe/Helsinki') // eslint-disable-line
-      } else {
-	update()
-      }
+    } else {
+      update()
+    }
   }).catch((err) => {
     process.stdout.write(err + '\n')
     process.exit(1)
