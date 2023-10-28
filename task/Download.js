@@ -24,7 +24,6 @@ module.exports = function (entries) {
     const downloadHandler = (err, res, body) => {
       if (err || res.statusCode !== 200) {
         postSlackMessage(`${entry.url} Download failed: ${err} :boom:`)
-        process.stdout.write(entry.url + ' Download FAILED\n')
         incProcessed()
         return
       }

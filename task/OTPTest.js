@@ -38,8 +38,6 @@ function testWithOTP (otpFile, quiet = false) {
                 process.stdout.write(otpFile + ' Test SUCCESS\n')
               } else {
                 const log = lastLog.join('')
-                process.stdout.write(otpFile + ` Test FAILED (${c})\n`)
-                process.stdout.write(otpFile + ': ' + lastLog.join('') + '\n')
                 postSlackMessage(`${otpFile} test failed: ${log} :boom:`)
                 resolve(false)
               }
@@ -65,8 +63,6 @@ function testWithOTP (otpFile, quiet = false) {
             })
           } catch (e) {
             const log = lastLog.join('')
-            process.stdout.write(otpFile + ` Test FAILED (${e})\n`)
-            process.stdout.write(otpFile + ': ' + log + '\n')
             postSlackMessage(`${otpFile} test failed: ${log} :boom:`)
             fse.removeSync(folder)
             reject(e)

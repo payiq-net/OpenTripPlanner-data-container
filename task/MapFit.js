@@ -40,8 +40,6 @@ const run = function (cmd, osmExtract, src, dst) {
       } else {
         const log = lastLog.join('')
         postSlackMessage(`Running command ${cmd} on ${src} failed: ${log} :boom:`)
-        process.stdout.write(`Running command ${cmd} failed:\n`)
-        process.stdout.write(`${src} ${log}\n`)
         resolve(false)
       }
     })

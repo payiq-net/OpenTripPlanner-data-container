@@ -32,6 +32,7 @@ const zipWithGlob = (zipFile, glob, zipDir, cb) => {
 }
 
 async function postSlackMessage (messageText) {
+  process.stdout.write(`${messageText}\n`) // write important messages also to log
   try {
     const response = await promisifiedRequest({
       method: 'POST',
@@ -59,6 +60,7 @@ async function postSlackMessage (messageText) {
 }
 
 async function updateSlackMessage (messageText) {
+  process.stdout.write(`${messageText}\n`)
   try {
     const response = await promisifiedRequest({
       method: 'POST',
@@ -93,7 +95,7 @@ async function updateSlackMessage (messageText) {
 const compareSizes = (localFile, newFileSize, maxDifference) => {
   return new Promise((resolve, reject) => {
     if (newFileSize === undefined) {
-      return resolve()
+      reject('error') // eslint-disable-line
     }
     if (!fs.existsSync(localFile)) {
       // download new file as local file does not exist

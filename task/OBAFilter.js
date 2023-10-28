@@ -46,8 +46,6 @@ function OBAFilter (src, dst, rule) {
       } else {
         const log = lastLog.join('')
         postSlackMessage(`Running command ${cmd} on ${src} failed: ${log} :boom:`)
-        process.stdout.write(`Running command ${cmd} failed: ${log}.\n`)
-        process.stdout.write(`${src} ${log}\n`)
         resolve(false)
       }
     })
