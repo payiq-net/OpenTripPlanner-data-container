@@ -100,9 +100,10 @@ gulp.task('gtfs:filter', gulp.series(
 ))
 
 // move listed packages from seed to ready
-gulp.task('gtfs:fallback', () =>
-    gulp.src(`${config.dataDir}/seed/gtfs/${global.failedFeeds}`).pipe(gulp.dest(`${config.dataDir}/ready/gtfs`))
-)
+gulp.task('gtfs:fallback', () => {
+  const sources = global.failedFeeds.split(',').map(feed => `${config.dataDir}/seed/gtfs/${feed}-gtfs.zip`)
+  return gulp.src(sources).pipe(gulp.dest(`${config.dataDir}/ready/gtfs`))
+})
 
 gulp.task('gtfs:del', () => del([`${config.dataDir}/seed/gtfs`, `${config.dataDir}/ready/gtfs`]))
 
