@@ -1,22 +1,13 @@
 const gulp = require('gulp')
 require('./gulpfile')
 const { promisify } = require('util')
-const everySeries = require('async/everySeries')
 const { execFileSync } = require('child_process')
 const { postSlackMessage, updateSlackMessage } = require('./util')
 const CronJob = require('cron').CronJob
 const fs = require('fs')
 const { router } = require('./config')
 
-const every = promisify((list, task, cb) => {
-  everySeries(list, task, function (err, result) {
-    cb(err, result)
-  })
-})
-
 const start = promisify((task, cb) => gulp.series(task)(cb))
-
-const updateGTFS = ['gtfs:dl', 'gtfs:fit', 'gtfs:filter', 'gtfs:id']
 
 if (!process.env.NOSEED) {
   start('seed').then(() => {
@@ -65,9 +56,7 @@ async function update () {
     postSlackMessage('OSM data update failed, using previous version :boom:')
   }
 
-  await every(updateGTFS, function (task, callback) {
-    start(task).then(() => { callback(null, true) })
-  })
+  await start('gtfs:update')
 
   const name = router.id
   try {
@@ -106,7 +95,7 @@ async function update () {
       updateSlackMessage(`${name} data updated. :white_check_mark:`)
     }
   } catch (E) {
-    postSlackMessage(`${name} data update failed: ` + E.message)
+    postSlackMessage(`${name} GTFS data update failed: ` + E.message)
     updateSlackMessage('Something went wrong with the data update. More information in the reply. :boom:')
   }
 }

@@ -88,6 +88,9 @@ Runs configured filterings. Copies data to directory 'data/id/gtfs'.
 6. gtfs:id
 Sets the gtfs feed id to <id> and copies data to directory 'data/ready/gtfs'.
 
+
+Steps 2. - 6. can also be run together using a single gtfs:update command.
+
 Building the router from available (seeded or downloaded and processed) data:
 
 7. router:buildGraph
