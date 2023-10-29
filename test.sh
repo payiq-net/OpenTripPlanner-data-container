@@ -25,9 +25,8 @@ sleep 10
 
 echo Starting otp...
 
-docker run --rm --name otp-$ROUTER_NAME -e ROUTER_NAME=$ROUTER_NAME -e JAVA_OPTS="$JAVA_OPTS" -e ROUTER_DATA_CONTAINER_URL=http://otp-data:8080/ --link otp-data-$ROUTER_NAME:otp-data $ORG/opentripplanner:$OTP_TAG > /dev/stdout &
-
-sleep 5
+docker run --rm --name otp-$ROUTER_NAME -p 9080:8080 -e ROUTER_NAME=$ROUTER_NAME -e JAVA_OPTS="$JAVA_OPTS" -e ROUTER_DATA_CONTAINER_URL=http://otp-data:8080/ --link otp-data-$ROUTER_NAME:otp-data --mount type=bind,source=$(pwd)/logback-include-extensions.xml,target=/opt/opentripplanner/logback-include-extensions.xml $ORG/opentripplanner:$OTP_TAG > /dev/stdout &> /dev/null &
+sleep 20
 
 echo Getting otp ip..
 timeout=$(($(date +%s) + 480))
@@ -41,7 +40,8 @@ fi
 
 echo Got otp ip: $IP
 
-OTP_URL=http://$IP:8080/otp/routers/default
+# OTP_URL=http://$IP:8080/otp/routers/default
+OTP_URL=http://localhost:9080/otp/routers/default
 
 for (( c=1; c<=10; c++ ));do
   STATUS_CODE=$(curl -s -o /dev/null -w "%{http_code}" $OTP_URL || true)
@@ -59,14 +59,15 @@ for (( c=1; c<=10; c++ ));do
     fi
   else
     echo waiting for service
-    sleep 30
+    sleep 20
   fi
 done
 
 echo running otpqa
 
-docker pull $TOOL_IMAGE
-docker run --name otp-data-tools $TOOL_IMAGE /bin/sh -c "cd OTPQA; python otpprofiler_json.py $OTP_URL $ROUTER_NAME $SKIPPED_SITES"
+#docker pull $TOOL_IMAGE
+docker run --name otp-data-tools --link otp-$ROUTER_NAME:otphost $TOOL_IMAGE /bin/sh -c "cd OTPQA; python otpprofiler_json.py http://otphost:8080/otp/routers/default $ROUTER_NAME $SKIPPED_SITES"
+
 if [ $? == 0 ]; then
   echo getting feed log from container
   docker cp otp-data-tools:/OTPQA/failed_feeds.txt . &> /dev/null
