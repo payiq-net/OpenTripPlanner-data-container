@@ -9,19 +9,9 @@ const { router } = require('./config')
 
 const start = promisify((task, cb) => gulp.series(task)(cb))
 
-if (!process.env.NOSEED) {
-  start('seed').then(() => {
-    process.stdout.write('Seeded.\n')
-    if (process.env.CRON) {
-      process.stdout.write(`Starting timer with pattern: ${process.env.CRON}\n`)
-	new CronJob(process.env.CRON, update, null, true, 'Europe/Helsinki') // eslint-disable-line
-    } else {
-      update()
-    }
-  }).catch((err) => {
-    process.stdout.write(err + '\n')
-    process.exit(1)
-  })
+if (process.env.CRON) {
+  process.stdout.write(`Starting timer with pattern: ${process.env.CRON}\n`)
+  new CronJob(process.env.CRON, update, null, true, 'Europe/Helsinki') // eslint-disable-line
 } else {
   update()
 }
@@ -30,6 +20,11 @@ async function update () {
   const slackResponse = await postSlackMessage('Starting data build')
   if (slackResponse.ok) {
     global.messageTimeStamp = slackResponse.ts
+  }
+
+  if (!process.env.NOSEED) {
+    await start('seed');
+    process.stdout.write('Seeded.\n')
   }
 
   await start('dem:update')
