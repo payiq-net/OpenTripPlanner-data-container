@@ -11,11 +11,11 @@ const del = require('del')
 * @returns {Promise} A Promise that resolves when the operation is complete.
 */
 function restoreFiles (zipFile, dataDir, filesToAdd) {
-  const p = new Promise((resolve, reject) => {
+  return new Promise((resolve, reject) => {
     const newZip = new JSZip()
     fs.readFile(zipFile, function (err, data) {
       if (err) {
-        process.stdout.write('Error reading file: ', err)
+        process.stdout.write(`Error reading file ${err.message} \n`)
         reject(err)
       } else {
         newZip.loadAsync(data).then((zip) => {
@@ -38,7 +38,6 @@ function restoreFiles (zipFile, dataDir, filesToAdd) {
       }
     })
   })
-  return p
 }
 
 /**
@@ -57,10 +56,9 @@ function backupFiles (filePath, filesToExtract, dataDir) {
         if (file) {
           zip.file(file).async('nodebuffer').then((fileData) => {
             fs.writeFileSync(`${dataDir}/tmp/${fileName}`, fileData)
-            process.stdout.write('File extracted and moved to /tmp/')
+            process.stdout.write(`${fileName} stored to temp folder \n`)
           })
         } else {
-          process.stdout.write('File not found in archive.')
           return Promise.resolve()
         }
       })
