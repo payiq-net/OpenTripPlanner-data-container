@@ -73,6 +73,7 @@ async function update () {
 
       // use seed packages for failed feeds
       global.failedFeeds = fs.readFileSync(logFile, 'utf8') // comma separated list of feed ids. No newline at end!
+      fs.unlinkSync(logFile) // cleanup for local use
       postSlackMessage(`GTFS packages ${global.failedFeeds} rejected, using fallback to current data`)
       await start('gtfs:fallback')
 
