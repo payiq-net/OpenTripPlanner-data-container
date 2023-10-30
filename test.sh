@@ -12,9 +12,9 @@ TOOL_IMAGE=$ORG/otp-data-tools:$TOOLS_TAG
 
 function shutdown() {
   echo shutting down
-  docker stop otp-data-$ROUTER_NAME || true
-  docker stop otp-$ROUTER_NAME || true
-  docker rm otp-data-tools || true &> /dev/null
+  docker stop otp-data-$ROUTER_NAME
+  docker stop otp-$ROUTER_NAME
+  docker rm otp-data-tools &> /dev/null
 }
 
 echo -e "\n##### Testing $DOCKER_IMAGE #####\n"
@@ -25,7 +25,7 @@ sleep 10
 
 echo Starting otp...
 
-docker run --rm --name otp-$ROUTER_NAME -p 9080:8080 -e ROUTER_NAME=$ROUTER_NAME -e JAVA_OPTS="$JAVA_OPTS" -e ROUTER_DATA_CONTAINER_URL=http://otp-data:8080/ --link otp-data-$ROUTER_NAME:otp-data --mount type=bind,source=$(pwd)/logback-include-extensions.xml,target=/opt/opentripplanner/logback-include-extensions.xml $ORG/opentripplanner:$OTP_TAG > /dev/stdout &> /dev/null &
+docker run --rm --name otp-$ROUTER_NAME -p 9080:8080 -e ROUTER_NAME=$ROUTER_NAME -e JAVA_OPTS="$JAVA_OPTS" -e ROUTER_DATA_CONTAINER_URL=http://otp-data:8080/ --link otp-data-$ROUTER_NAME:otp-data --mount type=bind,source=$(pwd)/logback-include-extensions.xml,target=/opt/opentripplanner/logback-include-extensions.xml $ORG/opentripplanner:$OTP_TAG &
 sleep 20
 
 echo Getting otp ip..

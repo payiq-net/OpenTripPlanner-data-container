@@ -23,7 +23,7 @@ async function update () {
   }
 
   if (!process.env.NOSEED) {
-    await start('seed');
+    await start('seed')
     process.stdout.write('Seeded\n')
   }
 
@@ -63,7 +63,7 @@ async function update () {
       process.stdout.write('Skipping all tests')
     } else {
       process.stdout.write('Test docker image\n')
-      execFileSync('./test.sh', [], { stdio: [0, 1, 2] })
+      execFileSync('./test.sh')
     }
     let hasFailures = false
     const logFile = 'failed_feeds.txt'
@@ -82,10 +82,10 @@ async function update () {
       await start('router:buildGraph')
 
       process.stdout.write('Rebuild docker image\n')
-      execFileSync('./build.sh', [name], { stdio: [0, 1, 2] })
+      execFileSync('./build.sh', [name])
     }
     process.stdout.write('Deploy docker image\n')
-    execFileSync('./deploy.sh', [name], { stdio: [0, 1, 2] })
+    execFileSync('./deploy.sh', [name])
     if (osmError || hasFailures) {
       updateSlackMessage(`${name} data updated, but part of new data was rejected. :boom:`)
     } else {

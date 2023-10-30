@@ -127,8 +127,6 @@ gulp.task('router:del', () => del(`${config.dataDir}/build`))
 gulp.task('router:copy', gulp.series('router:del',
   () => prepareRouterData(config.router).pipe(gulp.dest(`${config.dataDir}/build/${config.router.id}`))))
 
-gulp.task('foo', gulp.series('router:del', 'osm:del'))
-
 gulp.task('router:buildGraph', gulp.series('router:copy', () => {
   gulp.src('otp-data-container/*').pipe(gulp.dest(`${config.dataDir}/build/${config.router.id}`))
   return buildOTPGraphTask(config.router)

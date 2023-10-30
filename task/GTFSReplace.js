@@ -65,7 +65,7 @@ module.exports = {
       if (!replacements) {
         callback(null, file)
       } else {
-	process.stdout.write(`Replacing files in feed ${id} \n`)
+        process.stdout.write(`Replacing files in source ${id} \n`)
         replaceGTFSFiles(file.contents, replacements, fileName, (err, newContents) => {
           if (newContents) {
             file.contents = newContents
