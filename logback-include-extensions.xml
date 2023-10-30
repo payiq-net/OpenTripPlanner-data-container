@@ -16,4 +16,7 @@
   <logger name="org.opentripplanner.graph_builder.module.OsmBoardingLocationsModule" level="debug" additivity="false">
     <appender-ref ref="OSMBoardingLog"/>
   </logger>
+  <logger name="org.opentripplanner.updater" level="off" />
+  <logger name="org.opentripplanner.updater.trip.TimetableSnapshotSource" level="off" />
+  <logger name="org.opentripplanner.model.Timetable" level="off" />
 </included>
