@@ -87,30 +87,6 @@ async function updateSlackMessage (messageText) {
   }
 }
 
-/**
- * Compare size of a newly downloaded file (either from headers or from the downloaded file locally)
- * to the size of the local version of a file (either downloaded or seeded).
- * maxDifference should be a decimal of how much smaller the new file can be than the localFile (i.e. 0.01 = 1%).
- */
-const compareSizes = (localFile, newFileSize, maxDifference) => {
-  return new Promise((resolve, reject) => {
-    if (newFileSize === undefined) {
-      reject('error') // eslint-disable-line
-    }
-    if (!fs.existsSync(localFile)) {
-      // download new file as local file does not exist
-      reject('error') // eslint-disable-line
-    }
-    let fileSize = fs.statSync(localFile).size
-    if (fileSize * (1 - maxDifference) <= newFileSize) {
-      resolve()
-    } else {
-      process.stdout.write(`Local file size was: ${fileSize} and remote size: ${newFileSize} \n`)
-      reject('end') // eslint-disable-line
-    }
-  })
-}
-
 const UNCONNECTED = /Could not connect ([A-Z]?[a-z]?\d{4}) at \((\d+\.\d+), (\d+\.\d+)/
 const CONNECTED = /Connected <.*:(\d*) lat,lng=(\d+\.\d+),(\d+\.\d+)> \(([A-Z]?[a-z]?\d{4})\) to (.*) at \((\d+\.\d+), (\d+\.\d+)/
 
@@ -174,6 +150,5 @@ module.exports = {
   zipWithGlob,
   postSlackMessage,
   updateSlackMessage,
-  compareSizes,
   otpMatching
 }
