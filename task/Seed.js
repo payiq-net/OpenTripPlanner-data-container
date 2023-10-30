@@ -16,13 +16,10 @@ module.exports = function () {
       process.stdout.write(`extracting data from ${container}...\n`)
       const script =
        `cd ${dataDir}
-        docker login -u ${process.env.DOCKER_USER} -p ${process.env.DOCKER_AUTH} || true;
-        docker rmi --force ${container} || true;
-        docker rm data-extract-${router.id} || true;
-        docker rename data-extract-${router.id} $(date +%s) || true;
-        docker create --name data-extract-${router.id} ${container};
-        docker cp data-extract-${router.id}:var/www/localhost/htdocs/router-${router.id}.zip .;
-        docker rm data-extract-${router.id}`
+        docker create --name data-extract-${router.id} ${container}
+        docker cp data-extract-${router.id}:var/www/localhost/htdocs/router-${router.id}.zip .
+        docker rm data-extract-${router.id}
+        docker rmi ${container}`
 
       execSync(script)
       execSync(
