@@ -13,7 +13,6 @@ const prepareRouterData = require('./task/PrepareRouterData')
 const del = require('del')
 const config = require('./config')
 const { buildOTPGraphTask } = require('./task/BuildOTPGraph')
-const { postSlackMessage } = require('./util')
 const { renameGTFSFile } = require('./task/GTFSRename')
 const { replaceGTFSFilesTask } = require('./task/GTFSReplace')
 const { moveTask } = require('./task/MoveTask')
@@ -45,14 +44,7 @@ gulp.task('dem:update', () => {
   if (!fs.existsSync(demReadyDir)) {
     execSync(`mkdir -p ${demReadyDir}`)
   }
-  const promises = dlBlob(config.dem)
-  return Promise.all(promises)
-    .catch((err) => {
-      if (err === 'fail') {
-        postSlackMessage(`Failing build because of a failed DEM download`)
-        process.exit(1)
-      }
-    })
+  return Promise.all(dlBlob(config.dem)).catch(err => {})
 })
 
 gulp.task('del:filter', () => del(`${config.dataDir}/filter`))

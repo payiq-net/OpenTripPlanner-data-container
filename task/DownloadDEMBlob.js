@@ -1,8 +1,7 @@
 const fs = require('fs')
 const request = require('request')
-
 const { dataDir } = require('../config')
-const { compareSizes } = require('../util')
+const { postSlackMessage } = require('../util')
 
 /**
  * Download DEM files from Azure blob storage.
@@ -14,37 +13,33 @@ module.exports = function (entries) {
       const readyPath = `${dataDir}/ready/dem/${entry.id}.tif`
       let dataAlreadyExists = false
       let downloadSize
-      const r = request(entry.url)
+      let readySize
+      if (fs.existsSync(readyPath)) {
+        readySize = fs.statSync(readyPath).size
+      }
 
+      const r = request(entry.url)
       const stream = r.pipe(fs.createWriteStream(filePath))
       r.on('response', response => {
         if (response.statusCode === 200) {
           downloadSize = response.headers['content-length']
-          compareSizes(readyPath, parseInt(downloadSize), 0)
-            .then(() => {
-              process.stdout.write(`Local DEM data for ${entry.id} was already up-to-date\n`)
-              dataAlreadyExists = true
-              // Abort download as remote has same size as local copy
-              r.abort()
-            }).catch((err) => {
-              if (err === 'end') {
-                process.stdout.write(`${entry.url} size differs from local file's size\n`)
-                process.stdout.write(`Downloading new DEM data from ${entry.url}\n`)
-              } else if (err === 'error') {
-                process.stdout.write(`Failed to load local DEM data for ${entry.id}\n`)
-                process.stdout.write(`Downloading new DEM data from ${entry.url}\n`)
-              } else {
-                process.stdout.write(err)
-                process.stdout.write(`Failed to load local DEM data for ${entry.id}\n`)
-                process.stdout.write(`Downloading new DEM data from ${entry.url}\n`)
-              }
-            })
+          if (readySize && readySize === parseInt(downloadSize)) {
+            process.stdout.write(`Local DEM data for ${entry.id} was already up-to-date\n`)
+            dataAlreadyExists = true
+            // Abort download as remote has same size as local copy
+            r.abort()
+          } else {
+            process.stdout.write(`Downloading new DEM data from ${entry.url}\n`)
+          }
         }
       })
       r.on('error', err => {
-        process.stdout.write(err)
-        process.stdout.write(`Failed to load new DEM data for ${entry.id}\n`)
-        reject('fail') // eslint-disable-line
+        if (!dataAlreadyExists) {
+          postSlackMessage(`${entry.url} download failed: ${JSON.stringify(err)} :boom:`)
+          reject(err)
+        } else {
+          resolve()
+        }
       })
       stream.on('finish', () => {
         // If new file was downloaded, this resolves with the file's path
@@ -52,41 +47,18 @@ module.exports = function (entries) {
         // However, if the file is really small, this could in theory be called before call to abort request
         // but that situation shouldn't happen with DEM data sizes.
         if (!dataAlreadyExists) {
-          compareSizes(filePath, parseInt(downloadSize), 0)
-            .then(() => {
-              process.stdout.write(`Downloaded updated DEM data to ${filePath}\n`)
-              fs.rename(filePath, readyPath, (err) => {
-                if (err) {
-                  if (fs.existsSync(filePath)) {
-                    fs.unlinkSync(filePath)
-                  }
-                  process.stdout.write(err)
-                  process.stdout.write(`Failed to move DEM data from ${readyPath}\n`)
-                  reject('fail') // eslint-disable-line
-                } else {
-                  process.stdout.write(
-                    `DEM data update process was successful for ${entry.id}\n`
-                  )
-                  resolve()
-                }
-              })
-            }).catch((err) => {
-              if (fs.existsSync(filePath)) {
-                fs.unlinkSync(filePath)
-              }
-              if (err === 'end') {
-                process.stdout.write(`${entry.url} size differs from just downloaded file's size\n`)
-              } else if (err === 'error') {
-                process.stdout.write(`Failed to load local DEM data for ${entry.id}\n`)
-              } else {
-                process.stdout.write(err)
-              }
-              reject('fail') // eslint-disable-line
-            })
+          process.stdout.write(`Downloaded updated DEM data to ${filePath}\n`)
+          fs.rename(filePath, readyPath, err => {
+            if (err) {
+              process.stdout.write(JSON.stringify(err))
+              process.stdout.write(`Failed to move DEM data from ${readyPath}\n`)
+              reject(err)
+            } else {
+              process.stdout.write(`DEM data updated for ${entry.id}\n`)
+              resolve()
+            }
+          })
         } else {
-          if (fs.existsSync(filePath)) {
-            fs.unlinkSync(filePath)
-          }
           resolve()
         }
       })
