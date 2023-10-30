@@ -24,7 +24,7 @@ async function update () {
 
   if (!process.env.NOSEED) {
     await start('seed');
-    process.stdout.write('Seeded.\n')
+    process.stdout.write('Seeded\n')
   }
 
   await start('dem:update')
@@ -55,13 +55,14 @@ async function update () {
 
   const name = router.id
   try {
+    process.stdout.write('Build routing graph\n')
     await start('router:buildGraph')
-    process.stdout.write('Build docker image.\n')
+    process.stdout.write('Build docker image\n')
     execFileSync('./build.sh', [name], { stdio: [0, 1, 2] })
     if (process.env.SKIPPED_SITES === 'all') {
       process.stdout.write('Skipping all tests')
     } else {
-      process.stdout.write('Test docker image.\n')
+      process.stdout.write('Test docker image\n')
       execFileSync('./test.sh', [], { stdio: [0, 1, 2] })
     }
     let hasFailures = false
@@ -79,10 +80,10 @@ async function update () {
       process.stdout.write('Rebuild graph using fallback data\n')
       await start('router:buildGraph')
 
-      process.stdout.write('Rebuild docker image.\n')
+      process.stdout.write('Rebuild docker image\n')
       execFileSync('./build.sh', [name], { stdio: [0, 1, 2] })
     }
-    process.stdout.write('Deploy docker image.\n')
+    process.stdout.write('Deploy docker image\n')
     execFileSync('./deploy.sh', [name], { stdio: [0, 1, 2] })
     if (osmError || hasFailures) {
       updateSlackMessage(`${name} data updated, but part of new data was rejected. :boom:`)

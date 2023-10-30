@@ -57,6 +57,8 @@ function createAndProcessRouterConfig (router) {
 module.exports = function (router) {
   const stream = through.obj()
 
+  process.stdout.write(`Collecting data and configuration files for graph build\n`)
+
   stream.push(createFile(router, 'build-config.json', router.id))
   stream.push(createFile(router, 'otp-config.json', router.id))
   stream.push(createAndProcessRouterConfig(router))

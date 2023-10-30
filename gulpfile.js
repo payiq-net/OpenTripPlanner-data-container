@@ -49,8 +49,7 @@ gulp.task('dem:update', () => {
   return Promise.all(promises)
     .catch((err) => {
       if (err === 'fail') {
-        process.stdout.write('Failing build because of a failed DEM download!\n')
-        postSlackMessage(`Failing build because of a failed DEM download.`)
+        postSlackMessage(`Failing build because of a failed DEM download`)
         process.exit(1)
       }
     })
