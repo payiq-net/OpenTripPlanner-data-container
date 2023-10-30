@@ -63,7 +63,7 @@ async function update () {
       process.stdout.write('Skipping all tests')
     } else {
       process.stdout.write('Test docker image\n')
-      execFileSync('./test.sh')
+      execFileSync('./test.sh', [], { stdio: [0, 1, 2] })
     }
     let hasFailures = false
     const logFile = 'failed_feeds.txt'
@@ -85,7 +85,7 @@ async function update () {
       execFileSync('./build.sh', [name])
     }
     process.stdout.write('Deploy docker image\n')
-    execFileSync('./deploy.sh', [name])
+    execFileSync('./deploy.sh', [name], { stdio: [0, 1, 2] })
     if (osmError || hasFailures) {
       updateSlackMessage(`${name} data updated, but part of new data was rejected. :boom:`)
     } else {
