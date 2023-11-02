@@ -6,7 +6,7 @@ const graphBuildTag = process.env.OTP_TAG || 'v2'
 const JAVA_OPTS = process.env.JAVA_OPTS || '-Xmx12g'
 
 const buildGraph = function (router) {
-  let lastLog = []
+  const lastLog = []
   const collectLog = (data) => {
     lastLog.push(data.toString())
     if (lastLog.length > 20) {

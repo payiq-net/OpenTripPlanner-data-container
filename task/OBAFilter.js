@@ -36,14 +36,14 @@ module.exports = {
         const dst = `${relativeFilename}-filtered`
         const dstDir = `${dataDir}/${dst}`
 
-	// execute all rules
-	// result zip of a rule is input data for next rule
-	// async zip creation is synchronized using recursion:
-	// next recursion call is launched from zip callback
+        // execute all rules
+        // result zip of a rule is input data for next rule
+        // async zip creation is synchronized using recursion:
+        // next recursion call is launched from zip callback
         let i = 0
-        function processRule() {
+        function processRule () {
           if (i < rules.length) {
-	    const rule = rules[i++]
+            const rule = rules[i++]
             if (OBAFilter(src, dst, rule)) {
               fs.unlinkSync(`${dataDir}/${src}`)
               /* create zip named src from files in dst */
@@ -53,7 +53,7 @@ module.exports = {
                 processRule() // handle next rule
               })
             } else { // failure
-	      del(dstDir)
+              del(dstDir)
               postSlackMessage(`Rule ${rule} on ${gtfsFile} failed :boom:`)
               callback(null, null)
             }

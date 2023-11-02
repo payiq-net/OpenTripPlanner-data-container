@@ -14,19 +14,19 @@ const passOBAfilter = ['emissions.txt']
 
 const routers = {
   hsl: {
-    'id': 'hsl',
-    'src': [
+    id: 'hsl',
+    src: [
       src('HSL', 'https://infopalvelut.storage.hsldev.com/gtfs/hsl.zip', false, undefined, { 'translations.txt': 'translations_new.txt', 'trips.txt': 'trips2.txt' })
       // src('HSLlautta', 'https://koontikartta.navici.com/tiedostot/gtfs_lautat_digitransit.zip', false),
       // src('Sipoo', 'https://koontikartta.navici.com/tiedostot/rae/sipoon_kunta_sibbo_kommun.zip', false)
     ],
-    'osm': ['hsl'],
-    'dem': 'hsl'
+    osm: ['hsl'],
+    dem: 'hsl'
   },
 
   finland: {
-    'id': 'finland',
-    'src': [
+    id: 'finland',
+    src: [
       src('HSL', 'https://infopalvelut.storage.hsldev.com/gtfs/hsl.zip', false, ['finland/gtfs-rules/hsl-no-trains.rule'], { 'translations.txt': 'translations_new.txt', 'trips.txt': 'trips2.txt' }),
       src('MATKA', 'https://koontikartta.navici.com/tiedostot/gtfs_digitransit.zip', 'gtfs_shape_mapfit/fit_gtfs_stops.bash', ['finland/gtfs-rules/matka-cleaned.rule']),
       src('tampere', 'http://ekstrat.tampere.fi/ekstrat/ptdata/tamperefeed_deprecated.zip', false),
@@ -53,12 +53,12 @@ const routers = {
       src('Raasepori', 'https://tvv.fra1.digitaloceanspaces.com/232.zip', 'gtfs_shape_mapfit/fit_gtfs_stops.bash'),
       src('VARELY', 'http://digitransit-proxy:8080/out/varelyadmin.mattersoft.fi/feeds/102.zip', false)
     ],
-    'osm': ['finland', 'estonia']
+    osm: ['finland', 'estonia']
   },
 
   waltti: {
-    'id': 'waltti',
-    'src': [
+    id: 'waltti',
+    src: [
       src('Hameenlinna', 'https://tvv.fra1.digitaloceanspaces.com/203.zip', 'gtfs_shape_mapfit/fit_gtfs_stops.bash'),
       src('Kotka', 'https://tvv.fra1.digitaloceanspaces.com/217.zip', 'gtfs_shape_mapfit/fit_gtfs_stops.bash'),
       src('Kouvola', 'https://tvv.fra1.digitaloceanspaces.com/219.zip', 'gtfs_shape_mapfit/fit_gtfs_stops.bash'),
@@ -80,36 +80,36 @@ const routers = {
       src('Raasepori', 'https://tvv.fra1.digitaloceanspaces.com/232.zip', 'gtfs_shape_mapfit/fit_gtfs_stops.bash'),
       src('RaaseporiELY', 'https://koontikartta.navici.com/tiedostot/gtfs_raasepori.zip', false)
     ],
-    'osm': ['finland'],
-    'dem': 'waltti'
+    osm: ['finland'],
+    dem: 'waltti'
   },
 
   'waltti-alt': {
-    'id': 'waltti-alt',
-    'src': [
+    id: 'waltti-alt',
+    src: [
       src('Salo', 'https://tvv.fra1.digitaloceanspaces.com/239.zip', 'gtfs_shape_mapfit/fit_gtfs_stops.bash'),
       src('Kajaani', 'https://tvv.fra1.digitaloceanspaces.com/211.zip', 'gtfs_shape_mapfit/fit_gtfs_stops.bash')
     ],
-    'osm': ['finland']
+    osm: ['finland']
   },
 
   varely: {
-    'id': 'varely',
-    'src': [
+    id: 'varely',
+    src: [
       src('VARELY', 'http://digitransit-proxy:8080/out/varelyadmin.mattersoft.fi/feeds/102.zip', false),
       src('FOLI', 'http://data.foli.fi/gtfs/gtfs.zip', false),
       src('Rauma', 'http://digitransit-proxy:8080/out/raumaadmin.mattersoft.fi/feeds/233.zip', false)
     ],
-    'osm': ['finland']
+    osm: ['finland']
   },
 
   kela: {
-    'id': 'kela',
-    'src': [
+    id: 'kela',
+    src: [
       src('kela', 'https://koontikartta.navici.com/tiedostot/gtfs_kela.zip', false),
       src('matkahuolto', 'http://digitransit-proxy:8080/out/minfoapi.matkahuolto.fi/gtfs/kokomaa-fi/gtfs.zip', false, ['kela/gtfs-rules/no-onnibus-mega.rule'], { 'transfers.txt': null })
     ],
-    'osm': ['finland']
+    osm: ['finland']
   }
 }
 
@@ -124,7 +124,7 @@ const router = routers[process.env.ROUTER_NAME]
 // It is also possible to add completely new src by defining object with unused id or to remove a src by defining "remove": true
 const extraSrc = process.env.EXTRA_SRC !== undefined ? JSON.parse(process.env.EXTRA_SRC) : {}
 
-let usedSrc = []
+const usedSrc = []
 
 // add config to every source and override config values if they are defined in extraSrc
 const cfg = router
@@ -164,8 +164,8 @@ const osm = {
 }
 
 const dem = {
-  'waltti': 'https://elevdata.blob.core.windows.net/elevation/waltti/waltti-10m-elevation-model_20190927.tif',
-  'hsl': 'https://elevdata.blob.core.windows.net/elevation/hsl/hsl-10m-elevation-model_20190920.tif'
+  waltti: 'https://elevdata.blob.core.windows.net/elevation/waltti/waltti-10m-elevation-model_20190927.tif',
+  hsl: 'https://elevdata.blob.core.windows.net/elevation/hsl/hsl-10m-elevation-model_20190920.tif'
 }
 
 const constants = {

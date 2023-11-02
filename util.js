@@ -15,7 +15,7 @@ const promisifiedRequest = promisify(request)
  */
 const zipWithGlob = (zipFile, glob, zipDir, cb) => {
   return globby(glob).then(paths => {
-    let zip = new JSZip()
+    const zip = new JSZip()
 
     if (zipDir !== undefined) {
       zip.folder(zipDir)
@@ -38,9 +38,9 @@ async function postSlackMessage (messageText) {
       method: 'POST',
       url: 'https://slack.com/api/chat.postMessage',
       headers: {
-        'Authorization': `Bearer ${process.env.SLACK_ACCESS_TOKEN}`,
+        Authorization: `Bearer ${process.env.SLACK_ACCESS_TOKEN}`,
         'Content-Type': 'application/json',
-        'Accept': '*/*'
+        Accept: '*/*'
       },
       json: {
         channel: process.env.SLACK_CHANNEL_ID,
@@ -66,9 +66,9 @@ async function updateSlackMessage (messageText) {
       method: 'POST',
       url: 'https://slack.com/api/chat.update',
       headers: {
-        'Authorization': `Bearer ${process.env.SLACK_ACCESS_TOKEN}`,
+        Authorization: `Bearer ${process.env.SLACK_ACCESS_TOKEN}`,
         'Content-Type': 'application/json',
-        'Accept': '*/*'
+        Accept: '*/*'
       },
       json: {
         channel: process.env.SLACK_CHANNEL_ID,
@@ -91,8 +91,8 @@ const UNCONNECTED = /Could not connect ([A-Z]?[a-z]?\d{4}) at \((\d+\.\d+), (\d+
 const CONNECTED = /Connected <.*:(\d*) lat,lng=(\d+\.\d+),(\d+\.\d+)> \(([A-Z]?[a-z]?\d{4})\) to (.*) at \((\d+\.\d+), (\d+\.\d+)/
 
 function distance (lat1, lon1, lat2, lon2) {
-  var p = Math.PI / 180
-  var a =
+  const p = Math.PI / 180
+  const a =
     0.5 -
     Math.cos((lat2 - lat1) * p) / 2 +
     Math.cos(lat1 * p) * Math.cos(lat2 * p) * (1 - Math.cos((lon2 - lon1) * p)) / 2

@@ -50,8 +50,8 @@ ${id}-fake-name,${id}-fake-url,${id}-fake-lang,${id}\n`
               const idsToCheck = process.env.VERSION_CHECK.replace(/ /g, '').split(',')
               const now = new Date()
               // check if a warning should be shown about feed_version timestamp being over 8 hours in the past
-              if (idsToCheck.includes(id) && json[0]['feed_version'] !== undefined &&
-                ((now) - new Date(json[0]['feed_version'])) > EIGHT_HOURS) {
+              if (idsToCheck.includes(id) && json[0].feed_version !== undefined &&
+                ((now) - new Date(json[0].feed_version)) > EIGHT_HOURS) {
                 process.stdout.write('GTFS data for ' + id + ' had not been updated within 8 hours.\n')
                 // send warning also to slack between monday and friday
                 const day = now.getDay()
@@ -61,8 +61,8 @@ ${id}-fake-name,${id}-fake-url,${id}-fake-lang,${id}\n`
               }
             }
             // no id or id is wrong
-            if (json[0]['feed_id'] === undefined || json[0]['feed_id'] !== id) {
-              json[0]['feed_id'] = id
+            if (json[0].feed_id === undefined || json[0].feed_id !== id) {
+              json[0].feed_id = id
               converter.json2csv(json, json2csvcallback)
             } else {
               // id was already ok

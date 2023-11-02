@@ -44,7 +44,7 @@ gulp.task('dem:update', () => {
   if (!fs.existsSync(demReadyDir)) {
     execSync(`mkdir -p ${demReadyDir}`)
   }
-  return Promise.all(dlBlob(config.dem)).catch(err => {})
+  return Promise.all(dlBlob(config.dem)).catch(err => { throw err })
 })
 
 gulp.task('del:filter', () => del(`${config.dataDir}/filter`))

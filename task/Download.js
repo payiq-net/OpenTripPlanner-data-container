@@ -9,7 +9,7 @@ const { postSlackMessage } = require('../util')
 module.exports = function (entries) {
   let downloadCount = 0
 
-  var stream = through.obj()
+  const stream = through.obj()
 
   const incProcessed = () => {
     downloadCount += 1

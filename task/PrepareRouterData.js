@@ -16,11 +16,11 @@ const extraUpdaters = process.env.EXTRA_UPDATERS !== undefined ? JSON.parse(proc
 
 // Prepares router-config.json data for data container and applies edits/additions made in EXTRA_UPDATERS env var
 function createAndProcessRouterConfig (router) {
-  process.stdout.write(`copying router-config.json...\n`)
+  process.stdout.write('copying router-config.json...\n')
   const configName = `${router.id}/router-config.json`
   const routerConfig = JSON.parse(fs.readFileSync(configName, 'utf8'))
   const updaters = routerConfig.updaters
-  let usedPatches = []
+  const usedPatches = []
   for (let i = updaters.length - 1; i >= 0; i--) {
     const updaterId = updaters[i].id
     const updaterPatch = extraUpdaters[updaterId]
@@ -40,7 +40,7 @@ function createAndProcessRouterConfig (router) {
     if (!usedPatches.includes(id)) {
       const routers = extraUpdaters[id].routers
       if (routers !== undefined && routers.includes(router.id)) {
-        let patchClone = Object.assign({}, extraUpdaters[id])
+        const patchClone = Object.assign({}, extraUpdaters[id])
         delete patchClone.remove
         delete patchClone.routers
         updaters.push({ ...patchClone, id })
@@ -57,7 +57,7 @@ function createAndProcessRouterConfig (router) {
 module.exports = function (router) {
   const stream = through.obj()
 
-  process.stdout.write(`Collecting data and configuration files for graph build\n`)
+  process.stdout.write('Collecting data and configuration files for graph build\n')
 
   stream.push(createFile(router, 'build-config.json', router.id))
   stream.push(createFile(router, 'otp-config.json', router.id))

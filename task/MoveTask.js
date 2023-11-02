@@ -18,7 +18,7 @@ function restoreFiles (zipFile, dataDir, filesToAdd) {
         process.stdout.write(`Error reading file ${err.message} \n`)
         reject(err)
       } else {
-        newZip.loadAsync(data).then((zip) => {
+        newZip.loadAsync(data).then(zip => {
           filesToAdd.forEach((file) => {
             try {
               const filePath = `${dataDir}/tmp/${file}`
@@ -54,7 +54,7 @@ function backupFiles (filePath, filesToExtract, dataDir) {
       const promises = filesToExtract.map(fileName => {
         const file = Object.keys(zip.files).find((name) => name.endsWith(`${fileName}`))
         if (file) {
-          zip.file(file).async('nodebuffer').then((fileData) => {
+          return zip.file(file).async('nodebuffer').then((fileData) => {
             fs.writeFileSync(`${dataDir}/tmp/${fileName}`, fileData)
             process.stdout.write(`${fileName} stored to temp folder \n`)
           })

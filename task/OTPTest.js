@@ -12,12 +12,11 @@ const JAVA_OPTS = process.env.JAVA_OPTS || '-Xmx9g'
  * the file is good enough to be used.
  */
 function testWithOTP (otpFile, quiet = false) {
-  let lastLog = []
+  const lastLog = []
 
-  const p = new Promise((resolve, reject) => {
+  return new Promise((resolve, reject) => {
     if (!fs.existsSync(otpFile)) {
-      process.stdout.write(otpFile + ' does not exist!\n')
-      p.reject()
+      reject(new Error(`${otpFile} does not exist!\n`))
     } else {
       if (!fs.existsSync(`${dataDir}/tmp`)) {
         fs.mkdirSync(`${dataDir}/tmp`)
@@ -72,7 +71,6 @@ function testWithOTP (otpFile, quiet = false) {
       })
     }
   })
-  return p
 }
 
 module.exports = {

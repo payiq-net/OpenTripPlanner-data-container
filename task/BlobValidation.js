@@ -15,8 +15,8 @@ function validateSize (seededFile, downloadedFile) {
     global.blobSizeOk = true
     return true
   }
-  let downloadedFileSize = fs.statSync(downloadedFile).size
-  let seedFileSize = fs.statSync(seededFile).size
+  const downloadedFileSize = fs.statSync(downloadedFile).size
+  const seedFileSize = fs.statSync(seededFile).size
   if (seedFileSize * 0.99 <= downloadedFileSize) {
     process.stdout.write('Blob size validated\n')
     global.blobSizeOk = true
