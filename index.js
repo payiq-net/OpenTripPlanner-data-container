@@ -26,8 +26,14 @@ async function update () {
     await start('seed')
     process.stdout.write('Seeded\n')
   }
+  let hasFailures = false
 
-  await start('dem:update')
+  try { // tolerate fail in dem update
+    await start('dem:update')
+  } catch (E) {
+    postSlackMessage('DEM update failed, using previous version :boom:')
+    hasFailures = true
+  }
 
   for (let i = 0; i < 3; i++) {
     global.blobSizeOk = false // ugly hack but gulp does not return any values from tasks
@@ -44,10 +50,8 @@ async function update () {
     }
   }
 
-  let osmError = false
-
   if (!global.OTPacceptsFile) {
-    osmError = true
+    hasFailures = true
     postSlackMessage('OSM data update failed, using previous version :boom:')
   }
 
@@ -65,7 +69,7 @@ async function update () {
       process.stdout.write('Test docker image\n')
       execFileSync('./test.sh', [], { stdio: [0, 1, 2] })
     }
-    let hasFailures = false
+
     const logFile = 'failed_feeds.txt'
 
     if (fs.existsSync(logFile)) {
@@ -86,10 +90,10 @@ async function update () {
     }
     process.stdout.write('Deploy docker image\n')
     execFileSync('./deploy.sh', [name], { stdio: [0, 1, 2] })
-    if (osmError || hasFailures) {
-      updateSlackMessage(`${name} data updated, but part of new data was rejected. :boom:`)
+    if (hasFailures) {
+      updateSlackMessage(`${name} data updated, but partially falling back to older data :boom:`)
     } else {
-      updateSlackMessage(`${name} data updated. :white_check_mark:`)
+      updateSlackMessage(`${name} data updated :white_check_mark:`)
     }
   } catch (E) {
     postSlackMessage(`${name} GTFS data update failed: ` + E.message)

@@ -1,7 +1,6 @@
 const fs = require('fs')
 const request = require('request')
 const { dataDir } = require('../config')
-const { postSlackMessage } = require('../util')
 
 /**
  * Download DEM files from Azure blob storage.
@@ -35,7 +34,7 @@ module.exports = function (entries) {
       })
       r.on('error', err => {
         if (!dataAlreadyExists) {
-          postSlackMessage(`${entry.url} download failed: ${JSON.stringify(err)} :boom:`)
+          process.stdout.write(`${entry.url} download failed: ${JSON.stringify(err)}`)
           reject(err)
         } else {
           resolve()
