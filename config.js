@@ -16,7 +16,7 @@ const routers = {
   hsl: {
     id: 'hsl',
     src: [
-      src('HSL', 'https://infopalvelut.storage.hsldev.com/gtfs/hsl.zip', false, undefined, { 'translations.txt': 'translations_new.txt', 'trips.txt': 'trips2.txt' })
+      src('HSL', 'https://infopalvelut.storage.hsldev.com/gtfs/hsl.zip', true, ['hsl/gtfs-rules/notrains.rule'], { 'translations.txt': 'translations_new.txt', 'trips.txt': 'trips2.txt' })
       // src('HSLlautta', 'https://koontikartta.navici.com/tiedostot/gtfs_lautat_digitransit.zip', false),
       // src('Sipoo', 'https://koontikartta.navici.com/tiedostot/rae/sipoon_kunta_sibbo_kommun.zip', false)
     ],
