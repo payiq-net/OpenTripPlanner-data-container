@@ -88,7 +88,7 @@ async function updateSlackMessage (messageText) {
 }
 
 const UNCONNECTED = /Could not connect ([A-Z]?[a-z]?\d{4}) at \((\d+\.\d+), (\d+\.\d+)/
-const CONNECTED = /Connected <.*:(\d*) lat,lng=(\d+\.\d+),(\d+\.\d+)> \(([A-Z]?[a-z]?\d{4})\) to (.*) at \((\d+\.\d+), (\d+\.\d+)/
+const CONNECTED = /Connected {.*:(\d*) lat,lng=(\d+\.\d+),(\d+\.\d+)} \(([A-Z]?[a-z]?\d{4})\) to (.*) at \((\d+\.\d+), (\d+\.\d+)/
 
 function distance (lat1, lon1, lat2, lon2) {
   const p = Math.PI / 180
