@@ -2,7 +2,7 @@ const through = require('through2')
 const fs = require('fs')
 const path = require('path')
 const cloneable = require('cloneable-readable')
-const { dataDir, dataToolImage, constants } = require('../config.js')
+const { dataDir, dataToolImage } = require('../config.js')
 const { postSlackMessage } = require('../util')
 const execSync = require('child_process').execSync
 
