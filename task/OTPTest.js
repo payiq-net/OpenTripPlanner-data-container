@@ -33,11 +33,11 @@ function testWithOTP (otpFile, quiet = false) {
             build.on('exit', function (c) {
               if (c === 0) {
                 resolve(true)
-                global.OTPacceptsFile = true
                 process.stdout.write(otpFile + ' Test SUCCESS\n')
               } else {
                 const log = lastLog.join('')
                 postSlackMessage(`${otpFile} test failed: ${log} :boom:`)
+                global.hasFailures = true
                 resolve(false)
               }
               fse.removeSync(folder)
