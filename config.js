@@ -114,7 +114,7 @@ const routers = {
 }
 
 if (!process.env.ROUTER_NAME || !routers[process.env.ROUTER_NAME]) {
-  process.stdout.write('Invalid ROUTER variable \n')
+  process.stdout.write('Invalid ROUTER_NAME variable \n')
   process.exit(1)
 }
 const router = routers[process.env.ROUTER_NAME]
