@@ -62,10 +62,10 @@ async function update () {
     postSlackMessage('OSM data update failed, using previous version :boom:')
   }
 
-  await start('gtfs:update')
-
   const name = router.id
   try {
+    await start('gtfs:update')
+
     process.stdout.write('Build routing graph\n')
     await start('router:buildGraph')
 
