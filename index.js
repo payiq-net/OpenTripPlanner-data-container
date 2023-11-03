@@ -12,6 +12,8 @@ const CronJob = require('cron').CronJob
 const fs = require('fs')
 const { router } = require('./config')
 
+const MAX_GTFS_FALLBACK = 2 // threshold for aborting data loading
+
 const start = promisify((task, cb) => gulp.series(task)(cb))
 
 if (process.env.CRON) {
@@ -81,10 +83,16 @@ async function update () {
     if (fs.existsSync(logFile)) { // testing detected routing problems
       global.hasFailures = true
 
-      // use seed packages for failed feeds
       global.failedFeeds = fs.readFileSync(logFile, 'utf8') // comma separated list of feed ids. No newline at end!
       fs.unlinkSync(logFile) // cleanup for local use
+
+      if (global.failedFeeds.split(',').length > MAX_GTFS_FALLBACK) {
+        updateSlackMessage('Aborting the data update because too many quality tests failed :boom:')
+        process.exit(1)
+      }
+
       postSlackMessage(`GTFS packages ${global.failedFeeds} rejected, using fallback to current data`)
+      // use seed packages for failed feeds
       await start('gtfs:fallback')
 
       // rebuild the graph
