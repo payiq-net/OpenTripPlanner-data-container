@@ -1,8 +1,8 @@
 /*
  * id = feedid (String)
  * url = feed url (String)
- * fit = mapfit shapes (true/false)
- * rules = OBA Filter rules to apply (array of strings)
+ * fit = mapfit shapes (true/falsy)
+ * rules = OBA Filter rules to apply (array of strings or undefined)
  * replacements = replace or remove file from gtfs package (format: {'file_to_replace': 'file_to_replace_with' or null})
  * request options = optional special options for request
  */
@@ -17,8 +17,8 @@ const routers = {
     id: 'hsl',
     src: [
       src('HSL', 'https://infopalvelut.storage.hsldev.com/gtfs/hsl.zip', false, undefined, { 'translations.txt': 'translations_new.txt', 'trips.txt': 'trips2.txt' })
-      // src('HSLlautta', 'https://koontikartta.navici.com/tiedostot/gtfs_lautat_digitransit.zip', false),
-      // src('Sipoo', 'https://koontikartta.navici.com/tiedostot/rae/sipoon_kunta_sibbo_kommun.zip', false)
+      // src('HSLlautta', 'https://koontikartta.navici.com/tiedostot/gtfs_lautat_digitransit.zip'),
+      // src('Sipoo', 'https://koontikartta.navici.com/tiedostot/rae/sipoon_kunta_sibbo_kommun.zip')
     ],
     osm: ['hsl'],
     dem: 'hsl'
