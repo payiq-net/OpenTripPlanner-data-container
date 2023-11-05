@@ -177,7 +177,7 @@ module.exports = {
   gtfsMap,
   osm: router.osm.map(id => { return { id, url: osm[id] } }), // array of id, url pairs
   dem: router.dem ? [{ id: router.dem, url: dem[router.dem] }] : null, // currently only one DEM file is used
-  dataToolImage: `hsldevcom/otp-data-tools:${process.env.TOOLS_TAG || 'latest'}`,
+  dataToolImage: `hsldevcom/otp-data-tools:${process.env.TOOLS_TAG || 'v3'}`,
   dataDir: `${process.cwd()}/data`,
   constants,
   passOBAfilter
