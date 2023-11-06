@@ -9,7 +9,7 @@ ORG=${ORG:-hsldevcom}
 JAVA_OPTS=${JAVA_OPTS:--Xmx12g}
 ROUTER_NAME=${ROUTER_NAME:-hsl}
 OTP_TAG=${OTP_TAG:-v2}
-TOOLS_TAG=${TOOLS_TAG:-test}
+TOOLS_TAG=${TOOLS_TAG:-v3}
 
 # set useful variables
 DOCKER_IMAGE=$ORG/opentripplanner-data-container-$ROUTER_NAME:test
