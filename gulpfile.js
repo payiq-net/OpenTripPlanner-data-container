@@ -128,6 +128,6 @@ gulp.task('router:copy', gulp.series('router:del',
   () => prepareRouterData(config.router).pipe(gulp.dest(`${config.dataDir}/build/${config.router.id}`))))
 
 gulp.task('router:buildGraph', gulp.series('router:copy', () => {
-  gulp.src('otp-data-container/*').pipe(gulp.dest(`${config.dataDir}/build/${config.router.id}`))
+  gulp.src(['otp-data-container/*', 'otp-data-container/.dockerignore']).pipe(gulp.dest(`${config.dataDir}/build/${config.router.id}`))
   return buildOTPGraphTask(config.router)
 }))
