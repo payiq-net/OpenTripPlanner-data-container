@@ -29,13 +29,16 @@ ${id}-fake-name,${id}-fake-url,${id}-fake-lang,${id}\n`
           cb('created') // eslint-disable-line
         })
       } else {
-        feedInfo.async('string').then(async function (data) {
+        feedInfo.async('string').then(function (data) {
           // Remove unnecessary control characters that break things
           let filteredData = data.replace(/\r/g, '')
           if (filteredData.charAt(filteredData.length - 1) === '\n') {
             filteredData = filteredData.slice(0, -1)
           }
-          const json = await converter.csv2json(filteredData)
+	  if (filteredData.charCodeAt(0) === 0xFEFF) { // remove BOM
+	    filteredData = filteredData.substr(1)
+	  }
+          const json = converter.csv2json(filteredData)
           /* eslint-enable */
           if (json.length > 0) {
             if (process.env.VERSION_CHECK) {
@@ -56,7 +59,7 @@ ${id}-fake-name,${id}-fake-url,${id}-fake-lang,${id}\n`
             // no id or id is wrong
             if (json[0].feed_id === undefined || json[0].feed_id !== id) {
               json[0].feed_id = id
-              const csv = await converter.json2csv(json)
+              const csv = converter.json2csv(json)
               createFeedInfo(zip, file, csv, () => {
                 cb('edited')  // eslint-disable-line
               })
