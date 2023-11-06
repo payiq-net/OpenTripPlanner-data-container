@@ -1,4 +1,3 @@
 Dockerfile.data-container
-lighttpd.conf
 graph.obj
 taggedStops.log
