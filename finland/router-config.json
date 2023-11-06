@@ -157,6 +157,17 @@
       "fuzzyTripMatching": true
     },
     {
+      "type" : "vehicle-positions",
+      "url" : "https://realtime.hsl.fi/realtime/vehicle-positions/v2/hsl",
+      "feedId" : "HSL",
+      "frequency" : "30s",
+      "fuzzyTripMatching" : true,
+      "features" : [
+        "stop-position",
+        "occupancy"
+      ]
+    },
+    {
       "id": "digitraffic-trip-updates",
       "type": "stop-time-updater",
       "frequency": "60s",
