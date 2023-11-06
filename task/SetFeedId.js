@@ -35,9 +35,9 @@ ${id}-fake-name,${id}-fake-url,${id}-fake-lang,${id}\n`
           if (filteredData.charAt(filteredData.length - 1) === '\n') {
             filteredData = filteredData.slice(0, -1)
           }
-	  if (filteredData.charCodeAt(0) === 0xFEFF) { // remove BOM
-	    filteredData = filteredData.substr(1)
-	  }
+          if (filteredData.charCodeAt(0) === 0xFEFF) { // remove BOM
+            filteredData = filteredData.substr(1)
+          }
           const json = converter.csv2json(filteredData)
           /* eslint-enable */
           if (json.length > 0) {
