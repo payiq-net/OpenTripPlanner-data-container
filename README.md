@@ -25,7 +25,7 @@ install app deps:
   `npm install`
 
 update osm data:
-  `gulp osm:update`
+  `ROUTER_NAME=hsl gulp osm:update`
 
 download new gtfs data for waltti:
   `ROUTER_NAME=waltti gulp gtfs:dl`
@@ -36,7 +36,7 @@ It is possible to change the behaviour of the data builder by defining environme
 * "ROUTER_NAME" defines which data container will be built and deployed.
 * "DOCKER_USER" defines username for authenticating to docker hub.
 * "DOCKER_AUTH" defines password for authenticating to docker hub.
-* (Optional, default latest and tag based on date) "DOCKER_TAG" defines what will be the updated docker tag of the data container images in the remote container registry.
+* (Optional, default v3 and tag based on date) "DOCKER_TAG" defines what will be the updated docker tag of the data container images in the remote container registr.
 * (Optional, default hsldevcom) "ORG" defines what organization images belong to in the remote container registry.
 * (Optional, default v3) "SEED_TAG" defines what version of data container should be used for seeding.
 * (Optional, default v2) "OTP_TAG" defines what version of OTP is used for testing and building graphs.
