@@ -115,7 +115,7 @@ The end result of the build is a data container uploaded into dockerhub.
 Digitransit-deployer detects the changes and restarts OTP instances, so that new data becomes in use.
 
 Each data container image runs a http server listening to port 8080, serving both a data bundle required for building a graph,
-and a pre-built graph. For example, in HSL case: http://localhost:8080/router-hsl.zip and graph-hsl-<otpversion>.zip
+and a pre-built graph. For example, in HSL case: http://localhost:8080/router-hsl.zip and graph-hsl-$OTPVERSION.zip
 
 ### otp-data-tools
 
