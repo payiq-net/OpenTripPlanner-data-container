@@ -8,7 +8,6 @@ require('./gulpfile')
 const { promisify } = require('util')
 const { execFileSync } = require('child_process')
 const { postSlackMessage, updateSlackMessage } = require('./util')
-const CronJob = require('cron').CronJob
 const fs = require('fs')
 const { router } = require('./config')
 
@@ -16,12 +15,7 @@ const MAX_GTFS_FALLBACK = 2 // threshold for aborting data loading
 
 const start = promisify((task, cb) => gulp.series(task)(cb))
 
-if (process.env.CRON) {
-  process.stdout.write(`Starting timer with pattern: ${process.env.CRON}\n`)
-  new CronJob(process.env.CRON, update, null, true, 'Europe/Helsinki') // eslint-disable-line
-} else {
-  update()
-}
+update()
 
 async function update () {
   const slackResponse = await postSlackMessage('Starting data build')
@@ -39,7 +33,7 @@ async function update () {
 
   try { // tolerate fail in dem update
     await start('dem:update')
-  } catch (E) {
+  } catch (Err) {
     postSlackMessage('DEM update failed, using previous version :boom:')
     global.hasFailures = true
   }
@@ -110,8 +104,8 @@ async function update () {
     } else {
       updateSlackMessage(`${name} data updated :white_check_mark:`)
     }
-  } catch (E) {
-    postSlackMessage(`${name} data update failed: ` + E.message)
+  } catch (Err) {
+    postSlackMessage(`${name} data update failed: ` + Err.message)
     updateSlackMessage('Something went wrong with the data update :boom:')
   }
 }
