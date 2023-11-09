@@ -33,7 +33,7 @@ async function update () {
 
   try { // tolerate fail in dem update
     await start('dem:update')
-  } catch (Err) {
+  } catch (err) {
     postSlackMessage('DEM update failed, using previous version :boom:')
     global.hasFailures = true
   }
@@ -104,8 +104,8 @@ async function update () {
     } else {
       updateSlackMessage(`${name} data updated :white_check_mark:`)
     }
-  } catch (Err) {
-    postSlackMessage(`${name} data update failed: ` + Err.message)
+  } catch (err) {
+    postSlackMessage(`${name} data update failed: ` + err.message)
     updateSlackMessage('Something went wrong with the data update :boom:')
   }
 }
