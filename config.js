@@ -10,7 +10,7 @@ const src = (id, url, fit, rules, replacements, requestOptions) => ({ id, url, f
 
 // OBA filter erases files which it does not recognize from GTFS packages
 // this array specifies the file names which should be preserved
-const passOBAfilter = ['emissions.txt']
+const passOBAfilter = ['emissions.txt', 'translations.txt']
 
 const routers = {
   hsl: {
