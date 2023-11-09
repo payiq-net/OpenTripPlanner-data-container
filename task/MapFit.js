@@ -21,7 +21,7 @@ const fit = function (cmd, osmExtract, src, dst) {
 }
 
 module.exports = {
-  fitGTFSTask: gtfsMap => {
+  fitGTFSTask: (gtfsMap, osm) => {
     return through.obj((file, encoding, callback) => {
       const gtfsFile = file.history[file.history.length - 1]
       const fileName = gtfsFile.split('/').pop()
@@ -38,7 +38,7 @@ module.exports = {
         callback(null, file)
         return
       }
-      const osmFile = `${dataDir}/ready/osm/finland.pbf`
+      const osmFile = `${dataDir}/ready/osm/{osm[0].id}.pbf`
       if (!fs.existsSync(osmFile)) {
         process.stdout.write(`${osmFile} not available, skipping ${gtfsFile}\n`)
         callback(null, null)
@@ -50,7 +50,7 @@ module.exports = {
       const src = `${relativeFilename}`
       const dst = `${relativeFilename}-fitted`
 
-      if (fit(script, '/data/ready/osm/finland.pbf', src, dst)) {
+      if (fit(script, osmFile, src, dst)) {
         fs.unlinkSync(src)
         fs.renameSync(dst, src)
         process.stdout.write(gtfsFile + ' fit SUCCESS\n')

@@ -73,7 +73,7 @@ gulp.task('gtfs:id', () => gulp.src(`${config.dataDir}/id/gtfs/*`)
 // Run MapFit on gtfs files (based on config) and moves files to directory 'filter'
 gulp.task('gtfs:fit', gulp.series('del:filter',
   () => gulp.src(`${config.dataDir}/fit/gtfs/*`)
-    .pipe(fitGTFSTask(config.gtfsMap))
+    .pipe(fitGTFSTask(config.gtfsMap, config.osm))
     .pipe(gulp.dest(`${config.dataDir}/filter/gtfs`))))
 
 gulp.task('copyRules', () =>
