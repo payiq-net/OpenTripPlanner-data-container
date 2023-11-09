@@ -16,6 +16,9 @@
       }
     }
   ],
+  "gtfsDefaults" : {
+    "stationTransferPreference" : "recommended"
+  },
   "osmDefaults": {
     "timeZone": "Europe/Helsinki",
     "osmTagMapping": "finland"
