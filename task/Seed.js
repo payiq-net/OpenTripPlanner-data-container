@@ -16,6 +16,7 @@ module.exports = function () {
       process.stdout.write(`extracting data from ${container}...\n`)
       const script =
        `cd ${dataDir}
+        docker login -u ${process.env.DOCKER_USER} -p ${process.env.DOCKER_AUTH} || true
         docker create --name data-extract-${router.id} ${container}
         docker cp data-extract-${router.id}:var/www/localhost/htdocs/router-${router.id}.zip .
         docker rm data-extract-${router.id}
