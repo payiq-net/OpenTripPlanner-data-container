@@ -2,17 +2,11 @@ const through = require('through2')
 const Vinyl = require('vinyl')
 const fs = require('fs')
 const cloneable = require('cloneable-readable')
-const { routerDir } = require('../util')
-const osmFiles = (config) => config.osm.map(filename => filename + '.pbf')
-const demFile = (config) => config.dem + '.tif'
-const gtfsFile = (src) => src.id + '-gtfs.zip'
 const { dataDir } = require('../config')
 
-function createFile (config, fileName, source) {
-  const name = `${config.id}/router/${fileName}`
+function createFile (config, fileName, sourcePath) {
   process.stdout.write(`copying ${fileName}...\n`)
-  const file = new Vinyl({ path: name, contents: cloneable(fs.createReadStream(source)) })
-  return file
+  return new Vinyl({ path: fileName, contents: cloneable(fs.createReadStream(`${sourcePath}/${fileName}`)) })
 }
 
 // EXTRA_UPDATERS format should be {"turku-alerts": {"type": "real-time-alerts", "frequencySec": 30, "url": "https://foli-beta.nanona.fi/gtfs-rt/reittiopas", "feedId": "FOLI", "fuzzyTripMatching": true, "routers": ["waltti"]}}
@@ -21,16 +15,16 @@ function createFile (config, fileName, source) {
 const extraUpdaters = process.env.EXTRA_UPDATERS !== undefined ? JSON.parse(process.env.EXTRA_UPDATERS) : {}
 
 // Prepares router-config.json data for data container and applies edits/additions made in EXTRA_UPDATERS env var
-function createAndProcessRouterConfig (config) {
-  process.stdout.write(`copying router-config.json...\n`)
-  const source = `${routerDir(config)}/router-config.json`
-  const routerConfig = JSON.parse(fs.readFileSync(source, 'utf8'))
+function createAndProcessRouterConfig (router) {
+  process.stdout.write('copying router-config.json...\n')
+  const configName = `${router.id}/router-config.json`
+  const routerConfig = JSON.parse(fs.readFileSync(configName, 'utf8'))
   const updaters = routerConfig.updaters
-  let usedPatches = []
+  const usedPatches = []
   for (let i = updaters.length - 1; i >= 0; i--) {
     const updaterId = updaters[i].id
     const updaterPatch = extraUpdaters[updaterId]
-    if (updaterPatch !== undefined && updaterPatch.routers !== undefined && updaterPatch.routers.includes(config.id)) {
+    if (updaterPatch !== undefined && updaterPatch.routers !== undefined && updaterPatch.routers.includes(router.id)) {
       if (updaterPatch.remove === true) {
         updaters.splice(i, 1)
       } else {
@@ -42,41 +36,43 @@ function createAndProcessRouterConfig (config) {
       usedPatches.push(updaterId)
     }
   }
-  Object.keys(extraUpdaters).forEach((id) => {
+  Object.keys(extraUpdaters).forEach(id => {
     if (!usedPatches.includes(id)) {
       const routers = extraUpdaters[id].routers
-      if (routers !== undefined && routers.includes(config.id)) {
-        let patchClone = Object.assign({}, extraUpdaters[id])
+      if (routers !== undefined && routers.includes(router.id)) {
+        const patchClone = Object.assign({}, extraUpdaters[id])
         delete patchClone.remove
         delete patchClone.routers
         updaters.push({ ...patchClone, id })
       }
     }
   })
-  const name = `${config.id}/router/router-config.json`
-  const file = new Vinyl({ path: name, contents: Buffer.from(JSON.stringify(routerConfig, null, 2)) })
+  const file = new Vinyl({ path: 'router-config.json', contents: Buffer.from(JSON.stringify(routerConfig, null, 2)) })
   return file
 }
 
 /**
  * Make router data ready for inclusion in data container.
  */
-module.exports = function (configs) {
+module.exports = function (router) {
   const stream = through.obj()
 
-  configs.forEach(config => {
-    stream.push(createFile(config, 'build-config.json', `${routerDir(config)}/build-config.json`))
-    stream.push(createFile(config, 'otp-config.json', `${routerDir(config)}/otp-config.json`))
-    stream.push(createAndProcessRouterConfig(config))
-    osmFiles(config).forEach(osmFile =>
-      stream.push(createFile(config, osmFile, `${dataDir}/ready/osm/${osmFile}`))
-    )
-    if (config.dem) {
-      stream.push(createFile(config, demFile(config), `${dataDir}/ready/dem/${demFile(config)}`))
-    }
-    config.src.forEach(src => {
-      stream.push(createFile(config, gtfsFile(src), `${dataDir}/ready/gtfs/${gtfsFile(src)}`))
-    })
+  process.stdout.write('Collecting data and configuration files for graph build\n')
+
+  stream.push(createFile(router, 'build-config.json', router.id))
+  stream.push(createFile(router, 'otp-config.json', router.id))
+  stream.push(createAndProcessRouterConfig(router))
+  router.osm.forEach(osmId => {
+    const name = osmId + '.pbf'
+    stream.push(createFile(router, name, `${dataDir}/ready/osm`))
+  })
+  if (router.dem) {
+    const name = router.dem + '.tif'
+    stream.push(createFile(router, name, `${dataDir}/ready/dem`))
+  }
+  router.src.forEach(src => {
+    const name = src.id + '-gtfs.zip'
+    stream.push(createFile(router, name, `${dataDir}/ready/gtfs`))
   })
   stream.end()
 

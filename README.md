@@ -1,13 +1,10 @@
-# Build process for OpenTripPlanner-data-container 
+# Build process for OpenTripPlanner-data-container
 
 [![Build](https://github.com/hsldevcom/OpenTripPlanner-data-container/workflows/Process%20master%20push%20or%20pr/badge.svg?branch=master)](https://github.com/HSLdevcom/OpenTripPlanner-data-container/actions)
 
 ## This project:
 Contains tools for fetching, building and deploying fresh otp data-containers
-for consumption by hsl, waltti, waltti-alt and finland otp instances. This project can be
-reused for building data for other otp instances but it is only tested to
-work for the aforementioned otp instances. This is used for OTP
-version 2.x.
+for consumption by Digitransit maintained OTP version 2.x instances.
 
 ## Main components
 
@@ -19,31 +16,28 @@ required external dependency is docker. Docker is used for launching external
 commands that do for example data manipulation.
 
 install gulp cli:
-  `npm install -g gulp-cli`
+  `yarn global add gulp-cli`
 
 install app deps:
-  `npm install`
+  `yarn`
 
 update osm data:
-  `gulp osm:update`
+  `ROUTER_NAME=hsl gulp osm:update`
 
 download new gtfs data for waltti:
-  `ROUTERS=waltti gulp gtfs:dl`
+  `ROUTER_NAME=waltti gulp gtfs:dl`
 
 #### Configuration
 It is possible to change the behaviour of the data builder by defining environment variables.
 
+* "ROUTER_NAME" defines which data container will be built and deployed.
 * "DOCKER_USER" defines username for authenticating to docker hub.
 * "DOCKER_AUTH" defines password for authenticating to docker hub.
-* (Optional, default latest and tag based on date) "DOCKER_TAG" defines what will be the updated docker tag of the data container images in the remote container registry.
+* (Optional, default v3 and tag based on date) "DOCKER_TAG" defines what will be the updated docker tag of the data container images in the remote container registry.
 * (Optional, default hsldevcom) "ORG" defines what organization images belong to in the remote container registry.
-* (Optional, default latest) "SEED_TAG" defines what version of data container should be used for seeding.
-* (Optional, default latest) "OTP_TAG" defines what version of OTP is used for testing and building graphs.
-* (Optional, default latest) "TOOLS_TAG" defines what version of otp-data-tools image is used for testing.
-* (Optional, default ${process.cwd()}/data) "HOST_DATA" defines base path for volume directories.
-* (Optional, default 'finland, waltti, hsl, waltti-alt') "ROUTERS" defines which data containers are being built and deployed.
-* (Optional, default ${process.cwd()}/data) "DATA" defines base path for data directories in container's file system.
-* (Optional, default 23:00:00) "BUILD_TIME" defines when data build is being run. Uses UTC time.
+* (Optional, default v3) "SEED_TAG" defines what version of data container should be used for seeding.
+* (Optional, default v2) "OTP_TAG" defines what version of OTP is used for testing and building graphs.
+* (Optional, default v3) "TOOLS_TAG" defines what version of otp-data-tools image is used for testing.
 * (Optional, default dev) "BUILDER_TYPE" used as a postfix to slack bot name
 * (Optional) "SLACK_CHANNEL_ID" defines to which slack channel the messages are sent to
 * (Optional) "SLACK_ACCESS_TOKEN" bearer token for slack messaging
@@ -64,63 +58,63 @@ It is possible to change the behaviour of the data builder by defining environme
 
 Seed data can be retrieved with a single gulp command:
 
-1. seed
+1. `seed`
 
-Downloads previous data containers (env variable SEED_TAG can be used to customize which tag is pulled)
-and extracts osm and gtfs data from there and places it in 'data/ready' directory.
+Downloads previous data container (env variable SEED_TAG can be used to customize which tag is pulled)
+and extracts osm, dem and gtfs data from there and places it in 'data/seed' and 'data/ready' directories.
 Old data acts as backup in case fetching/validating new data fails.
 
-Currently there is single processing step for OSM data. Because gtfs processing steps require osm data,
-the osm data must be available before running the gtfs:fit stage later below.
-
-2. osm:update
+2. `osm:update`
 
 This command downloads required OSM packages from configured location, tests the file(s) with otp,
 and if tests pass data is copied to 'data/downloads/osm' directory.
 
 The data is then processed with the following steps:
 
-3. gtfs:dl
+3. `gtfs:dl`
 Downloads a GTFS package from configured location, tests the file with otp, if
 test passes data is copied to directory 'data/fit/gtfs'. The resulting zip is named <feedid>.zip.
 
-4. gtfs:fit
+4. `gtfs:fit`
 Runs configured map fits. Copies data to directory 'data/filter/gtfs'.
 
-5. gtfs:filter
+5. `gtfs:filter`
 Runs configured filterings. Copies data to directory 'data/id/gtfs'.
 
-6. gtfs:id
+6. `gtfs:id`
 Sets the gtfs feed id to <id> and copies data to directory 'data/ready/gtfs'.
+
+Steps 3. - 6. can also be run together using a single `gtfs:update` command.
 
 Building the router from available (seeded or downloaded and processed) data:
 
-7. router:buildGraph
+7. `router:buildGraph`
 
-Prebuilds graph with either current latest version or user defined version (with env variable OTP_TAG) of OTP and creates zip files
+Prebuilds graph with either current v3 version or user defined version (with env variable OTP_TAG) of OTP and creates zip files
 ready for building the otp-data container.
 
+8. `build.sh`
 
-The final step is router deployment:
+Builds a data container 'otp-data-container-$ROUTER_NAME:test'
 
-8. deploy.sh
+9. `test.sh`
 
-Builds a data container, starts it, starts either latest or user defined version (with env variable OTP_TAG) of otp and runs
-routing tests (otp-data-tools latest image is used for it by default, TOOLS_TAG env variable can be used to change that)
-to verify that the data container looks ok. If tests pass the fresh data container is pushed to Dockerhub.
+Runs routing quality test bench defined in the repository 'hsldevcom/OTPQA'. OTPQA test sets are associated with GTFS packages.
+If there are quality regressions, a comma separated list of failed GTFS feed identifiers is is written to local file 'failed_feeds.txt'.
 
-Normally when the application is running (as a container) the index.js is used.
-It runs the data updating process on a schedule specified as a cron pattern. Data build can be executed immediately
-by attaching to the builder container with bash 'docker exec -i -t <dockerid> /bin/bash' and then
-exexuting the command 'node index.js once'. The end result of the build is 2 docker containers uploaded into dockerhub.
+The final step is data container deployment:
+
+10. `deploy.sh`
+
+Tags the test image using 'DOCKER_TAG' env variable (default 'v3') and pushes the image to Dockerhub.
+
+Normally, when the application is running as a container, the script 'index.js' is run to execute all steps 1 - 10 described above.
+Execution time can be specified using CRON env variable; without it the script is run immediately.
+The end result of the build is a data container uploaded into dockerhub.
 Digitransit-deployer detects the changes and restarts OTP instances, so that new data becomes in use.
 
-Each data container image runs a http server listening to port 8080, serving both a gtfs data bundle and a pre-built graph:
-
-- hsl: http://localhost:8080/router-hsl.zip and graph-hsl-<otpversion>.zip
-- waltti: http://localhost:8080/router-waltti.zip and graph-waltti-<otpversion>.zip
-- finland: http://localhost:8080/router-finland.zip and graph-finland-<otpversion>.zip
-- waltti-alt: http://localhost:8080/router-waltti-alt.zip and graph-waltti-alt-<otpversion>.zip
+Each data container image runs a http server listening to port 8080, serving both a data bundle required for building a graph,
+and a pre-built graph. For example, in HSL case: http://localhost:8080/router-hsl.zip and graph-hsl-$OTPVERSION.zip
 
 ### otp-data-tools
 

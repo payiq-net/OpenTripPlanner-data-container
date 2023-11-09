@@ -2,3 +2,5 @@ data/
 node_modules/
 otp-data-tools/
 *.zip
+Dockerfile
+*~

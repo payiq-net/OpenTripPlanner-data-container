@@ -2,7 +2,7 @@
   <!-- Activate debug logging in OSM boarding location - transit stop matching module and write its log to a file.
        The file is used for automatic monitorig of the success rate of the matching process. -->
   <appender name="OSMBoardingLog" class="ch.qos.logback.core.FileAppender">
-    <file>graphs/${ROUTER_NAME}/router/taggedStops.log</file>
+    <file>graphs/${ROUTER_NAME}/taggedStops.log</file>
     <append>false</append>
     <!-- set immediateFlush to false for much higher logging throughput -->
     <immediateFlush>false</immediateFlush>
@@ -16,4 +16,8 @@
   <logger name="org.opentripplanner.graph_builder.module.OsmBoardingLocationsModule" level="debug" additivity="false">
     <appender-ref ref="OSMBoardingLog"/>
   </logger>
+  <logger name="org.opentripplanner.updater" level="off" />
+  <logger name="org.opentripplanner.updater.trip.TimetableSnapshotSource" level="off" />
+  <logger name="org.opentripplanner.model.Timetable" level="off" />
+  <logger name="org.opentripplanner.routing.algorithm.transferoptimization.OptimizeTransferService" level="off" />
 </included>

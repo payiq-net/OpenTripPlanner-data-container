@@ -15,7 +15,7 @@ const promisifiedRequest = promisify(request)
  */
 const zipWithGlob = (zipFile, glob, zipDir, cb) => {
   return globby(glob).then(paths => {
-    let zip = new JSZip()
+    const zip = new JSZip()
 
     if (zipDir !== undefined) {
       zip.folder(zipDir)
@@ -32,14 +32,15 @@ const zipWithGlob = (zipFile, glob, zipDir, cb) => {
 }
 
 async function postSlackMessage (messageText) {
+  process.stdout.write(`${messageText}\n`) // write important messages also to log
   try {
     const response = await promisifiedRequest({
       method: 'POST',
       url: 'https://slack.com/api/chat.postMessage',
       headers: {
-        'Authorization': `Bearer ${process.env.SLACK_ACCESS_TOKEN}`,
+        Authorization: `Bearer ${process.env.SLACK_ACCESS_TOKEN}`,
         'Content-Type': 'application/json',
-        'Accept': '*/*'
+        Accept: '*/*'
       },
       json: {
         channel: process.env.SLACK_CHANNEL_ID,
@@ -59,14 +60,15 @@ async function postSlackMessage (messageText) {
 }
 
 async function updateSlackMessage (messageText) {
+  process.stdout.write(`${messageText}\n`)
   try {
     const response = await promisifiedRequest({
       method: 'POST',
       url: 'https://slack.com/api/chat.update',
       headers: {
-        'Authorization': `Bearer ${process.env.SLACK_ACCESS_TOKEN}`,
+        Authorization: `Bearer ${process.env.SLACK_ACCESS_TOKEN}`,
         'Content-Type': 'application/json',
-        'Accept': '*/*'
+        Accept: '*/*'
       },
       json: {
         channel: process.env.SLACK_CHANNEL_ID,
@@ -85,36 +87,12 @@ async function updateSlackMessage (messageText) {
   }
 }
 
-/**
- * Compare size of a newly downloaded file (either from headers or from the downloaded file locally)
- * to the size of the local version of a file (either downloaded or seeded).
- * maxDifference should be a decimal of how much smaller the new file can be than the localFile (i.e. 0.01 = 1%).
- */
-const compareSizes = (localFile, newFileSize, maxDifference) => {
-  return new Promise((resolve, reject) => {
-    if (newFileSize === undefined) {
-      return resolve()
-    }
-    if (!fs.existsSync(localFile)) {
-      // download new file as local file does not exist
-      reject('error') // eslint-disable-line
-    }
-    let fileSize = fs.statSync(localFile).size
-    if (fileSize * (1 - maxDifference) <= newFileSize) {
-      resolve()
-    } else {
-      process.stdout.write(`Local file size was: ${fileSize} and remote size: ${newFileSize} \n`)
-      reject('end') // eslint-disable-line
-    }
-  })
-}
-
 const UNCONNECTED = /Could not connect ([A-Z]?[a-z]?\d{4}) at \((\d+\.\d+), (\d+\.\d+)/
-const CONNECTED = /Connected <.*:(\d*) lat,lng=(\d+\.\d+),(\d+\.\d+)> \(([A-Z]?[a-z]?\d{4})\) to (.*) at \((\d+\.\d+), (\d+\.\d+)/
+const CONNECTED = /Connected {.*:(\d*) lat,lng=(\d+\.\d+),(\d+\.\d+)} \(([A-Z]?[a-z]?\d{4})\) to (.*) at \((\d+\.\d+), (\d+\.\d+)/
 
 function distance (lat1, lon1, lat2, lon2) {
-  var p = Math.PI / 180
-  var a =
+  const p = Math.PI / 180
+  const a =
     0.5 -
     Math.cos((lat2 - lat1) * p) / 2 +
     Math.cos(lat1 * p) * Math.cos(lat2 * p) * (1 - Math.cos((lon2 - lon1) * p)) / 2
@@ -170,9 +148,7 @@ module.exports = {
     zipWithGlob(zipFile, [`${dir}/*`], undefined, cb)
   },
   zipWithGlob,
-  routerDir: (config) => `router-${config.id}`,
   postSlackMessage,
   updateSlackMessage,
-  compareSizes,
   otpMatching
 }

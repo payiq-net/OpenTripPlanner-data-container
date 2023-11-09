@@ -1,22 +1,12 @@
-FROM docker:20.10.7-dind
-MAINTAINER Digitransit version: 0.1
+FROM docker:dind
+MAINTAINER Digitransit version: 1
 
-RUN apk add --update --no-cache bash curl nodejs nodejs-npm \
-  && rm -rf /var/cache/apk/*
+RUN apk add --update --no-cache bash curl nodejs yarn && rm -rf /var/cache/apk/*
 
 WORKDIR /opt/otp-data-builder
 
-ADD package-lock.json package.json *.js *.sh  gulpfile.js logback-include-extensions.xml /opt/otp-data-builder/
+ADD . /opt/otp-data-builder/
 
-ADD task /opt/otp-data-builder/task
-ADD router-finland /opt/otp-data-builder/router-finland
-ADD router-hsl /opt/otp-data-builder/router-hsl
-ADD router-waltti /opt/otp-data-builder/router-waltti
-ADD router-waltti-alt /opt/otp-data-builder/router-waltti-alt
-ADD router-varely /opt/otp-data-builder/router-varely
-ADD router-kela /opt/otp-data-builder/router-kela
-ADD otp-data-container /opt/otp-data-builder/otp-data-container
+RUN yarn install
 
-RUN npm install
-
-CMD ( dockerd-entrypoint.sh & ) && sleep 30 && unset DOCKER_HOST && node index.js once
+CMD ( dockerd-entrypoint.sh & ) && sleep 30 && unset DOCKER_HOST && node index.js

@@ -9,7 +9,7 @@ const { postSlackMessage } = require('../util')
 module.exports = function (entries) {
   let downloadCount = 0
 
-  var stream = through.obj()
+  const stream = through.obj()
 
   const incProcessed = () => {
     downloadCount += 1
@@ -24,16 +24,15 @@ module.exports = function (entries) {
     const downloadHandler = (err, res, body) => {
       if (err || res.statusCode !== 200) {
         postSlackMessage(`${entry.url} Download failed: ${err} :boom:`)
-        process.stdout.write(entry.url + ' Download FAILED\n')
+        global.hasFailures = true
         incProcessed()
         return
       }
       const name = entry.url.split('/').pop()
       const fileExt = name.indexOf('.') > 0 ? '.' + name.split('.').pop() : ''
       const file = new Vinyl({ path: `${entry.id !== undefined ? (entry.id + fileExt) : name}`, contents: Buffer.from(body) })
-      stream.push(file)
-
       process.stdout.write(entry.url + ' Download SUCCESS\n')
+      stream.push(file)
       incProcessed()
     }
 

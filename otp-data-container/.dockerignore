@@ -1,4 +1,3 @@
-router
-!router/report
-!router/report/*
-!router/*.csv
+Dockerfile.data-container
+graph.obj
+taggedStops.log

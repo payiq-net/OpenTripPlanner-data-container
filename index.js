@@ -1,49 +1,21 @@
+/*
+Executes gulp tasks which download new data, builds and tests a new graph and deploys a data container containing the results.
+Data errors are detected and tolerated to a certain limit thanks to fallback mechanism to older data.
+Unexpected code execution errors and failures in graph build abort the data loading.
+*/
 const gulp = require('gulp')
-const { setCurrentConfig } = require('./config')
 require('./gulpfile')
 const { promisify } = require('util')
-const everySeries = require('async/everySeries')
 const { execFileSync } = require('child_process')
 const { postSlackMessage, updateSlackMessage } = require('./util')
-const CronJob = require('cron').CronJob
+const fs = require('fs')
+const { router } = require('./config')
 
-const every = promisify((list, task, cb) => {
-  everySeries(list, task, function (err, result) {
-    cb(err, result)
-  })
-})
+const MAX_GTFS_FALLBACK = 2 // threshold for aborting data loading
 
 const start = promisify((task, cb) => gulp.series(task)(cb))
 
-const updateDEM = ['dem:update']
-const updateOSM = ['osm:update']
-const updateGTFS = ['gtfs:dl', 'gtfs:fit', 'gtfs:filter', 'gtfs:id']
-
-let routers
-if (process.env.ROUTERS) {
-  routers = process.env.ROUTERS.replace(/ /g, '').split(',')
-} else {
-  routers = ['finland', 'waltti', 'hsl', 'waltti-alt', 'varely', 'kela']
-}
-
-if (!process.env.NOSEED) {
-  start('seed').then(() => {
-    process.stdout.write('Seeded.\n')
-    if (process.argv.length === 3 && process.argv[2] === 'once') {
-      process.stdout.write('Running update once.\n')
-      update()
-    } else {
-      const cronPattern = process.env.CRON || '0 0 3 * * *'
-      process.stdout.write(`Starting timer with pattern: ${cronPattern}\n`)
-      new CronJob(cronPattern, update, null, true, 'Europe/Helsinki') // eslint-disable-line
-    }
-  }).catch((err) => {
-    process.stdout.write(err + '\n')
-    process.exit(1)
-  })
-} else {
-  update()
-}
+update()
 
 async function update () {
   const slackResponse = await postSlackMessage('Starting data build')
@@ -51,19 +23,26 @@ async function update () {
     global.messageTimeStamp = slackResponse.ts
   }
 
-  setCurrentConfig(routers.join(',')) // restore used config
+  if (!process.env.NOSEED) {
+    await start('seed')
+    process.stdout.write('Seeded\n')
+  }
 
-  await every(updateDEM, function (task, callback) {
-    start(task).then(() => { callback(null, true) })
-  })
+  // we track data rejections using this global variable
+  global.hasFailures = false
 
+  try { // tolerate fail in dem update
+    await start('dem:update')
+  } catch (err) {
+    postSlackMessage('DEM update failed, using previous version :boom:')
+    global.hasFailures = true
+  }
+
+  // OSM update is more complicated. Download often fails, so there is a retry loop,
+  //  which breaks when a big enough file gets loaded
+  global.blobSizeOk = false // ugly hack but gulp does not return any values from tasks
   for (let i = 0; i < 3; i++) {
-    global.blobSizeOk = false // ugly hack but gulp does not return any values from tasks
-    global.OTPacceptsFile = false
-
-    await every(updateOSM, function (task, callback) {
-      start(task).then(() => { callback(null, true) })
-    })
+    await start('osm:update')
     if (global.blobSizeOk) {
       break
     }
@@ -72,48 +51,61 @@ async function update () {
       await new Promise(resolve => setTimeout(resolve, 600000))
     }
   }
-
-  let osmError = false
-
-  if (!global.OTPacceptsFile) {
-    osmError = true
+  if (!global.blobSizeOk) {
+    global.hasFailures = true
     postSlackMessage('OSM data update failed, using previous version :boom:')
   }
 
-  await every(updateGTFS, function (task, callback) {
-    start(task).then(() => { callback(null, true) })
-  })
+  const name = router.id
+  try {
+    await start('gtfs:update')
 
-  await every(routers, function (router, callback) {
-    setCurrentConfig(router)
-    start('router:buildGraph').then(() => {
-      try {
-        process.stdout.write('Executing deploy script.\n')
-        execFileSync('./deploy.sh', [router],
-          {
-            env:
-              {
-                DOCKER_USER: process.env.DOCKER_USER,
-                DOCKER_AUTH: process.env.DOCKER_AUTH,
-                DOCKER_TAG: process.env.DOCKER_TAG,
-                TEST_TAG: process.env.OTP_TAG || '',
-                TOOLS_TAG: process.env.TOOLS_TAG || '',
-                JAVA_OPTS: process.env.JAVA_OPTS,
-                SKIPPED_SITES: process.env.SKIPPED_SITES || ''
-              },
-            stdio: [0, 1, 2]
-          }
-        )
-        if (osmError) {
-          updateSlackMessage(`${router} data updated, but there was an error updating OSM data. :boom:`)
-        } else {
-          updateSlackMessage(`${router} data updated. :white_check_mark:`)
-        }
-      } catch (E) {
-        postSlackMessage(`${router} data update failed: ` + E.message)
-        updateSlackMessage('Something went wrong with the data update. More information in the reply. :boom:')
+    process.stdout.write('Build routing graph\n')
+    await start('router:buildGraph')
+
+    process.stdout.write('Build docker image\n')
+    execFileSync('./build.sh', [name], { stdio: [0, 1, 2] })
+
+    if (process.env.SKIPPED_SITES === 'all') {
+      process.stdout.write('Skipping all tests')
+    } else {
+      process.stdout.write('Test docker image\n')
+      execFileSync('./test.sh', [], { stdio: [0, 1, 2] })
+    }
+
+    const logFile = 'failed_feeds.txt'
+    if (fs.existsSync(logFile)) { // testing detected routing problems
+      global.hasFailures = true
+
+      global.failedFeeds = fs.readFileSync(logFile, 'utf8') // comma separated list of feed ids. No newline at end!
+      fs.unlinkSync(logFile) // cleanup for local use
+
+      if (global.failedFeeds.split(',').length > MAX_GTFS_FALLBACK) {
+        updateSlackMessage('Aborting the data update because too many quality tests failed :boom:')
+        process.exit(1)
       }
-      callback(null, true)
-    })
-  })
+
+      postSlackMessage(`GTFS packages ${global.failedFeeds} rejected, using fallback to current data`)
+      // use seed packages for failed feeds
+      await start('gtfs:fallback')
+
+      // rebuild the graph
+      process.stdout.write('Rebuild graph using fallback data\n')
+      await start('router:buildGraph')
+
+      process.stdout.write('Rebuild docker image\n')
+      execFileSync('./build.sh', [name])
+    }
+    process.stdout.write('Deploy docker image\n')
+    execFileSync('./deploy.sh', [name], { stdio: [0, 1, 2] })
+
+    if (global.hasFailures) {
+      updateSlackMessage(`${name} data updated, but partially falling back to older data :boom:`)
+    } else {
+      updateSlackMessage(`${name} data updated :white_check_mark:`)
+    }
+  } catch (err) {
+    postSlackMessage(`${name} data update failed: ` + err.message)
+    updateSlackMessage('Something went wrong with the data update :boom:')
+  }
 }

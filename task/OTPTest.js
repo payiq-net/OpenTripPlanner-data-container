@@ -2,9 +2,9 @@ const fs = require('fs')
 const fse = require('fs-extra')
 const exec = require('child_process').exec
 const through = require('through2')
-const { hostDataDir, dataDir, constants } = require('../config')
+const { dataDir, constants } = require('../config')
 const { postSlackMessage } = require('../util')
-const testTag = process.env.OTP_TAG || 'latest'
+const testTag = process.env.OTP_TAG || 'v2'
 const JAVA_OPTS = process.env.JAVA_OPTS || '-Xmx9g'
 
 /**
@@ -12,12 +12,11 @@ const JAVA_OPTS = process.env.JAVA_OPTS || '-Xmx9g'
  * the file is good enough to be used.
  */
 function testWithOTP (otpFile, quiet = false) {
-  let lastLog = []
+  const lastLog = []
 
-  const p = new Promise((resolve, reject) => {
+  return new Promise((resolve, reject) => {
     if (!fs.existsSync(otpFile)) {
-      process.stdout.write(otpFile + ' does not exist!\n')
-      p.reject()
+      reject(new Error(`${otpFile} does not exist!\n`))
     } else {
       if (!fs.existsSync(`${dataDir}/tmp`)) {
         fs.mkdirSync(`${dataDir}/tmp`)
@@ -29,18 +28,16 @@ function testWithOTP (otpFile, quiet = false) {
         const r = fs.createReadStream(otpFile)
         r.on('end', () => {
           try {
-            const build = exec(`docker run --rm -v ${hostDataDir}/tmp:/opt/opentripplanner/graphs --entrypoint /bin/bash hsldevcom/opentripplanner:${testTag} -c "java ${JAVA_OPTS} -jar otp-shaded.jar --build --save ./graphs/${dir} "`,
+            const build = exec(`docker run --rm -v ${dataDir}/tmp:/opt/opentripplanner/graphs --entrypoint /bin/bash hsldevcom/opentripplanner:${testTag} -c "java ${JAVA_OPTS} -jar otp-shaded.jar --build --save ./graphs/${dir} "`,
               { maxBuffer: constants.BUFFER_SIZE })
             build.on('exit', function (c) {
               if (c === 0) {
                 resolve(true)
-                global.OTPacceptsFile = true
                 process.stdout.write(otpFile + ' Test SUCCESS\n')
               } else {
                 const log = lastLog.join('')
-                process.stdout.write(otpFile + ` Test FAILED (${c})\n`)
-                process.stdout.write(otpFile + ': ' + lastLog.join('') + '\n')
                 postSlackMessage(`${otpFile} test failed: ${log} :boom:`)
+                global.hasFailures = true
                 resolve(false)
               }
               fse.removeSync(folder)
@@ -65,8 +62,6 @@ function testWithOTP (otpFile, quiet = false) {
             })
           } catch (e) {
             const log = lastLog.join('')
-            process.stdout.write(otpFile + ` Test FAILED (${e})\n`)
-            process.stdout.write(otpFile + ': ' + log + '\n')
             postSlackMessage(`${otpFile} test failed: ${log} :boom:`)
             fse.removeSync(folder)
             reject(e)
@@ -76,7 +71,6 @@ function testWithOTP (otpFile, quiet = false) {
       })
     }
   })
-  return p
 }
 
 module.exports = {
