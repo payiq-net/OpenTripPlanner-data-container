@@ -16,10 +16,10 @@ required external dependency is docker. Docker is used for launching external
 commands that do for example data manipulation.
 
 install gulp cli:
-  `npm install -g gulp-cli`
+  `yarn global add gulp-cli`
 
 install app deps:
-  `npm install`
+  `yarn`
 
 update osm data:
   `ROUTER_NAME=hsl gulp osm:update`
@@ -38,7 +38,6 @@ It is possible to change the behaviour of the data builder by defining environme
 * (Optional, default v3) "SEED_TAG" defines what version of data container should be used for seeding.
 * (Optional, default v2) "OTP_TAG" defines what version of OTP is used for testing and building graphs.
 * (Optional, default v3) "TOOLS_TAG" defines what version of otp-data-tools image is used for testing.
-* (Optional) "CRON" defines cronjob pattern when data build is being run. Uses local time.
 * (Optional, default dev) "BUILDER_TYPE" used as a postfix to slack bot name
 * (Optional) "SLACK_CHANNEL_ID" defines to which slack channel the messages are sent to
 * (Optional) "SLACK_ACCESS_TOKEN" bearer token for slack messaging
