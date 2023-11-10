@@ -7,7 +7,7 @@ const { postSlackMessage } = require('../util')
 const execSync = require('child_process').execSync
 
 const fit = function (cmd, osmExtract, src, dst) {
-  process.stdout.write('fitting ' + src + '...\n')
+  process.stdout.write(`fitting ${src}  to ${osmExtract} ...\n`)
 
   const dcmd = `docker pull ${dataToolImage}; docker run --rm -e TCMALLOC_LARGE_ALLOC_REPORT_THRESHOLD=2147483648 -v ${dataDir}:/data --rm ${dataToolImage} ${cmd} ${osmExtract} +init=epsg:3067 /${src} /${dst}`
 
@@ -15,6 +15,7 @@ const fit = function (cmd, osmExtract, src, dst) {
     execSync(dcmd)
     return true
   } catch (e) {
+    process.stdout.write(e.message)
     postSlackMessage(`Running command ${cmd} on ${src} failed :boom:`)
     return false
   }
@@ -38,9 +39,10 @@ module.exports = {
         callback(null, file)
         return
       }
-      const osmFile = `${dataDir}/ready/osm/${osm[0].id}.pbf`
-      if (!fs.existsSync(osmFile)) {
-        process.stdout.write(`${osmFile} not available, skipping ${gtfsFile}\n`)
+      const osmFile = `/ready/osm/${osm[0].id}.pbf`
+      const localPath = `${dataDir}${osmFile}`
+      if (!fs.existsSync(localPath)) {
+        process.stdout.write(`${localPath} not available, skipping ${gtfsFile} map fit\n`)
         callback(null, null)
         return
       }
@@ -49,8 +51,8 @@ module.exports = {
       const script = 'gtfs_shape_mapfit/fit_gtfs.bash &> /dev/null'
       const src = `${relativeFilename}`
       const dst = `${relativeFilename}-fitted`
-
-      if (fit(script, osmFile, src, dst)) {
+      const mountedPath = `/data${osmFile}`
+      if (fit(script, mountedPath, src, dst)) {
         fs.unlinkSync(src)
         fs.renameSync(dst, src)
         process.stdout.write(gtfsFile + ' fit SUCCESS\n')
