@@ -117,7 +117,7 @@ const routers = {
     id: 'kela',
     src: [
       src('kela', 'https://koontikartta.navici.com/tiedostot/gtfs_kela.zip'),
-      src('matkahuolto', mhAddress, false, ['router-kela/gtfs-rules/no-onnibus-mega.rule'], { 'transfers.txt': null })
+      src('matkahuolto', mhAddress, false, ['kela/gtfs-rules/no-onnibus-mega.rule'], { 'transfers.txt': null })
     ],
     osm: ['finland']
   }
