@@ -8,7 +8,6 @@
       "SandboxAPIMapboxVectorTilesApi": true,
       "FloatingBike": false,
       "ActuatorAPI": true,
-      "AsyncGraphQLFetchers": true,
-      "Co2Emissions": true
+      "AsyncGraphQLFetchers": true
   }
 }
