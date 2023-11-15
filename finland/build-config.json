@@ -22,5 +22,9 @@
   "osmDefaults": {
     "timeZone": "Europe/Helsinki",
     "osmTagMapping": "finland"
+  },
+  "emissions": {
+    "carAvgCo2PerKm": 170,
+    "carAvgOccupancy": 1.3
   }
 }
