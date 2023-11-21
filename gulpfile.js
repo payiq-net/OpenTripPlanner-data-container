@@ -16,7 +16,7 @@ const config = require('./config')
 const { buildOTPGraphTask } = require('./task/BuildOTPGraph')
 const { renameGTFSFile } = require('./task/GTFSRename')
 const { replaceGTFSFilesTask } = require('./task/GTFSReplace')
-const { moveTask } = require('./task/MoveTask')
+const { backupTask, restoreTask } = require('./task/MoveTask')
 
 const seedSourceDir = `${config.dataDir}/router-${config.router.id}` // e.g. data/router-hsl
 
@@ -87,9 +87,9 @@ gulp.task('copyRules', () =>
 gulp.task('gtfs:filter', gulp.series(
   'copyRules',
   () => gulp.src(`${config.dataDir}/filter/gtfs/*.zip`)
-    .pipe(moveTask(config.passOBAfilter, true, config.dataDir))
+    .pipe(backupTask(config.passOBAfilter))
     .pipe(OBAFilterTask(config.gtfsMap))
-    .pipe(moveTask(config.passOBAfilter, false, config.dataDir)),
+    .pipe(restoreTask(config.passOBAfilter)),
   () => gulp.src(`${config.dataDir}/filter/gtfs/*.zip`).pipe(gulp.dest(`${config.dataDir}/id/gtfs`))
 ))
 
