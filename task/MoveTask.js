@@ -47,31 +47,23 @@ function restoreFiles (zipFile, path, filesToAdd) {
  * @param {string} filePath - The path to the zip archive.
  * @param {string[]} filesToExtract - An array of filenames to extract from the archive.
  * @param {string} path - The path to the data directory where files are put
- * @returns {Promise} A Promise that resolves when the operation is complete.
+ * @param {function} cb - callback to signal when finished
  */
-function backupFiles (filePath, filesToExtract, path) {
-  if (filePath) {
-    const zip = new JSZip()
-    zip.loadAsync(fs.readFileSync(filePath)).then(() => {
-      const promises = filesToExtract.map(fileName => {
-        const file = Object.keys(zip.files).find((name) => name.endsWith(`${fileName}`))
-        if (file) {
-          return zip.file(file).async('nodebuffer').then((fileData) => {
-            fs.writeFileSync(`${path}/${fileName}`, fileData)
-            process.stdout.write(`${fileName} stored to ${path} \n`)
-          })
-        } else {
-          return Promise.resolve()
-        }
-      })
-      return Promise.all(promises)
+function backupFiles (filePath, filesToExtract, path, cb) {
+  const zip = new JSZip()
+  zip.loadAsync(fs.readFileSync(filePath)).then(() => {
+    const promises = filesToExtract.map(fileName => {
+      const file = Object.keys(zip.files).find((name) => name.endsWith(`${fileName}`))
+      if (file) {
+        return zip.file(file).async('nodebuffer').then((fileData) => {
+          fs.writeFileSync(`${path}/${fileName}`, fileData)
+        })
+      } else {
+        return Promise.resolve()
+      }
     })
-
-    return Promise.resolve(false)
-  } else {
-    process.stdout.write('No file ', filePath, ' found')
-    return Promise.resolve(false)
-  }
+    Promise.all(promises).then(() => cb())
+  })
 }
 
 function tmpPath (fileName) {
@@ -93,7 +85,7 @@ module.exports = {
       if (!fs.existsSync(path)) {
         fs.mkdirSync(path)
       }
-      backupFiles(localFile, names, path).then(status => {
+      backupFiles(localFile, names, path, ()  => {
         callback(null, file)
       })
     })
