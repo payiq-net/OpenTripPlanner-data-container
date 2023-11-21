@@ -26,7 +26,11 @@
     "jszip": "^3.10.1",
     "request": "^2.88.0",
     "through2": "^4.0.2",
-    "vinyl": "^3.0.0"
+    "vinyl": "^3.0.0",
+    "csv-parser": "^3.0.0",
+    "csv-stringify": "^6.4.4",
+    "osm-pbf-parser": "^2.3.0",
+    "remove-bom-stream": "^2.0.0"
   },
   "devDependencies": {
     "standard": "^17.1.0"
