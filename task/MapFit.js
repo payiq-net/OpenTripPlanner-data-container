@@ -1,66 +1,112 @@
 const through = require('through2')
 const fs = require('fs')
-const path = require('path')
-const cloneable = require('cloneable-readable')
-const { dataDir, dataToolImage } = require('../config.js')
-const { postSlackMessage } = require('../util')
-const execSync = require('child_process').execSync
+const csvParser = require('csv-parser')
+const removeBOM = require('remove-bom-stream')
+const { parseId } = require('../util')
+const { stringify } = require('csv-stringify')
+const { dataDir } = require('../config.js')
 
-const fit = function (cmd, osmExtract, src, dst) {
-  process.stdout.write(`fitting ${src}  to ${osmExtract} ...\n`)
+const limit = 200 // do not fit if distance is more than this many meters
 
-  const dcmd = `docker pull ${dataToolImage}; docker run --rm -e TCMALLOC_LARGE_ALLOC_REPORT_THRESHOLD=2147483648 -v ${dataDir}:/data --rm ${dataToolImage} ${cmd} ${osmExtract} +init=epsg:3067 /${src} /${dst}`
+// The radius of the earth.
+const radius = 6371000
+const dr = Math.PI / 180 // degree to radian
 
-  try {
-    execSync(dcmd)
-    return true
-  } catch (e) {
-    process.stdout.write(e.message)
-    postSlackMessage(`Running command ${cmd} on ${src} failed :boom:`)
-    return false
-  }
+function distance (a, b) {
+  const lat1 = a[0] * dr
+  const lat2 = b[0] * dr
+  const sinDLat = Math.sin(((b[0] - a[0]) * dr) * 0.5)
+  const sinDLon = Math.sin(((b[1] - a[1]) * dr) * 0.5)
+  const r = sinDLat * sinDLat + Math.cos(lat1) * Math.cos(lat2) * sinDLon * sinDLon
+  const c = 2 * Math.atan2(Math.sqrt(r), Math.sqrt(1 - r))
+  return radius * c
 }
 
-module.exports = {
-  fitGTFSTask: (gtfsMap, osm) => {
-    return through.obj((file, encoding, callback) => {
-      const gtfsFile = file.history[file.history.length - 1]
-      const fileName = gtfsFile.split('/').pop()
-      const relativeFilename = path.relative(process.cwd(), gtfsFile)
-      const id = fileName.substring(0, fileName.indexOf('-gtfs'))
-      const source = gtfsMap[id]
-      if (!source) {
-        process.stdout.write(`${gtfsFile} Could not find source for Id:${id}, ignoring fit...\n`)
-        callback(null, null)
-        return
-      }
-      if (!source.fit) {
-        process.stdout.write(gtfsFile + ' fit skipped\n')
-        callback(null, file)
-        return
-      }
-      const osmFile = `/ready/osm/${osm[0].id}.pbf`
-      const localPath = `${dataDir}${osmFile}`
-      if (!fs.existsSync(localPath)) {
-        process.stdout.write(`${localPath} not available, skipping ${gtfsFile} map fit\n`)
-        callback(null, null)
-        return
-      }
+function readHeader (fileName) {
+  return new Promise((resolve, reject) => {
+    const readStream = fs.createReadStream(fileName)
+    readStream
+      .pipe(removeBOM('utf-8'))
+      .pipe(csvParser())
+      .on('headers', headers => {
+        readStream.destroy()
+        resolve(headers)
+      })
+  })
+}
 
-      // use default script or string content
-      const script = 'gtfs_shape_mapfit/fit_gtfs.bash &> /dev/null'
-      const src = `${relativeFilename}`
-      const dst = `${relativeFilename}-fitted`
-      const mountedPath = `/data${osmFile}`
-      if (fit(script, mountedPath, src, dst)) {
-        fs.unlinkSync(src)
-        fs.renameSync(dst, src)
-        process.stdout.write(gtfsFile + ' fit SUCCESS\n')
-        file.contents = cloneable(fs.createReadStream(gtfsFile))
-        callback(null, file)
+function fitStopCoordinates (map, stats) {
+  return through.obj(function (stop, enc, next) {
+    const osmPos = map[stop.stop_id] || map[stop.stop_code]
+    if (osmPos && stop.stop_lat && stop.stop_lon) {
+      const dist = distance(osmPos, [stop.stop_lat, stop.stop_lon])
+      if (dist > stats.maxDist) stats.maxDist = dist
+      if (dist < limit) {
+        stats.fitted++
+        stats.dsum += dist
+        stop.stop_lat = osmPos[0]
+        stop.stop_lon = osmPos[1]
       } else {
-        callback(null, null)
+        // console.log('Bad fit:' + stop.stop_id + ', distance ='  + dist)
+        stats.bad++
       }
-    })
+    }
+    next(null, stop)
+  })
+}
+
+function transformStops (folder, map, cb) {
+  const fileName = `${folder}/stops.txt`
+  const result = `${folder}/transformed_stops.txt`
+  const stats = {
+    bad: 0,
+    fitted: 0,
+    dsum: 0,
+    maxDist: 0
   }
+
+  readHeader(fileName).then(headers => {
+    const stringifier = stringify({ header: true, columns: headers })
+
+    fs.createReadStream(fileName)
+      .pipe(removeBOM('utf-8'))
+      .pipe(csvParser())
+      .pipe(fitStopCoordinates(map, stats))
+      .pipe(stringifier)
+      .pipe(fs.createWriteStream(result))
+      .on('finish', () => {
+        fs.copyFileSync(result, fileName)
+        process.stdout.write(`Fitted ${stats.fitted} stops, skipped ${stats.bad} bad fits\n`)
+        if (stats.fitted) {
+          process.stdout.write(`Average fit distance ${stats.dsum / stats.fitted}, max distance ${stats.maxDist}\n`)
+        }
+        cb()
+      })
+  })
+}
+
+module.exports = function mapFit (config) {
+  return through.obj((file, encoding, callback) => {
+    const gtfsFile = file.history[file.history.length - 1]
+    const id = parseId(gtfsFile)
+    const folder = `${dataDir}/tmp/${id}`
+    const source = config.gtfsMap[id]
+
+    if (!source.fit) {
+      process.stdout.write(gtfsFile + ' fit disabled\n')
+      callback(null, file)
+      return
+    }
+    if (!config.fitMap) {
+      process.stdout.write(`PrepareFit task not run before fitting, skipping ${gtfsFile} map fit\n`)
+      callback(null, file)
+      return
+    }
+
+    process.stdout.write(`Fitting ${gtfsFile} to OSM stop locations ...\n`)
+    transformStops(folder, config.fitMap, () => {
+      process.stdout.write(gtfsFile + ' fit SUCCESS\n')
+      callback(null, file)
+    })
+  })
 }
