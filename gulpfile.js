@@ -6,7 +6,7 @@ const dlBlob = require('./task/DownloadDEMBlob')
 const { setFeedIdTask } = require('./task/SetFeedId')
 const { OBAFilterTask } = require('./task/OBAFilter')
 const prepareFit = require('./task/PrepareFit')
-const { fitGTFSTask } = require('./task/MapFit')
+const mapFit = require('./task/MapFit')
 const { validateBlobSize } = require('./task/BlobValidation')
 const { testOTPFile } = require('./task/OTPTest')
 const seed = require('./task/Seed')
@@ -71,13 +71,14 @@ gulp.task('gtfs:id', () => gulp.src(`${config.dataDir}/id/gtfs/*`)
   .pipe(setFeedIdTask())
   .pipe(gulp.dest(`${config.dataDir}/ready/gtfs`)))
 
-// Run MapFit on gtfs files (based on config) and moves files to directory 'filter'
+// Runs MapFit on gtfs files and moves files to directory 'filter'
 gulp.task('gtfs:fit', gulp.series('del:filter',
+  () => prepareFit(config),
   () => gulp.src(`${config.dataDir}/fit/gtfs/*`)
-    .pipe(fitGTFSTask(config.gtfsMap, config.osm))
+    .pipe(backupTask(['stops.txt']))
+    .pipe(mapFit(config)) // modify backup of stops.txt
+    .pipe(restoreTask(['stops.txt']))
     .pipe(gulp.dest(`${config.dataDir}/filter/gtfs`))))
-
-gulp.task('gtfs:prepareFit', () => prepareFit(config))
 
 gulp.task('copyRules', () =>
   gulp.src(`${config.router.id}/gtfs-rules/*`).pipe(gulp.dest(`${config.dataDir}/${config.router.id}/gtfs-rules`))
