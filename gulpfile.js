@@ -5,6 +5,7 @@ const dl = require('./task/Download')
 const dlBlob = require('./task/DownloadDEMBlob')
 const { setFeedIdTask } = require('./task/SetFeedId')
 const { OBAFilterTask } = require('./task/OBAFilter')
+const prepareFit = require('./task/PrepareFit')
 const { fitGTFSTask } = require('./task/MapFit')
 const { validateBlobSize } = require('./task/BlobValidation')
 const { testOTPFile } = require('./task/OTPTest')
@@ -75,6 +76,8 @@ gulp.task('gtfs:fit', gulp.series('del:filter',
   () => gulp.src(`${config.dataDir}/fit/gtfs/*`)
     .pipe(fitGTFSTask(config.gtfsMap, config.osm))
     .pipe(gulp.dest(`${config.dataDir}/filter/gtfs`))))
+
+gulp.task('gtfs:prepareFit', () => prepareFit(config))
 
 gulp.task('copyRules', () =>
   gulp.src(`${config.router.id}/gtfs-rules/*`).pipe(gulp.dest(`${config.dataDir}/${config.router.id}/gtfs-rules`))
