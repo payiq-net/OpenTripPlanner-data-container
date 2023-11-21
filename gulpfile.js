@@ -59,8 +59,8 @@ gulp.task('del:id', () => del(`${config.dataDir}/id`))
  * 4. copy to fit dir if test is succesful
  */
 gulp.task('gtfs:dl', gulp.series('del:fit', () => dl(config.router.src)
-  .pipe(replaceGTFSFilesTask(config.gtfsMap))
   .pipe(renameGTFSFile())
+  .pipe(replaceGTFSFilesTask(config.gtfsMap))
   .pipe(gulp.dest(`${config.dataDir}/downloads/gtfs`))
   .pipe(testOTPFile())
   .pipe(gulp.dest(`${config.dataDir}/fit/gtfs`))

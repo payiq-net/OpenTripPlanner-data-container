@@ -143,6 +143,12 @@ const otpMatching = function (directory) {
   })
 }
 
+// extract feed id from zip file name: 'path/HSL-gtfs.zip' -> HSL
+const parseId = function (gtfsFile) {
+  const fileName = gtfsFile.split('/').pop()
+  return fileName.substring(0, fileName.indexOf('-gtfs'))
+}
+
 module.exports = {
   zipDir: (zipFile, dir, cb) => {
     zipWithGlob(zipFile, [`${dir}/*`], undefined, cb)
@@ -150,5 +156,6 @@ module.exports = {
   zipWithGlob,
   postSlackMessage,
   updateSlackMessage,
-  otpMatching
+  otpMatching,
+  parseId
 }
