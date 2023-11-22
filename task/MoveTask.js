@@ -85,7 +85,7 @@ module.exports = {
       if (!fs.existsSync(path)) {
         fs.mkdirSync(path)
       }
-      backupFiles(localFile, names, path, ()  => {
+      backupFiles(localFile, names, path, () => {
         callback(null, file)
       })
     })
