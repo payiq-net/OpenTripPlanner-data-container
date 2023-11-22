@@ -37,7 +37,10 @@ function readHeader (fileName) {
 
 function fitStopCoordinates (map, stats) {
   return through.obj(function (stop, enc, next) {
-    const osmPos = map[stop.stop_id] || map[stop.stop_code]
+    const id = stop.stop_id
+    // koontikanta uses x_<digiroad-ref> like gtfs ids, strip the prefix
+    const noprefix = id.slice(id.indexOf('_') + 1)
+    const osmPos = map[id] || map[stop.stop_code] || map[noprefix]
     if (osmPos && stop.stop_lat && stop.stop_lon) {
       const dist = distance(osmPos, [stop.stop_lat, stop.stop_lon])
       if (dist > stats.maxDist) stats.maxDist = dist
