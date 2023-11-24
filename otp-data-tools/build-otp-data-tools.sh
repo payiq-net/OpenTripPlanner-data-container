@@ -12,4 +12,4 @@ ONEBUSAWAY_URL="http://nexus.onebusaway.org/service/local/artifact/maven/content
 mkdir -p one-busaway-gtfs-transformer && \
   wget -O one-busaway-gtfs-transformer/onebusaway-gtfs-transformer-cli.jar $ONEBUSAWAY_URL
 
-git clone https://github.com/HSLdevcom/OTPQA.git && cd OTPQA && git checkout v3
+git clone -b v3 --single-branch https://github.com/HSLdevcom/OTPQA.git
