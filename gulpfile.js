@@ -16,7 +16,7 @@ const config = require('./config')
 const { buildOTPGraphTask } = require('./task/BuildOTPGraph')
 const { renameGTFSFile } = require('./task/GTFSRename')
 const { replaceGTFSFilesTask } = require('./task/GTFSReplace')
-const { backupTask, restoreTask } = require('./task/MoveTask')
+const { extractFromZip, addToZip } = require('./task/ZipTask')
 
 const seedSourceDir = `${config.dataDir}/router-${config.router.id}` // e.g. data/router-hsl
 
@@ -75,9 +75,9 @@ gulp.task('gtfs:id', () => gulp.src(`${config.dataDir}/id/gtfs/*`)
 gulp.task('gtfs:fit', gulp.series('del:filter',
   () => prepareFit(config),
   () => gulp.src(`${config.dataDir}/fit/gtfs/*`)
-    .pipe(backupTask(['stops.txt']))
+    .pipe(extractFromZip(['stops.txt']))
     .pipe(mapFit(config)) // modify backup of stops.txt
-    .pipe(restoreTask(['stops.txt']))
+    .pipe(addToZip(['stops.txt']))
     .pipe(gulp.dest(`${config.dataDir}/filter/gtfs`))))
 
 gulp.task('copyRules', () =>
@@ -88,9 +88,9 @@ gulp.task('copyRules', () =>
 gulp.task('gtfs:filter', gulp.series(
   'copyRules',
   () => gulp.src(`${config.dataDir}/filter/gtfs/*.zip`)
-    .pipe(backupTask(config.passOBAfilter))
+    .pipe(extractFromZip(config.passOBAfilter))
     .pipe(OBAFilterTask(config.gtfsMap))
-    .pipe(restoreTask(config.passOBAfilter)),
+    .pipe(addToZip(config.passOBAfilter)),
   () => gulp.src(`${config.dataDir}/filter/gtfs/*.zip`).pipe(gulp.dest(`${config.dataDir}/id/gtfs`))
 ))
 

@@ -6,13 +6,13 @@ const { parseId } = require('../util')
 const { dataDir } = require('../config.js')
 
 /**
-* Moves files from backup to a zip file.
-* @param {string} zipFile - The path to the zip file.
+* Moves files from tmp folder to a zip file.
+* @param {string} zipFile - The name of the zip file
 * @param {string} path - The path to the data directory containing files to be restored
-* @param {string[]} filesToAdd - An array of filenames to add to the zip file.
-* @returns {Promise} A Promise that resolves when the operation is complete.
+* @param {string[]} filesToAdd - An array of filenames to add to the zip file
+* @returns {Promise} A Promise that resolves when the operation is complete
 */
-function restoreFiles (zipFile, path, filesToAdd) {
+function addFiles (zipFile, path, filesToAdd) {
   return new Promise((resolve, reject) => {
     const newZip = new JSZip()
     fs.readFile(zipFile, function (err, data) {
@@ -43,15 +43,15 @@ function restoreFiles (zipFile, path, filesToAdd) {
 }
 
 /**
- * Extracts files from a zip archive and saves them to disk.
- * @param {string} filePath - The path to the zip archive.
- * @param {string[]} filesToExtract - An array of filenames to extract from the archive.
+ * Extracts files from a zip archive and saves them to given path
+ * @param {string} zipName - zip file name
+ * @param {string[]} filesToExtract - An array of filenames to extract from the archive
  * @param {string} path - The path to the data directory where files are put
  * @param {function} cb - callback to signal when finished
  */
-function backupFiles (filePath, filesToExtract, path, cb) {
+function extractFiles (zipName, filesToExtract, path, cb) {
   const zip = new JSZip()
-  zip.loadAsync(fs.readFileSync(filePath)).then(() => {
+  zip.loadAsync(fs.readFileSync(zipName)).then(() => {
     const promises = filesToExtract.map(fileName => {
       const file = Object.keys(zip.files).find((name) => name.endsWith(`${fileName}`))
       if (file) {
@@ -72,7 +72,7 @@ function tmpPath (fileName) {
 }
 
 module.exports = {
-  backupTask: names => {
+  extraxtFromZip: names => {
     if (!names?.length) {
       return through.obj(function (file, encoding, callback) {
         callback(null, file)
@@ -81,17 +81,17 @@ module.exports = {
     return through.obj(function (file, encoding, callback) {
       const localFile = file.history[file.history.length - 1]
       const path = tmpPath(localFile)
-      // Create a temp file for files to be backed up.
+      // Create a temp folder for files to be extracted
       if (!fs.existsSync(path)) {
         fs.mkdirSync(path)
       }
-      backupFiles(localFile, names, path, () => {
+      extractFiles(localFile, names, path, () => {
         callback(null, file)
       })
     })
   },
 
-  restoreTask: names => {
+  addToZip: names => {
     if (!names?.length) {
       return through.obj(function (file, encoding, callback) {
         callback(null, file)
@@ -100,7 +100,7 @@ module.exports = {
     return through.obj(function (file, encoding, callback) {
       const localFile = file.history[file.history.length - 1]
       const path = tmpPath(localFile)
-      restoreFiles(localFile, path, names).then(() => {
+      addFiles(localFile, path, names).then(() => {
         del(`${dataDir}/tmp/**`)
         callback(null, file)
       })
