@@ -72,7 +72,7 @@ function tmpPath (fileName) {
 }
 
 module.exports = {
-  extraxtFromZip: names => {
+  extractFromZip: names => {
     if (!names?.length) {
       return through.obj(function (file, encoding, callback) {
         callback(null, file)
