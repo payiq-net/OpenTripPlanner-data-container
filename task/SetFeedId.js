@@ -3,8 +3,7 @@ const fs = require('fs')
 const converter = require('json-2-csv')
 const through = require('through2')
 const cloneable = require('cloneable-readable')
-
-const { postSlackMessage } = require('../util')
+const { postSlackMessage, parseId } = require('../util')
 
 function createFeedInfo (zip, file, csv, cb) {
   zip.file('feed_info.txt', csv)
@@ -82,8 +81,7 @@ module.exports = {
   setFeedIdTask: () => {
     return through.obj(function (file, encoding, callback) {
       const gtfsFile = file.history[file.history.length - 1]
-      const fileName = gtfsFile.split('/').pop()
-      const id = fileName.substring(0, fileName.indexOf('-gtfs'))
+      const id = parseId(gtfsFile)
       process.stdout.write(gtfsFile + ' ' + 'Setting GTFS feed id to ' + id + '\n')
       setFeedId(gtfsFile, id, action => {
         process.stdout.write(gtfsFile + ' ID ' + action + ' SUCCESS\n')

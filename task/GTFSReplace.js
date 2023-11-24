@@ -1,6 +1,6 @@
 const through = require('through2')
 const JSZip = require('jszip')
-const { postSlackMessage } = require('../util')
+const { postSlackMessage, parseId } = require('../util')
 
 const replaceGTFSFiles = (fileContents, replacements, fileName, cb) => {
   const zip = new JSZip()
@@ -58,8 +58,8 @@ module.exports = {
   replaceGTFSFilesTask: (configMap) => {
     return through.obj(function (file, encoding, callback) {
       const gtfsFile = file.history[file.history.length - 1]
+      const id = parseId(gtfsFile)
       const fileName = gtfsFile.split('/').pop()
-      const id = fileName.indexOf('.zip') > 0 ? fileName.substring(0, fileName.indexOf('.zip')) : fileName
       const config = configMap[id]
       const replacements = config ? config.replacements : null
       if (!replacements) {

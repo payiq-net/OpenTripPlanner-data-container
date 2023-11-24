@@ -1,6 +1,6 @@
-FROM openjdk:11-jre-buster
+FROM eclipse-temurin:21-jre
 LABEL maintainer="Digitransit (digitransit.fi)" \
-      version="0.1" \
+      version="1.0" \
       repo="https://github.com/HSLdevcom/OpenTripPlanner-data-container"
 
 ADD build-otp-data-tools.sh ${WORK}

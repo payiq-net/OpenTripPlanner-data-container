@@ -7,7 +7,7 @@ const cloneable = require('cloneable-readable')
 const { zipDir } = require('../util')
 const { dataToolImage } = require('../config.js')
 const { dataDir } = require('../config.js')
-const { postSlackMessage } = require('../util')
+const { postSlackMessage, parseId } = require('../util')
 
 function OBAFilter (src, dst, rule) {
   process.stdout.write(`filtering ${src} with ${rule}...\n`)
@@ -26,9 +26,8 @@ module.exports = {
   OBAFilterTask: gtfsMap => {
     return through.obj(function (file, encoding, callback) {
       const gtfsFile = file.history[file.history.length - 1]
-      const fileName = gtfsFile.split('/').pop()
       const relativeFilename = path.relative(dataDir, gtfsFile)
-      const id = fileName.substring(0, fileName.indexOf('-gtfs'))
+      const id = parseId(gtfsFile)
       const source = gtfsMap[id]
       const rules = source.rules
       if (rules) {
