@@ -29,13 +29,13 @@ function addFiles (zipFile, path, filesToAdd) {
                 zip.file(`${file}`, fileData)
               }
             } catch (e) {
-              resolve(e)
+              // nop
             }
           })
-          zip.generateAsync({ type: 'nodebuffer' }).then((content) => {
+          zip.generateAsync({ type: 'nodebuffer' }).then(content => {
             fs.writeFileSync(zipFile, content)
-            resolve()
-          }).catch(e => reject(e))
+            resolve(zip.generateNodeStream())
+          }).catch(err => reject(err))
         })
       }
     })
@@ -100,8 +100,9 @@ module.exports = {
     return through.obj(function (file, encoding, callback) {
       const localFile = file.history[file.history.length - 1]
       const path = tmpPath(localFile)
-      addFiles(localFile, path, names).then(() => {
+      addFiles(localFile, path, names).then(newContents => {
         del(`${dataDir}/tmp/**`)
+        file.contents = newContents
         callback(null, file)
       })
     })

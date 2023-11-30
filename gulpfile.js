@@ -90,9 +90,8 @@ gulp.task('gtfs:filter', gulp.series(
   () => gulp.src(`${config.dataDir}/filter/gtfs/*.zip`)
     .pipe(extractFromZip(config.passOBAfilter))
     .pipe(OBAFilterTask(config.gtfsMap))
-    .pipe(addToZip(config.passOBAfilter)),
-  () => gulp.src(`${config.dataDir}/filter/gtfs/*.zip`).pipe(gulp.dest(`${config.dataDir}/id/gtfs`))
-))
+    .pipe(addToZip(config.passOBAfilter))
+    .pipe(gulp.dest(`${config.dataDir}/id/gtfs`))))
 
 gulp.task('gtfs:update', gulp.series('gtfs:dl', 'gtfs:fit', 'gtfs:filter', 'gtfs:id'))
 
