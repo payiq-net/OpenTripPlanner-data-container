@@ -53,7 +53,7 @@ function createMap (config, cb) {
         const tags = item.tags
         if (isBoardingLocation(tags)) {
           const ref = tags.ref || tags['ref:findr'] || tags['ref:findt']
-          if (ref && !map[ref]) {
+          if (ref) {
             let pos
             if (item.type === 'node') {
               pos = [item.lat, item.lon]
@@ -80,7 +80,15 @@ function createMap (config, cb) {
               }
             }
             if (pos) {
-              map[ref] = pos
+              if (tags.ref && !map[tags.ref]) {
+                map[tags.ref] = pos
+              }
+              if (tags['ref:findr'] && !map[tags['ref:findr']]) {
+                map[tags['ref:findr']] = pos
+              }
+              if (tags['ref:findt'] && !map[tags['ref:findt']]) {
+                map[tags['ref:findt']] = pos
+              }
               count++
             }
           }

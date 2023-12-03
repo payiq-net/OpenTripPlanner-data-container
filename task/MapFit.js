@@ -40,18 +40,23 @@ function fitStopCoordinates (map, stats) {
     const id = stop.stop_id
     // koontikanta uses x_<digiroad-ref> like gtfs ids, strip the prefix
     const noprefix = id.slice(id.indexOf('_') + 1)
-    const osmPos = map[id] || map[stop.stop_code] || map[noprefix]
-    if (osmPos && stop.stop_lat && stop.stop_lon) {
-      const dist = distance(osmPos, [stop.stop_lat, stop.stop_lon])
-      if (dist > stats.maxDist) stats.maxDist = dist
-      if (dist < limit) {
-        stats.fitted++
-        stats.dsum += dist
-        stop.stop_lat = osmPos[0]
-        stop.stop_lon = osmPos[1]
-      } else {
-        // console.log('Bad fit:' + stop.stop_id + ', distance ='  + dist)
-        stats.bad++
+    for (const k of [id, stop.stop_code, noprefix]) {
+      if (k === undefined) {
+        continue
+      }
+      const osmPos = map[k]
+      if (osmPos && stop.stop_lat && stop.stop_lon) {
+        const dist = distance(osmPos, [stop.stop_lat, stop.stop_lon])
+        if (dist > stats.maxDist) stats.maxDist = dist
+        if (dist < limit) {
+          stats.fitted++
+          stats.dsum += dist
+          stop.stop_lat = osmPos[0]
+          stop.stop_lon = osmPos[1]
+          break
+        } else {
+          stats.bad++
+        }
       }
     }
     next(null, stop)
