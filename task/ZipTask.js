@@ -1,7 +1,6 @@
 const fs = require('fs')
 const through = require('through2')
 const JSZip = require('jszip')
-const del = require('del')
 const { parseId } = require('../util')
 const { dataDir } = require('../config.js')
 
@@ -22,13 +21,14 @@ function addFiles (zipFile, path, filesToAdd) {
       } else {
         newZip.loadAsync(data).then(zip => {
           filesToAdd.forEach((file) => {
+            const filePath = `${path}/${file}`
             try {
-              const filePath = `${path}/${file}`
               const fileData = fs.readFileSync(filePath)
               if (fileData) {
                 zip.file(`${file}`, fileData)
               }
             } catch (e) {
+              process.stdout.write(`${filePath} not found\n`)
               // nop
             }
           })
@@ -101,7 +101,6 @@ module.exports = {
       const localFile = file.history[file.history.length - 1]
       const path = tmpPath(localFile)
       addFiles(localFile, path, names).then(newContents => {
-        del(`${dataDir}/tmp/**`)
         file.contents = newContents
         callback(null, file)
       })
