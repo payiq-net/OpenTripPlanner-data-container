@@ -72,13 +72,16 @@ gulp.task('gtfs:id', () => gulp.src(`${config.dataDir}/id/gtfs/*`)
   .pipe(gulp.dest(`${config.dataDir}/ready/gtfs`)))
 
 // Runs MapFit on gtfs files and moves files to directory 'filter'
-gulp.task('gtfs:fit', gulp.series('del:filter',
+gulp.task('gtfs:fit', gulp.series(
+  'del:filter',
   () => prepareFit(config),
   () => gulp.src(`${config.dataDir}/fit/gtfs/*`)
     .pipe(extractFromZip(['stops.txt']))
     .pipe(mapFit(config)) // modify backup of stops.txt
     .pipe(addToZip(['stops.txt']))
-    .pipe(gulp.dest(`${config.dataDir}/filter/gtfs`))))
+    .pipe(gulp.dest(`${config.dataDir}/filter/gtfs`)),
+  () => del(`${config.dataDir}/tmp`)
+))
 
 gulp.task('copyRules', () =>
   gulp.src(`${config.router.id}/gtfs-rules/*`).pipe(gulp.dest(`${config.dataDir}/${config.router.id}/gtfs-rules`))
@@ -91,7 +94,9 @@ gulp.task('gtfs:filter', gulp.series(
     .pipe(extractFromZip(config.passOBAfilter))
     .pipe(OBAFilterTask(config.gtfsMap))
     .pipe(addToZip(config.passOBAfilter))
-    .pipe(gulp.dest(`${config.dataDir}/id/gtfs`))))
+    .pipe(gulp.dest(`${config.dataDir}/id/gtfs`)),
+  () => del(`${config.dataDir}/tmp`)
+))
 
 gulp.task('gtfs:update', gulp.series('gtfs:dl', 'gtfs:fit', 'gtfs:filter', 'gtfs:id'))
 
