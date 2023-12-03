@@ -83,7 +83,7 @@ module.exports = {
       const path = tmpPath(localFile)
       // Create a temp folder for files to be extracted
       if (!fs.existsSync(path)) {
-        fs.mkdirSync(path)
+        fs.mkdirSync(path, { recursive: true })
       }
       extractFiles(localFile, names, path, () => {
         callback(null, file)
