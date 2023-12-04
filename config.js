@@ -86,9 +86,7 @@ const routers = {
       src('digitraffic', 'https://rata.digitraffic.fi/api/v1/trains/gtfs-passenger-stops.zip', false, undefined, undefined, { gzip: true }),
       src('tampereDRT', 'https://ekstrat.tampere.fi/ekstrat/ptdata/tamperefeed_kutsuliikenne.zip'),
       src('Pori', 'https://tvv.fra1.digitaloceanspaces.com/231.zip', true),
-      src('FUNI', 'https://foligtfs.blob.core.windows.net/routeplanner/gtfs-foli-ff.zip', true),
-      src('Raasepori', 'https://tvv.fra1.digitaloceanspaces.com/232.zip', true),
-      src('RaaseporiELY', 'https://koontikartta.navici.com/tiedostot/gtfs_raasepori.zip')
+      src('FUNI', 'https://foligtfs.blob.core.windows.net/routeplanner/gtfs-foli-ff.zip', true)
     ],
     osm: ['finland'],
     dem: 'waltti'
@@ -98,7 +96,8 @@ const routers = {
     id: 'waltti-alt',
     src: [
       src('Salo', 'https://tvv.fra1.digitaloceanspaces.com/239.zip', true),
-      src('Kajaani', 'https://tvv.fra1.digitaloceanspaces.com/211.zip', true)
+      src('Kajaani', 'https://tvv.fra1.digitaloceanspaces.com/211.zip', true),
+      src('Raasepori', 'https://tvv.fra1.digitaloceanspaces.com/232.zip', true)
     ],
     osm: ['finland']
   },
