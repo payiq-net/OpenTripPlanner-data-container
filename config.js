@@ -61,7 +61,8 @@ const routers = {
       src('Viro', 'http://peatus.ee/gtfs/gtfs.zip'),
       src('Vikingline', 'https://fgwgtfsprod.blob.core.windows.net/gtfsout/latest_VIKINGLINE.zip'),
       src('Raasepori', 'https://tvv.fra1.digitaloceanspaces.com/232.zip', true),
-      src('VARELY', 'http://digitransit-proxy:8080/out/varelyadmin.mattersoft.fi/feeds/102.zip', false)
+      src('VARELY', 'http://digitransit-proxy:8080/out/varelyadmin.mattersoft.fi/feeds/102.zip', false),
+      src('Harma', 'https://harmanliikenne.bussikaista.fi/sites/harma/files/gtfs/export/latest.zip', true),
     ],
     osm: ['finland', 'estonia']
   },
