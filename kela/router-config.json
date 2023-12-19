@@ -13,7 +13,8 @@
     "stairsTimeFactor": 2,
     "elevatorBoardTime": 60,
     "accessEgress": {
-      "maxDuration": "8h"
+      "maxDuration": "8h",
+      "maxStopCount": "400"
     },
     "maxDirectStreetDuration": "100h",
     "maxDirectStreetDurationForMode": {
