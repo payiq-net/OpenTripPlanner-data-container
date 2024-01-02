@@ -1,17 +1,23 @@
 {
   "routingDefaults": {
     "searchWindow": "16h",
-    "walkSpeed": 1.3,
     "transferSlack": 90,
     "waitReluctance": 0.99,
-    "bikeReluctance": 1.7,
-    "walkReluctance": 1.75,
-    "carReluctance": 10.0,
-    "stairsReluctance": 1.65,
-    "walkBoardCost": 120,
-    "bikeBoardCost": 120,
-    "stairsTimeFactor": 2,
     "elevatorBoardTime": 60,
+    "bicycle": {
+      "boardCost": 120,
+      "reluctance": 1.7
+    },
+    "car": {
+      "reluctance": 10.0
+    },
+    "walk": {
+      "speed": 1.3,
+      "reluctance": 1.75,
+      "stairsReluctance": 1.65,
+      "stairsTimeFactor": 2,
+      "boardCost": 120
+    },
     "accessEgress": {
       "maxDuration": "8h",
       "maxStopCount": "400"
@@ -42,21 +48,27 @@
     "transferCacheRequests": [
       {
         "modes": "WALK",
-        "walkSpeed": 1.2,
-        "walkReluctance": 1.8
+        "walk": {
+          "speed": 1.2,
+          "reluctance": 1.8
+        }
       },
       {
         "modes": "WALK",
-        "walkSpeed": 1.2,
-        "walkReluctance": 1.8,
+        "walk": {
+          "speed": 1.2,
+          "reluctance": 1.8
+        },
         "wheelchairAccessibility": {
           "enabled": true
         }
       },
       {
         "modes": "WALK",
-        "walkSpeed": 1.67,
-        "walkReluctance": 1.8
+        "walk": {
+          "speed": 1.67,
+          "reluctance": 1.8
+        }
       }
     ]
   },
