@@ -81,7 +81,7 @@ const routers = {
       src('Lahti', 'https://tvv.fra1.digitaloceanspaces.com/223.zip', true),
       src('Kuopio', 'http://karttapalvelu.kuopio.fi/google_transit/google_transit.zip'),
       src('OULU', 'https://tvv.fra1.digitaloceanspaces.com/229.zip'),
-      src('LINKKI', 'geocoding.blob.core.windows.net/vrk/jkl.zip', true, undefined, {'fare_attributes.txt': 'digitransit_fare_attributes.txt', 'fare_rules.txt': 'digitransit_fare_rules.txt'}),
+      src('LINKKI', 'https://geocoding.blob.core.windows.net/vrk/jkl.zip', true, undefined, {'fare_attributes.txt': 'digitransit_fare_attributes.txt', 'fare_rules.txt': 'digitransit_fare_rules.txt'}),
       src('tampere', 'http://ekstrat.tampere.fi/ekstrat/ptdata/tamperefeed_deprecated.zip'),
       src('Rovaniemi', 'https://tvv.fra1.digitaloceanspaces.com/237.zip', true),
       src('digitraffic', 'https://rata.digitraffic.fi/api/v1/trains/gtfs-passenger-stops.zip', false, undefined, undefined, { gzip: true }),
