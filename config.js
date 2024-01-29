@@ -172,7 +172,7 @@ router.src.forEach(src => { gtfsMap[src.id] = src })
 
 const osm = {
   finland: 'https://karttapalvelu.storage.hsldev.com/finland.osm/finland.osm.pbf',
-  hsl: 'https://geocoding.blob.core.windows.net/vrk/hsl.pbf',
+  hsl: 'https://karttapalvelu.storage.hsldev.com/hsl.osm/hsl.osm.pbf',
   estonia: 'https://download.geofabrik.de/europe/estonia-latest.osm.pbf'
 }
 
