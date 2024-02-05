@@ -167,10 +167,13 @@ Object.keys(extraSrc).forEach(id => {
 const gtfsMap = {}
 router.src.forEach(src => { gtfsMap[src.id] = src })
 
+const extraOSM = process.env.EXTRA_OSM !== undefined ? JSON.parse(process.env.EXTRA_OSM) : {}
+
 const osm = {
   finland: 'https://karttapalvelu.storage.hsldev.com/finland.osm/finland.osm.pbf',
   hsl: 'https://karttapalvelu.storage.hsldev.com/hsl.osm/hsl.osm.pbf',
-  estonia: 'https://download.geofabrik.de/europe/estonia-latest.osm.pbf'
+  estonia: 'https://download.geofabrik.de/europe/estonia-latest.osm.pbf',
+  ...extraOSM
 }
 
 const dem = {
