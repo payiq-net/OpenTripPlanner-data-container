@@ -9,8 +9,8 @@ function createFile (config, fileName, sourcePath) {
   return new Vinyl({ path: fileName, contents: cloneable(fs.createReadStream(`${sourcePath}/${fileName}`)) })
 }
 
-// EXTRA_UPDATERS format should be {"turku-alerts": {"type": "real-time-alerts", "frequencySec": 30, "url": "https://foli-beta.nanona.fi/gtfs-rt/reittiopas", "feedId": "FOLI", "fuzzyTripMatching": true, "routers": ["waltti"]}}
-// but you can only define, for example, new url and the other key value pairs will remain the same as they are defined in this file. "routers" is always mandatory.
+// EXTRA_UPDATERS format should be {"turku-alerts": {"type": "real-time-alerts", "frequencySec": 30, "url": "https://foli-beta.nanona.fi/gtfs-rt/reittiopas", "feedId": "FOLI", "fuzzyTripMatching": true}}
+// but you can only define, for example, new url and the other key value pairs will remain the same as they are defined in this file.
 // It is also possible to add completely new src by defining object with unused id or to remove a src by defining "remove": true
 const extraUpdaters = process.env.EXTRA_UPDATERS !== undefined ? JSON.parse(process.env.EXTRA_UPDATERS) : {}
 
@@ -24,13 +24,12 @@ function createAndProcessRouterConfig (router) {
   for (let i = updaters.length - 1; i >= 0; i--) {
     const updaterId = updaters[i].id
     const updaterPatch = extraUpdaters[updaterId]
-    if (updaterPatch !== undefined && updaterPatch.routers !== undefined && updaterPatch.routers.includes(router.id)) {
+    if (updaterPatch !== undefined) {
       if (updaterPatch.remove === true) {
         updaters.splice(i, 1)
       } else {
         const mergedUpdaters = { ...updaters[i], ...updaterPatch }
         delete mergedUpdaters.remove
-        delete mergedUpdaters.routers
         updaters[i] = mergedUpdaters
       }
       usedPatches.push(updaterId)
@@ -38,13 +37,9 @@ function createAndProcessRouterConfig (router) {
   }
   Object.keys(extraUpdaters).forEach(id => {
     if (!usedPatches.includes(id)) {
-      const routers = extraUpdaters[id].routers
-      if (routers !== undefined && routers.includes(router.id)) {
-        const patchClone = Object.assign({}, extraUpdaters[id])
-        delete patchClone.remove
-        delete patchClone.routers
-        updaters.push({ ...patchClone, id })
-      }
+      const patchClone = Object.assign({}, extraUpdaters[id])
+      delete patchClone.remove
+      updaters.push({ ...patchClone, id })
     }
   })
   const file = new Vinyl({ path: 'router-config.json', contents: Buffer.from(JSON.stringify(routerConfig, null, 2)) })

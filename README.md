@@ -41,12 +41,13 @@ It is possible to change the behaviour of the data builder by defining environme
 * (Optional, default dev) "BUILDER_TYPE" used as a postfix to slack bot name
 * (Optional) "SLACK_CHANNEL_ID" defines to which slack channel the messages are sent to
 * (Optional) "SLACK_ACCESS_TOKEN" bearer token for slack messaging
-* (Optional, default {}) "EXTRA_SRC" defines gtfs src values that should be overridden or completely new src that should be added with unique id. "routers" is always a mandatory field. Example format:
-  - `{"FOLI": {"url": "http://data.foli.fi/gtfs/gtfs.zip",  "fit": false, "rules": ["router-waltti/gtfs-rules/waltti.rule"], "routers": ["hsl", "finland"]}}`
-  - You can remove a src by including "remove": true, `{"FOLI": {"remove": true, "routers": ["hsl"]}`
-* (Optional, default {}) "EXTRA_UPDATERS" defines router-config.json updater values that should be overridden or completely new updater that should be added with unique id. "routers" is always a mandatory field. Example format:
-  - `{"turku-alerts": {"type": "real-time-alerts", "frequencySec": 30, "url": "https://foli-beta.nanona.fi/gtfs-rt/reittiopas", "feedId": "FOLI", "fuzzyTripMatching": true, "routers": ["waltti"]}}`
-  - You can remove a src by including "remove": true, `{"turku-alerts": {"remove": true, "routers": ["waltti"]}`
+* (Optional, default {}) "EXTRA_SRC" defines gtfs src values that should be overridden or completely new src that should be added with unique id. Example format:
+  - `{"FOLI": {"url": "http://data.foli.fi/gtfs/gtfs.zip",  "fit": false, "rules": ["router-waltti/gtfs-rules/waltti.rule"]}}`
+  - You can remove a src by including "remove": true, `{"FOLI": {"remove": true}}`
+* (Optional, default {}) "EXTRA_UPDATERS" defines router-config.json updater values that should be overridden or completely new updater that should be added with unique id. Example format:
+  - `{"turku-alerts": {"type": "real-time-alerts", "frequencySec": 30, "url": "https://foli-beta.nanona.fi/gtfs-rt/reittiopas", "feedId": "FOLI", "fuzzyTripMatching": true}}`
+  - You can remove a src by including "remove": true, `{"turku-alerts": {"remove": true}}`
+* (Optional, default {}) "EXTRA_OSM" can redefine OSM source URLs. For example: `{"hsl": "https://tempserver.com/newhsl.pbf"}`
 * (Optional) "VERSION_CHECK" is a comma-separated list of feedIds from which the GTFS data's `feed_info.txt`'s file's `feed_version` field is parsed into a date object and it's checked if the data has been updated within the last 8 hours. If not, a message is sent to stdout (and slack, only monday-friday) to inform about usage of "old" data.
 * (Optional) "SKIPPED_SITES" defines a comma-separated list of sites from OTPQA tests that should be skipped. Example format:
   - `"turku.digitransit.fi,reittiopas.hsl.fi"`

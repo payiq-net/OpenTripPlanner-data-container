@@ -71,17 +71,20 @@ gulp.task('gtfs:id', () => gulp.src(`${config.dataDir}/id/gtfs/*`)
   .pipe(setFeedIdTask())
   .pipe(gulp.dest(`${config.dataDir}/ready/gtfs`)))
 
-// Runs MapFit on gtfs files and moves files to directory 'filter'
-gulp.task('gtfs:fit', gulp.series(
-  'del:filter',
-  () => prepareFit(config),
-  () => gulp.src(`${config.dataDir}/fit/gtfs/*`)
-    .pipe(extractFromZip(['stops.txt']))
-    .pipe(mapFit(config)) // modify backup of stops.txt
-    .pipe(addToZip(['stops.txt']))
-    .pipe(gulp.dest(`${config.dataDir}/filter/gtfs`)),
-  () => del(`${config.dataDir}/tmp`)
-))
+// Runs mapFit on gtfs files if fit is enabled, or just moves files to directory 'filter'
+gulp.task('gtfs:fit', config.router.src.some(src => src.fit)
+  ? gulp.series(
+    'del:filter',
+    () => prepareFit(config),
+    () => gulp.src(`${config.dataDir}/fit/gtfs/*`)
+      .pipe(extractFromZip(['stops.txt']))
+      .pipe(mapFit(config)) // modify backup of stops.txt
+      .pipe(addToZip(['stops.txt']))
+      .pipe(gulp.dest(`${config.dataDir}/filter/gtfs`)),
+    () => del(`${config.dataDir}/tmp`))
+  : () => gulp.src(`${config.dataDir}/fit/gtfs/*`)
+      .pipe(gulp.dest(`${config.dataDir}/filter/gtfs`))
+)
 
 gulp.task('copyRules', () =>
   gulp.src(`${config.router.id}/gtfs-rules/*`).pipe(gulp.dest(`${config.dataDir}/${config.router.id}/gtfs-rules`))

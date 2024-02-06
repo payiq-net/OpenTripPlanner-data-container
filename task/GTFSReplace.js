@@ -2,10 +2,39 @@ const through = require('through2')
 const JSZip = require('jszip')
 const { postSlackMessage, parseId } = require('../util')
 
+function zipWithNewName (zip, relativePath, replacementFile) {
+  return new Promise((resolve, reject) => {
+    const replacementZipFile = zip.file(replacementFile)
+    if (!replacementZipFile) {
+      const errorMessage =
+        `${replacementFile} was defined to replace ${relativePath} but ${replacementFile} doesn't exist`
+      postSlackMessage(errorMessage)
+      reject(new Error(errorMessage))
+    } else {
+      zip.file(replacementFile)
+        .async('string')
+        .then(data => {
+          zip.file(relativePath, data)
+          zip.remove(replacementFile)
+          process.stdout.write(
+            `Replaced ${relativePath} with ${replacementFile}\n`)
+          resolve()
+        })
+        .catch((err) => {
+          const errorMessage =
+            `${replacementFile} was defined to replace ${relativePath} but the operation failed\n ${err}`
+          postSlackMessage(errorMessage)
+          reject(err)
+        })
+    }
+  })
+}
+
 const replaceGTFSFiles = (fileContents, replacements, fileName, cb) => {
   const zip = new JSZip()
   zip.loadAsync(fileContents).then(function () {
     const promises = []
+    const used = {}
     zip.forEach((relativePath, file) => {
       const replacementFile = replacements[relativePath]
       // No replacement file defined, remove the file
@@ -16,33 +45,15 @@ const replaceGTFSFiles = (fileContents, replacements, fileName, cb) => {
           resolve()
         }))
       } else if (replacementFile !== undefined) {
-        // Replacement file defined, replace the file with the defined file
-        // and remove the defined replacement file
-        promises.push(new Promise((resolve, reject) => {
-          const replacementZipFile = zip.file(replacementFile)
-          if (!replacementZipFile) {
-            const errorMessage =
-              `${replacementFile} was defined to replace ${relativePath} but ${replacementFile} doesn't exist in ${fileName}`
-            postSlackMessage(errorMessage)
-            reject(new Error(errorMessage))
-          } else {
-            zip.file(replacements[relativePath])
-              .async('string')
-              .then((data) => {
-                zip.file(relativePath, data)
-                zip.remove(replacementFile)
-                process.stdout.write(
-                  `Replaced ${relativePath} from ${fileName} with ${replacementFile}\n`)
-                resolve()
-              })
-              .catch((err) => {
-                const errorMessage =
-                  `${replacementFile} was defined to replace ${relativePath} but ${replacementFile} in ${fileName} but the operation failed\n ${err}`
-                postSlackMessage(errorMessage)
-                reject(err)
-              })
-          }
-        }))
+        used[relativePath] = true
+        // Replacement file defined, replace the file with the new one
+        promises.push(zipWithNewName(zip, relativePath, replacementFile))
+      }
+    })
+    // renamed replacements without existing counterpart
+    Object.keys(replacements).forEach(name => {
+      if (!used[name]) {
+        promises.push(zipWithNewName(zip, name, replacements[name]))
       }
     })
     Promise.all(promises)

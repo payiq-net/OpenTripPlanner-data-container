@@ -6,7 +6,7 @@
  * replacements = replace or remove file from gtfs package (format: {'file_to_replace': 'file_to_replace_with' or null})
  * request options = optional special options for request
  */
-const src = (id, url, fit, rules, replacements, requestOptions) => ({ id, url, fit, rules, replacements, requestOptions })
+const mapSrc = (id, url, fit, rules, replacements, requestOptions) => ({ id, url, fit, rules, replacements, requestOptions })
 
 // OBA filter erases files which it does not recognize from GTFS packages
 // this array specifies the file names which should be preserved
@@ -26,7 +26,7 @@ const routers = {
   hsl: {
     id: 'hsl',
     src: [
-      src('HSL', 'https://infopalvelut.storage.hsldev.com/gtfs/hsl.zip', false, undefined, { 'translations.txt': 'translations_new.txt', 'trips.txt': 'trips2.txt' })
+      mapSrc('HSL', 'https://infopalvelut.storage.hsldev.com/gtfs/hsl.zip', false, undefined, { 'translations.txt': 'translations_new.txt', 'trips.txt': 'trips2.txt' })
       // src('HSLlautta', 'https://koontikartta.navici.com/tiedostot/gtfs_lautat_digitransit.zip'),
       // src('Sipoo', 'https://koontikartta.navici.com/tiedostot/rae/sipoon_kunta_sibbo_kommun.zip')
     ],
@@ -37,32 +37,32 @@ const routers = {
   finland: {
     id: 'finland',
     src: [
-      src('HSL', 'https://infopalvelut.storage.hsldev.com/gtfs/hsl.zip', false, ['finland/gtfs-rules/hsl-no-trains.rule'], { 'translations.txt': 'translations_new.txt', 'trips.txt': 'trips2.txt' }),
-      src('MATKA', 'https://koontikartta.navici.com/tiedostot/gtfs_digitransit.zip', true, ['finland/gtfs-rules/matka-cleaned.rule']),
-      src('tampere', 'http://ekstrat.tampere.fi/ekstrat/ptdata/tamperefeed_deprecated.zip'),
-      src('LINKKI', 'https://tvv.fra1.digitaloceanspaces.com/209.zip', true),
-      src('OULU', 'https://tvv.fra1.digitaloceanspaces.com/229.zip'),
-      src('digitraffic', 'https://rata.digitraffic.fi/api/v1/trains/gtfs-passenger-stops.zip', false, undefined, undefined, { gzip: true }),
-      src('Rauma', 'http://digitransit-proxy:8080/out/raumaadmin.mattersoft.fi/feeds/233.zip'),
-      src('Hameenlinna', 'https://tvv.fra1.digitaloceanspaces.com/203.zip', true),
-      src('Kotka', 'https://tvv.fra1.digitaloceanspaces.com/217.zip', true),
-      src('Kouvola', 'https://tvv.fra1.digitaloceanspaces.com/219.zip', true),
-      src('Lappeenranta', 'https://tvv.fra1.digitaloceanspaces.com/225.zip', true),
-      src('Mikkeli', 'https://tvv.fra1.digitaloceanspaces.com/227.zip', true),
-      src('Vaasa', 'https://tvv.fra1.digitaloceanspaces.com/249.zip', true),
-      src('Joensuu', 'https://tvv.fra1.digitaloceanspaces.com/207.zip', true),
-      src('FOLI', 'http://data.foli.fi/gtfs/gtfs.zip'),
-      src('Lahti', 'https://tvv.fra1.digitaloceanspaces.com/223.zip', true),
-      src('Kuopio', 'http://karttapalvelu.kuopio.fi/google_transit/google_transit.zip'),
-      src('Rovaniemi', 'https://tvv.fra1.digitaloceanspaces.com/237.zip', true),
-      src('Kajaani', 'https://tvv.fra1.digitaloceanspaces.com/211.zip', true),
-      src('Salo', 'https://tvv.fra1.digitaloceanspaces.com/239.zip', true),
-      src('Pori', 'https://tvv.fra1.digitaloceanspaces.com/231.zip', true),
-      src('Viro', 'http://peatus.ee/gtfs/gtfs.zip'),
-      src('Vikingline', 'https://fgwgtfsprod.blob.core.windows.net/gtfsout/latest_VIKINGLINE.zip'),
-      src('Raasepori', 'https://tvv.fra1.digitaloceanspaces.com/232.zip', true),
-      src('VARELY', 'http://digitransit-proxy:8080/out/varelyadmin.mattersoft.fi/feeds/102.zip', false),
-      src('Harma', 'https://harmanliikenne.bussikaista.fi/sites/harma/files/gtfs/export/latest.zip', true),
+      mapSrc('HSL', 'https://infopalvelut.storage.hsldev.com/gtfs/hsl.zip', false, ['finland/gtfs-rules/hsl-no-trains.rule'], { 'translations.txt': 'translations_new.txt', 'trips.txt': 'trips2.txt' }),
+      mapSrc('MATKA', 'https://koontikartta.navici.com/tiedostot/gtfs_digitransit.zip', true, ['finland/gtfs-rules/matka-cleaned.rule']),
+      mapSrc('tampere', 'http://ekstrat.tampere.fi/ekstrat/ptdata/tamperefeed_deprecated.zip'),
+      mapSrc('LINKKI', 'https://tvv.fra1.digitaloceanspaces.com/209.zip', true),
+      mapSrc('OULU', 'https://tvv.fra1.digitaloceanspaces.com/229.zip'),
+      mapSrc('digitraffic', 'https://rata.digitraffic.fi/api/v1/trains/gtfs-passenger-stops.zip', false, undefined, undefined, { gzip: true }),
+      mapSrc('Rauma', 'http://digitransit-proxy:8080/out/raumaadmin.mattersoft.fi/feeds/233.zip'),
+      mapSrc('Hameenlinna', 'https://tvv.fra1.digitaloceanspaces.com/203.zip', true),
+      mapSrc('Kotka', 'https://tvv.fra1.digitaloceanspaces.com/217.zip', true),
+      mapSrc('Kouvola', 'https://tvv.fra1.digitaloceanspaces.com/219.zip', true),
+      mapSrc('Lappeenranta', 'https://tvv.fra1.digitaloceanspaces.com/225.zip', true),
+      mapSrc('Mikkeli', 'https://tvv.fra1.digitaloceanspaces.com/227.zip', true),
+      mapSrc('Vaasa', 'https://tvv.fra1.digitaloceanspaces.com/249.zip', true),
+      mapSrc('Joensuu', 'https://tvv.fra1.digitaloceanspaces.com/207.zip', true),
+      mapSrc('FOLI', 'http://data.foli.fi/gtfs/gtfs.zip'),
+      mapSrc('Lahti', 'https://tvv.fra1.digitaloceanspaces.com/223.zip', true),
+      mapSrc('Kuopio', 'http://karttapalvelu.kuopio.fi/google_transit/google_transit.zip'),
+      mapSrc('Rovaniemi', 'https://tvv.fra1.digitaloceanspaces.com/237.zip', true),
+      mapSrc('Kajaani', 'https://tvv.fra1.digitaloceanspaces.com/211.zip', true),
+      mapSrc('Salo', 'https://tvv.fra1.digitaloceanspaces.com/239.zip', true),
+      mapSrc('Pori', 'https://tvv.fra1.digitaloceanspaces.com/231.zip', true),
+      mapSrc('Viro', 'http://peatus.ee/gtfs/gtfs.zip'),
+      mapSrc('Vikingline', 'https://fgwgtfsprod.blob.core.windows.net/gtfsout/latest_VIKINGLINE.zip'),
+      mapSrc('Raasepori', 'https://tvv.fra1.digitaloceanspaces.com/232.zip', true),
+      mapSrc('VARELY', 'http://digitransit-proxy:8080/out/varelyadmin.mattersoft.fi/feeds/102.zip', false),
+      mapSrc('Harma', 'https://harmanliikenne.bussikaista.fi/sites/harma/files/gtfs/export/latest.zip', true)
     ],
     osm: ['finland', 'estonia']
   },
@@ -70,26 +70,26 @@ const routers = {
   waltti: {
     id: 'waltti',
     src: [
-      src('Hameenlinna', 'https://tvv.fra1.digitaloceanspaces.com/203.zip', true),
-      src('Kotka', 'https://tvv.fra1.digitaloceanspaces.com/217.zip', true),
-      src('Kouvola', 'https://tvv.fra1.digitaloceanspaces.com/219.zip', true),
-      src('Lappeenranta', 'https://tvv.fra1.digitaloceanspaces.com/225.zip', true),
-      src('Mikkeli', 'https://tvv.fra1.digitaloceanspaces.com/227.zip', true),
-      src('Vaasa', 'https://tvv.fra1.digitaloceanspaces.com/249.zip', true),
-      src('Joensuu', 'https://tvv.fra1.digitaloceanspaces.com/207.zip', true),
-      src('FOLI', 'http://data.foli.fi/gtfs/gtfs.zip'),
-      src('Lahti', 'https://tvv.fra1.digitaloceanspaces.com/223.zip', true),
-      src('Kuopio', 'http://karttapalvelu.kuopio.fi/google_transit/google_transit.zip'),
-      src('OULU', 'https://tvv.fra1.digitaloceanspaces.com/229.zip'),
-      src('LINKKI', 'https://geocoding.blob.core.windows.net/vrk/jkl.zip', true, undefined, {'fare_attributes.txt': 'digitransit_fare_attributes.txt', 'fare_rules.txt': 'digitransit_fare_rules.txt'}),
-      src('tampere', 'http://ekstrat.tampere.fi/ekstrat/ptdata/tamperefeed_deprecated.zip'),
-      src('Rovaniemi', 'https://tvv.fra1.digitaloceanspaces.com/237.zip', true),
-      src('digitraffic', 'https://rata.digitraffic.fi/api/v1/trains/gtfs-passenger-stops.zip', false, undefined, undefined, { gzip: true }),
-      src('tampereDRT', 'https://ekstrat.tampere.fi/ekstrat/ptdata/tamperefeed_kutsuliikenne.zip'),
-      src('Pori', 'https://tvv.fra1.digitaloceanspaces.com/231.zip', true),
-      src('FUNI', 'https://foligtfs.blob.core.windows.net/routeplanner/gtfs-foli-ff.zip', true),
-      src('Raasepori', 'https://tvv.fra1.digitaloceanspaces.com/232.zip', true),
-      src('RaaseporiELY', 'https://koontikartta.navici.com/tiedostot/gtfs_raasepori.zip')
+      mapSrc('Hameenlinna', 'https://tvv.fra1.digitaloceanspaces.com/203.zip', true),
+      mapSrc('Kotka', 'https://tvv.fra1.digitaloceanspaces.com/217.zip', true),
+      mapSrc('Kouvola', 'https://tvv.fra1.digitaloceanspaces.com/219.zip', true),
+      mapSrc('Lappeenranta', 'https://tvv.fra1.digitaloceanspaces.com/225.zip', true),
+      mapSrc('Mikkeli', 'https://tvv.fra1.digitaloceanspaces.com/227.zip', true),
+      mapSrc('Vaasa', 'https://tvv.fra1.digitaloceanspaces.com/249.zip', true),
+      mapSrc('Joensuu', 'https://tvv.fra1.digitaloceanspaces.com/207.zip', true),
+      mapSrc('FOLI', 'http://data.foli.fi/gtfs/gtfs.zip'),
+      mapSrc('Lahti', 'https://tvv.fra1.digitaloceanspaces.com/223.zip', true),
+      mapSrc('Kuopio', 'http://karttapalvelu.kuopio.fi/google_transit/google_transit.zip'),
+      mapSrc('OULU', 'https://tvv.fra1.digitaloceanspaces.com/229.zip'),
+      mapSrc('LINKKI', 'https://geocoding.blob.core.windows.net/vrk/jkl.zip', true, undefined, { 'fare_attributes.txt': 'digitransit_fare_attributes.txt', 'fare_rules.txt': 'digitransit_fare_rules.txt' }),
+      mapSrc('tampere', 'http://ekstrat.tampere.fi/ekstrat/ptdata/tamperefeed_deprecated.zip'),
+      mapSrc('Rovaniemi', 'https://tvv.fra1.digitaloceanspaces.com/237.zip', true),
+      mapSrc('digitraffic', 'https://rata.digitraffic.fi/api/v1/trains/gtfs-passenger-stops.zip', false, undefined, undefined, { gzip: true }),
+      mapSrc('tampereDRT', 'https://ekstrat.tampere.fi/ekstrat/ptdata/tamperefeed_kutsuliikenne.zip'),
+      mapSrc('Pori', 'https://tvv.fra1.digitaloceanspaces.com/231.zip', true),
+      mapSrc('FUNI', 'https://foligtfs.blob.core.windows.net/routeplanner/gtfs-foli-ff.zip', true),
+      mapSrc('Raasepori', 'https://tvv.fra1.digitaloceanspaces.com/232.zip', true),
+      mapSrc('RaaseporiELY', 'https://koontikartta.navici.com/tiedostot/gtfs_raasepori.zip')
     ],
     osm: ['finland'],
     dem: 'waltti'
@@ -98,10 +98,10 @@ const routers = {
   'waltti-alt': {
     id: 'waltti-alt',
     src: [
-      src('Salo', 'https://tvv.fra1.digitaloceanspaces.com/239.zip', true),
-      src('Kajaani', 'https://tvv.fra1.digitaloceanspaces.com/211.zip', true),
-      src('Raasepori', 'https://tvv.fra1.digitaloceanspaces.com/232.zip', true),
-      src('RaaseporiELY', 'https://koontikartta.navici.com/tiedostot/gtfs_raasepori.zip')
+      mapSrc('Salo', 'https://tvv.fra1.digitaloceanspaces.com/239.zip', true),
+      mapSrc('Kajaani', 'https://tvv.fra1.digitaloceanspaces.com/211.zip', true),
+      mapSrc('Raasepori', 'https://tvv.fra1.digitaloceanspaces.com/232.zip', true),
+      mapSrc('RaaseporiELY', 'https://koontikartta.navici.com/tiedostot/gtfs_raasepori.zip')
     ],
     osm: ['finland']
   },
@@ -109,9 +109,9 @@ const routers = {
   varely: {
     id: 'varely',
     src: [
-      src('VARELY', 'http://digitransit-proxy:8080/out/varelyadmin.mattersoft.fi/feeds/102.zip'),
-      src('FOLI', 'http://data.foli.fi/gtfs/gtfs.zip'),
-      src('Rauma', 'http://digitransit-proxy:8080/out/raumaadmin.mattersoft.fi/feeds/233.zip')
+      mapSrc('VARELY', 'http://digitransit-proxy:8080/out/varelyadmin.mattersoft.fi/feeds/102.zip'),
+      mapSrc('FOLI', 'http://data.foli.fi/gtfs/gtfs.zip'),
+      mapSrc('Rauma', 'http://digitransit-proxy:8080/out/raumaadmin.mattersoft.fi/feeds/233.zip')
     ],
     osm: ['finland']
   },
@@ -119,8 +119,8 @@ const routers = {
   kela: {
     id: 'kela',
     src: [
-      src('kela', 'https://koontikartta.navici.com/tiedostot/gtfs_kela.zip'),
-      src('matkahuolto', mhAddress, false, ['kela/gtfs-rules/no-onnibus-mega.rule'], { 'transfers.txt': null })
+      mapSrc('kela', 'https://koontikartta.navici.com/tiedostot/gtfs_kela.zip'),
+      mapSrc('matkahuolto', mhAddress, false, ['kela/gtfs-rules/no-onnibus-mega.rule'], { 'transfers.txt': null })
     ],
     osm: ['finland']
   }
@@ -132,37 +132,34 @@ if (!process.env.ROUTER_NAME || !routers[process.env.ROUTER_NAME]) {
 }
 const router = routers[process.env.ROUTER_NAME]
 
-// EXTRA_SRC format should be {"FOLI": {"url": "http://data.foli.fi/gtfs/gtfs.zip",  "fit": false, "rules": ["waltti/gtfs-rules/waltti.rule"], "routers": ["hsl", "finland"]}}
-// but you can only define, for example, new url and the other key value pairs will remain the same as they are defined in this file. "routers" is always a mandatory field.
+// EXTRA_SRC format should be {"FOLI": {"url": "http://data.foli.fi/gtfs/gtfs.zip",  "fit": false, "rules": ["waltti/gtfs-rules/waltti.rule"]}}
+// but you can only define, for example, new url and the other key value pairs will remain the same as they are defined in this file.
 // It is also possible to add completely new src by defining object with unused id or to remove a src by defining "remove": true
 const extraSrc = process.env.EXTRA_SRC !== undefined ? JSON.parse(process.env.EXTRA_SRC) : {}
 
 const usedSrc = []
 
-// add config to every source and override config values if they are defined in extraSrc
-const cfg = router
-const cfgSrc = cfg.src
-for (let j = cfgSrc.length - 1; j >= 0; j--) {
-  const src = cfgSrc[j]
+// override source values if they are defined in extraSrc
+const rt = router
+const sources = rt.src
+for (let j = sources.length - 1; j >= 0; j--) {
+  const src = sources[j]
   const id = src.id
-  if (extraSrc[id] && extraSrc[id].routers !== undefined && extraSrc[id].routers.includes(cfg.id)) {
+  if (extraSrc[id]) {
     usedSrc.push(id)
     if (extraSrc[id].remove) {
-      cfgSrc.splice(j, 1)
+      sources.splice(j, 1)
       continue
     }
-    cfgSrc[j] = { ...src, ...extraSrc[src.id] }
+    sources[j] = { ...src, ...extraSrc[id] }
   }
-  cfgSrc[j].config = cfg
+  sources[j].config = rt
 }
 
 // Go through extraSrc keys to find keys that don't already exist in src and add those as new src
 Object.keys(extraSrc).forEach(id => {
   if (!usedSrc.includes(id)) {
-    const targets = extraSrc[id].routers
-    if (targets.includes(router.id)) {
-      router.src.push({ ...extraSrc[id], id })
-    }
+    router.src.push({ ...extraSrc[id], id })
   }
 })
 
@@ -170,10 +167,13 @@ Object.keys(extraSrc).forEach(id => {
 const gtfsMap = {}
 router.src.forEach(src => { gtfsMap[src.id] = src })
 
+const extraOSM = process.env.EXTRA_OSM !== undefined ? JSON.parse(process.env.EXTRA_OSM) : {}
+
 const osm = {
   finland: 'https://karttapalvelu.storage.hsldev.com/finland.osm/finland.osm.pbf',
   hsl: 'https://karttapalvelu.storage.hsldev.com/hsl.osm/hsl.osm.pbf',
-  estonia: 'https://download.geofabrik.de/europe/estonia-latest.osm.pbf'
+  estonia: 'https://download.geofabrik.de/europe/estonia-latest.osm.pbf',
+  ...extraOSM
 }
 
 const dem = {
