@@ -20,15 +20,41 @@ const { extractFromZip, addToZip } = require('./task/ZipTask')
 
 const seedSourceDir = `${config.dataDir}/router-${config.router.id}` // e.g. data/router-hsl
 
+const osmDlDir = `${config.dataDir}/downloads/osm`
+const demDlDir = `${config.dataDir}/downloads/dem`
+const gtfsDlDir = `${config.dataDir}/downloads/gtfs`
+
+const osmDir = `${config.dataDir}/ready/osm`
+const demDir = `${config.dataDir}/ready/dem`
+const gtfsDir = `${config.dataDir}/ready/gtfs`
+
+const gtfsSeedDir = `${config.dataDir}/seed`
+const fitDir = `${config.dataDir}/fit`
+const filterDir = `${config.dataDir}/filter`
+const idDir = `${config.dataDir}/id`
+const tmpDir = `${config.dataDir}/tmp`
+
 /**
- * Download and test new osm data
+ * Download osm data
  */
-gulp.task('osm:update', () =>
-  dl(config.osm)
-    .pipe(gulp.dest(`${config.dataDir}/downloads/osm`))
+gulp.task('osm:download', () => {
+  if (!config.osm) {
+    return Promise.resolve()
+  }
+  if (!fs.existsSync(osmDlDir)) {
+    execSync(`mkdir -p ${osmDlDir}`)
+  }
+  if (!fs.existsSync(osmDir)) {
+    execSync(`mkdir -p ${osmDir}`)
+  }
+  return Promise.all(dl(config.osm, osmDlDir)).catch(err => { throw err })
+})
+
+gulp.task('osm:update', gulp.series('osm:download',
+  () => gulp.src(`${osmDlDir}/*`)
     .pipe(validateBlobSize())
     .pipe(testOTPFile())
-    .pipe(gulp.dest(`${config.dataDir}/ready/osm`)))
+    .pipe(gulp.dest(osmDir))))
 
 /**
  * Download and test new dem data
@@ -37,20 +63,18 @@ gulp.task('dem:update', () => {
   if (!config.dem) {
     return Promise.resolve()
   }
-  const demDownloadDir = `${config.dataDir}/downloads/dem/`
-  if (!fs.existsSync(demDownloadDir)) {
-    execSync(`mkdir -p ${demDownloadDir}`)
+  if (!fs.existsSync(demDlDir)) {
+    execSync(`mkdir -p ${demDlDir}`)
   }
-  const demReadyDir = `${config.dataDir}/ready/dem/`
-  if (!fs.existsSync(demReadyDir)) {
-    execSync(`mkdir -p ${demReadyDir}`)
+  if (!fs.existsSync(demDir)) {
+    execSync(`mkdir -p ${demDir}`)
   }
   return Promise.all(dlBlob(config.dem)).catch(err => { throw err })
 })
 
-gulp.task('del:filter', () => del(`${config.dataDir}/filter`))
-gulp.task('del:fit', () => del(`${config.dataDir}/fit`))
-gulp.task('del:id', () => del(`${config.dataDir}/id`))
+gulp.task('del:filter', () => del(filterDir))
+gulp.task('del:fit', () => del(fitDir))
+gulp.task('del:id', () => del(idDir))
 
 /**
  * 1. download
@@ -58,32 +82,41 @@ gulp.task('del:id', () => del(`${config.dataDir}/id`))
  * 3. test zip with OpenTripPlanner
  * 4. copy to fit dir if test is succesful
  */
-gulp.task('gtfs:dl', gulp.series('del:fit', () => dl(config.router.src)
-  .pipe(renameGTFSFile())
-  .pipe(replaceGTFSFilesTask(config.gtfsMap))
-  .pipe(gulp.dest(`${config.dataDir}/downloads/gtfs`))
-  .pipe(testOTPFile())
-  .pipe(gulp.dest(`${config.dataDir}/fit/gtfs`))
+gulp.task('gtfs:dl', gulp.series('del:fit',
+  () => {
+    if (!fs.existsSync(tmpDir)) {
+      execSync(`mkdir -p ${tmpDir}`)
+    }
+    console.log('SRC:', config.src)
+    return Promise.all(dl(config.router.src, tmpDir)).catch(err => { throw err })
+  },
+  () => gulp.src(`${tmpDir}/*`)
+    .pipe(renameGTFSFile())
+    .pipe(replaceGTFSFilesTask(config.gtfsMap))
+    .pipe(gulp.dest(gtfsDlDir))
+    .pipe(testOTPFile())
+    .pipe(gulp.dest(fitDir)),
+  () => del(tmpDir) // cleanup
 ))
 
 // Add feedId to gtfs files in id dir, and moves files to directory 'ready'
-gulp.task('gtfs:id', () => gulp.src(`${config.dataDir}/id/gtfs/*`)
+gulp.task('gtfs:id', () => gulp.src(`${idDir}/*`)
   .pipe(setFeedIdTask())
-  .pipe(gulp.dest(`${config.dataDir}/ready/gtfs`)))
+  .pipe(gulp.dest(gtfsDir)))
 
 // Runs mapFit on gtfs files if fit is enabled, or just moves files to directory 'filter'
 gulp.task('gtfs:fit', config.router.src.some(src => src.fit)
   ? gulp.series(
     'del:filter',
     () => prepareFit(config),
-    () => gulp.src(`${config.dataDir}/fit/gtfs/*`)
+    () => gulp.src(`${fitDir}/*`)
       .pipe(extractFromZip(['stops.txt']))
       .pipe(mapFit(config)) // modify backup of stops.txt
       .pipe(addToZip(['stops.txt']))
-      .pipe(gulp.dest(`${config.dataDir}/filter/gtfs`)),
-    () => del(`${config.dataDir}/tmp`))
-  : () => gulp.src(`${config.dataDir}/fit/gtfs/*`)
-      .pipe(gulp.dest(`${config.dataDir}/filter/gtfs`))
+      .pipe(gulp.dest(filterDir)),
+    () => del(tmpDir))
+  : () => gulp.src(`${fitDir}/*`)
+      .pipe(gulp.dest(filterDir))
 )
 
 gulp.task('copyRules', () =>
@@ -93,36 +126,36 @@ gulp.task('copyRules', () =>
 // Filter gtfs files and move result to directory 'id'
 gulp.task('gtfs:filter', gulp.series(
   'copyRules',
-  () => gulp.src(`${config.dataDir}/filter/gtfs/*.zip`)
+  () => gulp.src(`${filterDir}/*.zip`)
     .pipe(extractFromZip(config.passOBAfilter))
     .pipe(OBAFilterTask(config.gtfsMap))
     .pipe(addToZip(config.passOBAfilter))
-    .pipe(gulp.dest(`${config.dataDir}/id/gtfs`)),
-  () => del(`${config.dataDir}/tmp`)
+    .pipe(gulp.dest(idDir)),
+  () => del(tmpDir)
 ))
 
 gulp.task('gtfs:update', gulp.series('gtfs:dl', 'gtfs:fit', 'gtfs:filter', 'gtfs:id'))
 
 // move listed packages from seed to ready
 gulp.task('gtfs:fallback', () => {
-  const sources = global.failedFeeds.split(',').map(feed => `${config.dataDir}/seed/gtfs/${feed}-gtfs.zip`)
-  return gulp.src(sources).pipe(gulp.dest(`${config.dataDir}/ready/gtfs`))
+  const sources = global.failedFeeds.split(',').map(feed => `${gtfsSeedDir}/${feed}-gtfs.zip`)
+  return gulp.src(sources).pipe(gulp.dest(gtfsDir))
 })
 
-gulp.task('gtfs:del', () => del([`${config.dataDir}/seed/gtfs`, `${config.dataDir}/ready/gtfs`]))
+gulp.task('gtfs:del', () => del([gtfsSeedDir, gtfsDir]))
 
 gulp.task('gtfs:seed', gulp.series('gtfs:del',
-  () => gulp.src(`${seedSourceDir}/*-gtfs.zip`).pipe(gulp.dest(`${config.dataDir}/seed/gtfs`)).pipe(gulp.dest(`${config.dataDir}/ready/gtfs`))))
+  () => gulp.src(`${seedSourceDir}/*-gtfs.zip`).pipe(gulp.dest(gtfsSeedDir)).pipe(gulp.dest(gtfsDir))))
 
-gulp.task('osm:del', () => del(`${config.dataDir}/ready/osm`))
+gulp.task('osm:del', () => del(osmDir))
 
 gulp.task('osm:seed', gulp.series('osm:del',
-  () => gulp.src(`${seedSourceDir}/*.pbf`).pipe(gulp.dest(`${config.dataDir}/ready/osm`))))
+  () => gulp.src(`${seedSourceDir}/*.pbf`).pipe(gulp.dest(osmDir))))
 
-gulp.task('dem:del', () => del(`${config.dataDir}/ready/dem`))
+gulp.task('dem:del', () => del(demDir))
 
 gulp.task('dem:seed', gulp.series('dem:del',
-  () => gulp.src(`${seedSourceDir}/*.tif`).pipe(gulp.dest(`${config.dataDir}/ready/dem`))))
+  () => gulp.src(`${seedSourceDir}/*.tif`).pipe(gulp.dest(demDir))))
 
 gulp.task('seed:cleanup', () => del([seedSourceDir, `${config.dataDir}/*.zip`]))
 
