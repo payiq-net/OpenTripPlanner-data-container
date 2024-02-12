@@ -30,7 +30,7 @@ module.exports = function (entries) {
           dataAlreadyExists = true
           // Abort download as remote has same size as local copy
           abortController.abort()
-	  resolve()
+          resolve()
         } else {
           response.data.pipe(fs.createWriteStream(filePath))
           process.stdout.write(`Downloading new DEM data from ${entry.url}\n`)
