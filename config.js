@@ -6,7 +6,7 @@
  * replacements = replace or remove file from gtfs package (format: {'file_to_replace': 'file_to_replace_with' or null})
  * request options = optional special options for request
  */
-const mapSrc = (id, url, fit, rules, replacements, requestOptions) => ({ id, url, fit, rules, replacements, requestOptions })
+const mapSrc = (id, url, fit, rules, replacements, headers) => ({ id, url, fit, rules, replacements, headers })
 
 // OBA filter erases files which it does not recognize from GTFS packages
 // this array specifies the file names which should be preserved
@@ -42,7 +42,7 @@ const routers = {
       mapSrc('tampere', 'http://ekstrat.tampere.fi/ekstrat/ptdata/tamperefeed_deprecated.zip'),
       mapSrc('LINKKI', 'https://tvv.fra1.digitaloceanspaces.com/209.zip', true),
       mapSrc('OULU', 'https://tvv.fra1.digitaloceanspaces.com/229.zip'),
-      mapSrc('digitraffic', 'https://rata.digitraffic.fi/api/v1/trains/gtfs-passenger-stops.zip', false, undefined, undefined, { gzip: true }),
+      mapSrc('digitraffic', 'https://rata.digitraffic.fi/api/v1/trains/gtfs-passenger-stops.zip', false, undefined, undefined, { 'Content-Encoding': 'gzip' }),
       mapSrc('Rauma', 'http://digitransit-proxy:8080/out/raumaadmin.mattersoft.fi/feeds/233.zip'),
       mapSrc('Hameenlinna', 'https://tvv.fra1.digitaloceanspaces.com/203.zip', true),
       mapSrc('Kotka', 'https://tvv.fra1.digitaloceanspaces.com/217.zip', true),
@@ -84,7 +84,7 @@ const routers = {
       mapSrc('LINKKI', 'https://geocoding.blob.core.windows.net/vrk/jkl.zip', true, undefined, { 'fare_attributes.txt': 'digitransit_fare_attributes.txt', 'fare_rules.txt': 'digitransit_fare_rules.txt' }),
       mapSrc('tampere', 'http://ekstrat.tampere.fi/ekstrat/ptdata/tamperefeed_deprecated.zip'),
       mapSrc('Rovaniemi', 'https://tvv.fra1.digitaloceanspaces.com/237.zip', true),
-      mapSrc('digitraffic', 'https://rata.digitraffic.fi/api/v1/trains/gtfs-passenger-stops.zip', false, undefined, undefined, { gzip: true }),
+      mapSrc('digitraffic', 'https://rata.digitraffic.fi/api/v1/trains/gtfs-passenger-stops.zip', false, undefined, undefined, { 'Content-Encoding': 'gzip' }),
       mapSrc('tampereDRT', 'https://ekstrat.tampere.fi/ekstrat/ptdata/tamperefeed_kutsuliikenne.zip'),
       mapSrc('Pori', 'https://tvv.fra1.digitaloceanspaces.com/231.zip', true),
       mapSrc('FUNI', 'https://foligtfs.blob.core.windows.net/routeplanner/gtfs-foli-ff.zip', true),
