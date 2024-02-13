@@ -1,4 +1,5 @@
 const fs = require('fs')
+const { execSync } = require('child_process')
 const axios = require('axios')
 const { postSlackMessage } = require('../util')
 
@@ -10,19 +11,24 @@ function handleFail (url, err) {
 /**
  * Download external data (gtfs, osm) resources.
  */
-module.exports = function download (entries, dir) {
-  return entries.map(entry => new Promise(resolve => {
+function download (entry, dir) {
+  return new Promise(resolve => {
+    if (!fs.existsSync(dir)) {
+      execSync(`mkdir -p ${dir}`)
+    }
     process.stdout.write('Downloading ' + entry.url + '...\n')
     const name = entry.url.split('/').pop()
     const ext = name.indexOf('.') > 0 ? '.' + name.split('.').pop() : ''
     const filePath = `${dir}/${entry.id + ext}`
-
-    axios({
+    const request = {
       method: 'GET',
       url: entry.url,
       responseType: 'stream',
-      headers: entry.headers
-    }).then(response => {
+    }
+    if (entry.headers) {
+      request.headers = entry.headers;
+    }
+    axios(request).then(response => {
       response.data.pipe(fs.createWriteStream(filePath))
       response.data.on('error', err => {
         handleFail(entry.url, err)
@@ -36,5 +42,11 @@ module.exports = function download (entries, dir) {
       handleFail(entry.url, err)
       resolve()
     })
-  }))
+  })
+}
+
+module.exports = async function dlSequentially (entries, dir) {
+  for(const e of entries) {
+    await download(e, dir);
+  }
 }
