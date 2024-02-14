@@ -23,10 +23,8 @@ function download (entry, dir) {
     const request = {
       method: 'GET',
       url: entry.url,
-      responseType: 'stream'
-    }
-    if (entry.headers) {
-      request.headers = entry.headers
+      responseType: 'stream',
+      ...entry.request
     }
     axios(request).then(response => {
       response.data.pipe(fs.createWriteStream(filePath))
