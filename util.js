@@ -3,9 +3,7 @@ const fs = require('fs')
 const globby = require('globby')
 const readline = require('readline')
 const path = require('path')
-const request = require('request')
-const { promisify } = require('util')
-const promisifiedRequest = promisify(request)
+const axios = require('axios')
 
 /**
  * zipFile file to create
@@ -31,27 +29,26 @@ const zipWithGlob = (zipFile, glob, zipDir, cb) => {
   })
 }
 
-async function postSlackMessage (messageText) {
-  process.stdout.write(`${messageText}\n`) // write important messages also to log
+const username = `OTP data builder ${process.env.BUILDER_TYPE || 'dev'}`
+const channel = process.env.SLACK_CHANNEL_ID
+const headers = {
+  Authorization: `Bearer ${process.env.SLACK_ACCESS_TOKEN}`,
+  'Content-Type': 'application/json',
+  Accept: '*/*'
+}
+
+async function postSlackMessage (text) {
+  process.stdout.write(`${text}\n`) // write important messages also to log
   try {
-    const response = await promisifiedRequest({
-      method: 'POST',
-      url: 'https://slack.com/api/chat.postMessage',
-      headers: {
-        Authorization: `Bearer ${process.env.SLACK_ACCESS_TOKEN}`,
-        'Content-Type': 'application/json',
-        Accept: '*/*'
-      },
-      json: {
-        channel: process.env.SLACK_CHANNEL_ID,
-        text: messageText,
-        username: `OTP data builder ${process.env.BUILDER_TYPE || 'dev'}`,
-        thread_ts: global.messageTimeStamp // either null (will be a new message) or pointing to parent message (will be a reply)
-      }
-    })
+    const { data } = await axios.post('https://slack.com/api/chat.postMessage', {
+      channel,
+      text,
+      username,
+      thread_ts: global.messageTimeStamp // either null (will be a new message) or pointing to parent message (will be a reply)
+    }, { headers })
 
     // Return the response, it contains information such as the message timestamp that is needed to reply to messages
-    return response.body
+    return data
   } catch (e) {
     // Something went wrong in the Slack-cycle... log it and continue build
     process.stdout.write(`Something went wrong when trying to send message to Slack: ${e}\n`)
@@ -59,27 +56,17 @@ async function postSlackMessage (messageText) {
   }
 }
 
-async function updateSlackMessage (messageText) {
-  process.stdout.write(`${messageText}\n`)
+async function updateSlackMessage (text) {
+  process.stdout.write(`${text}\n`)
   try {
-    const response = await promisifiedRequest({
-      method: 'POST',
-      url: 'https://slack.com/api/chat.update',
-      headers: {
-        Authorization: `Bearer ${process.env.SLACK_ACCESS_TOKEN}`,
-        'Content-Type': 'application/json',
-        Accept: '*/*'
-      },
-      json: {
-        channel: process.env.SLACK_CHANNEL_ID,
-        text: messageText,
-        username: `OTP data builder ${process.env.BUILDER_TYPE || 'dev'}`,
-        ts: global.messageTimeStamp
-      }
-    })
-
-    // Return the response, it contains information such as the message timestamp that is needed to reply to messages
-    return response.body
+    const { data } = await axios.post('https://slack.com/api/chat.update', {
+      channel: process.env.SLACK_CHANNEL_ID,
+      text,
+      username,
+      ts: global.messageTimeStamp
+    }, { headers })
+    // Return response data, it contains information such as the message timestamp that is needed to reply to messages
+    return data
   } catch (e) {
     // Something went wrong in the Slack-cycle... log it and continue build
     process.stdout.write(`Something went wrong when trying to update Slack message: ${e}\n`)

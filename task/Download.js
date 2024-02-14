@@ -23,10 +23,10 @@ function download (entry, dir) {
     const request = {
       method: 'GET',
       url: entry.url,
-      responseType: 'stream',
+      responseType: 'stream'
     }
     if (entry.headers) {
-      request.headers = entry.headers;
+      request.headers = entry.headers
     }
     axios(request).then(response => {
       response.data.pipe(fs.createWriteStream(filePath))
@@ -46,7 +46,7 @@ function download (entry, dir) {
 }
 
 module.exports = async function dlSequentially (entries, dir) {
-  for(const e of entries) {
-    await download(e, dir);
+  for (const e of entries) {
+    await download(e, dir)
   }
 }
