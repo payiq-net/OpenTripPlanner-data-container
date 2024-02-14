@@ -37,7 +37,7 @@ const tmpDir = `${config.dataDir}/tmp`
 /**
  * Download osm data
  */
-gulp.task('osm:download', () => {
+gulp.task('osm:download', async cb => {
   if (!config.osm) {
     return Promise.resolve()
   }
@@ -47,7 +47,8 @@ gulp.task('osm:download', () => {
   if (!fs.existsSync(osmDir)) {
     execSync(`mkdir -p ${osmDir}`)
   }
-  return Promise.all(dl(config.osm, osmDlDir)).catch(err => { throw err })
+  await dl(config.osm, osmDlDir)
+  cb()
 })
 
 gulp.task('osm:update', gulp.series('osm:download',
@@ -82,13 +83,12 @@ gulp.task('del:id', () => del(idDir))
  * 3. test zip with OpenTripPlanner
  * 4. copy to fit dir if test is succesful
  */
-gulp.task('gtfs:dl', gulp.series('del:fit',
-  () => {
-    if (!fs.existsSync(tmpDir)) {
-      execSync(`mkdir -p ${tmpDir}`)
-    }
-    console.log('SRC:', config.src)
-    return Promise.all(dl(config.router.src, tmpDir)).catch(err => { throw err })
+gulp.task('gtfs:dl', gulp.series(
+  'del:fit',
+  cb => {
+    dl(config.router.src, tmpDir).then(() => {
+      cb()
+    })
   },
   () => gulp.src(`${tmpDir}/*`)
     .pipe(renameGTFSFile())
@@ -96,7 +96,7 @@ gulp.task('gtfs:dl', gulp.series('del:fit',
     .pipe(gulp.dest(gtfsDlDir))
     .pipe(testOTPFile())
     .pipe(gulp.dest(fitDir)),
-  () => del(tmpDir) // cleanup
+  () => del(tmpDir)
 ))
 
 // Add feedId to gtfs files in id dir, and moves files to directory 'ready'
