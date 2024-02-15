@@ -46,7 +46,6 @@ async function postSlackMessage (text) {
       username,
       thread_ts: global.messageTimeStamp // either null (will be a new message) or pointing to parent message (will be a reply)
     }, { headers })
-
     // Return the response, it contains information such as the message timestamp that is needed to reply to messages
     return data
   } catch (e) {

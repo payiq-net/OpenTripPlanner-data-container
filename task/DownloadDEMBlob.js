@@ -35,10 +35,13 @@ module.exports = function (entries) {
           response.data.pipe(fs.createWriteStream(filePath))
           process.stdout.write(`Downloading new DEM data from ${entry.url}\n`)
         }
+      } else {
+	process.stdout.write(`${entry.url} download failed`)
+	reject(err)
       }
       response.data.on('error', err => {
         if (!dataAlreadyExists) {
-          process.stdout.write(`${entry.url} download failed: ${JSON.stringify(err)}`)
+          process.stdout.write(`${entry.url} download failed: ${JSON.stringify(err)} \n`)
           reject(err)
         } else {
           resolve()
@@ -65,6 +68,9 @@ module.exports = function (entries) {
           resolve()
         }
       })
+    }).catch(err => {
+      process.stdout.write(`${entry.url} download failed: ${JSON.stringify(err)}\n`)
+      reject(err)
     })
   }))
 }

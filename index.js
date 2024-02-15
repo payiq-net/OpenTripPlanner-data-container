@@ -30,12 +30,9 @@ async function update () {
 
   // we track data rejections using this global variable
   global.hasFailures = false
-
-  try { // tolerate fail in dem update
-    await start('dem:update')
-  } catch (err) {
+  await start('dem:update')
+  if (global.hasFailures) {
     postSlackMessage('DEM update failed, using previous version :boom:')
-    global.hasFailures = true
   }
 
   // OSM update is more complicated. Download often fails, so there is a retry loop,

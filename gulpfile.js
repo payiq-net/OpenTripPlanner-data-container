@@ -51,11 +51,14 @@ gulp.task('osm:download', async cb => {
   cb()
 })
 
-gulp.task('osm:update', gulp.series('osm:download',
+gulp.task('osm:update', gulp.series(
+  'osm:download',
   () => gulp.src(`${osmDlDir}/*`)
     .pipe(validateBlobSize())
     .pipe(testOTPFile())
-    .pipe(gulp.dest(osmDir))))
+    .pipe(gulp.dest(osmDir)),
+  () => del(tmpDir)
+))
 
 /**
  * Download and test new dem data
@@ -70,7 +73,7 @@ gulp.task('dem:update', () => {
   if (!fs.existsSync(demDir)) {
     execSync(`mkdir -p ${demDir}`)
   }
-  return Promise.all(dlBlob(config.dem)).catch(err => { throw err })
+  return Promise.all(dlBlob(config.dem)).catch(err => { global.hasFailures = true })
 })
 
 gulp.task('del:filter', () => del(filterDir))
