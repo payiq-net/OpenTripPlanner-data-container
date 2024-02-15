@@ -35,9 +35,6 @@ module.exports = function (entries) {
           response.data.pipe(fs.createWriteStream(filePath))
           process.stdout.write(`Downloading new DEM data from ${entry.url}\n`)
         }
-      } else {
-	process.stdout.write(`${entry.url} download failed`)
-	reject(err)
       }
       response.data.on('error', err => {
         if (!dataAlreadyExists) {
