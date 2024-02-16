@@ -45,10 +45,10 @@ const replaceGTFSFiles = (fileContents, replacements, fileName, cb) => {
           resolve()
         }))
       } else if (replacementFile !== undefined) {
-        used[relativePath] = true
         // Replacement file defined, replace the file with the new one
         promises.push(zipWithNewName(zip, relativePath, replacementFile))
       }
+      used[relativePath] = true
     })
     // renamed replacements without existing counterpart
     Object.keys(replacements).forEach(name => {
