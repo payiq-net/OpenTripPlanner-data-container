@@ -120,6 +120,6 @@ and a pre-built graph. For example, in HSL case: http://localhost:8080/router-hs
 ### otp-data-tools
 
 Contains tools for gtfs manipulation, such as One Bus Away gtfs filter. OBA filter tool version 1.3.9 is embedded into this repository.
-It should be replaced with a newer version if such one appers e.g into https://mvnrepository.com/.
+It should be replaced with a newer version if such one appears e.g. into https://mvnrepository.com/.
 
 These tools are packaged inside docker container and are used during the data build process.
