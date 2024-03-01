@@ -104,60 +104,62 @@
       }
     ]
   },
-  "vectorTileLayers": [
-    {
-      "name": "stops",
-      "type": "Stop",
-      "mapper": "Digitransit",
-      "maxZoom": 20,
-      "minZoom": 5,
-      "cacheMaxSeconds": 43200
-    },
-    {
-      "name": "stations",
-      "type": "Station",
-      "mapper": "Digitransit",
-      "maxZoom": 20,
-      "minZoom": 5,
-      "cacheMaxSeconds": 43200
-    },
-    {
-      "name": "rentalStations",
-      "type": "VehicleRentalStation",
-      "mapper": "Digitransit",
-      "maxZoom": 20,
-      "minZoom": 5,
-      "cacheMaxSeconds": 43200,
-      "expansionFactor": 0.25
-    },
-    {
-      "name": "realtimeRentalStations",
-      "type": "VehicleRentalStation",
-      "mapper": "DigitransitRealtime",
-      "maxZoom": 20,
-      "minZoom": 5,
-      "cacheMaxSeconds": 45,
-      "expansionFactor": 0.25
-    },
-    {
-      "name": "vehicleParking",
-      "type": "VehicleParking",
-      "mapper": "Digitransit",
-      "maxZoom": 20,
-      "minZoom": 5,
-      "cacheMaxSeconds": 43200,
-      "expansionFactor": 0.25
-    },
-    {
-      "name": "vehicleParkingGroups",
-      "type": "VehicleParkingGroup",
-      "mapper": "Digitransit",
-      "maxZoom": 20,
-      "minZoom": 5,
-      "cacheMaxSeconds": 43200,
-      "expansionFactor": 0.25
-    }
-  ],
+  "vectorTiles": {
+    "layers": [
+      {
+        "name": "stops",
+        "type": "Stop",
+        "mapper": "Digitransit",
+        "maxZoom": 20,
+        "minZoom": 5,
+        "cacheMaxSeconds": 43200
+      },
+      {
+        "name": "stations",
+        "type": "Station",
+        "mapper": "Digitransit",
+        "maxZoom": 20,
+        "minZoom": 5,
+        "cacheMaxSeconds": 43200
+      },
+      {
+        "name": "rentalStations",
+        "type": "VehicleRentalStation",
+        "mapper": "Digitransit",
+        "maxZoom": 20,
+        "minZoom": 5,
+        "cacheMaxSeconds": 43200,
+        "expansionFactor": 0.25
+      },
+      {
+        "name": "realtimeRentalStations",
+        "type": "VehicleRentalStation",
+        "mapper": "DigitransitRealtime",
+        "maxZoom": 20,
+        "minZoom": 5,
+        "cacheMaxSeconds": 45,
+        "expansionFactor": 0.25
+      },
+      {
+        "name": "vehicleParking",
+        "type": "VehicleParking",
+        "mapper": "Digitransit",
+        "maxZoom": 20,
+        "minZoom": 5,
+        "cacheMaxSeconds": 43200,
+        "expansionFactor": 0.25
+      },
+      {
+        "name": "vehicleParkingGroups",
+        "type": "VehicleParkingGroup",
+        "mapper": "Digitransit",
+        "maxZoom": 20,
+        "minZoom": 5,
+        "cacheMaxSeconds": 43200,
+        "expansionFactor": 0.25
+      }
+    ]
+  },
   "updaters": [
     {
       "id": "hsl-trip-updates",
