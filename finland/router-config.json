@@ -29,9 +29,6 @@
       "walk": "90m"
     },
     "maxJourneyDuration": "24h",
-    "maxAccessEgressDurationForMode": {
-      "CAR_TO_PARK": "2h"
-    },
     "streetRoutingTimeout": "9s",
     "wheelchairAccessibility": {
       "stop": {
