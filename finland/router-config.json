@@ -193,7 +193,10 @@
       "url": "https://rata.digitraffic.fi/api/v1/trains/gtfs-rt-updates",
       "feedId": "digitraffic",
       "fuzzyTripMatching": false,
-      "backwardsDelayPropagationType": "ALWAYS"
+      "backwardsDelayPropagationType": "ALWAYS",
+      "headers": {
+        "digitraffic-user": "Digitransit/OTP"
+      }
     },
     {
       "id": "oulu-trip-updates",
