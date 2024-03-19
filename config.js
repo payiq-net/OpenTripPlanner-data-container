@@ -26,7 +26,7 @@ const routers = {
   hsl: {
     id: 'hsl',
     src: [
-      mapSrc('HSL', 'https://infopalvelut.storage.hsldev.com/gtfs/hsl.zip', false, undefined, { 'translations.txt': 'translations_new.txt', 'trips.txt': 'trips2.txt' })
+      mapSrc('HSL', 'https://infopalvelut.storage.hsldev.com/gtfs/hsl.zip', false, undefined, { 'trips.txt': 'trips2.txt' })
       // src('HSLlautta', 'https://koontikartta.navici.com/tiedostot/gtfs_lautat_digitransit.zip'),
       // src('Sipoo', 'https://koontikartta.navici.com/tiedostot/rae/sipoon_kunta_sibbo_kommun.zip')
     ],
@@ -37,7 +37,7 @@ const routers = {
   finland: {
     id: 'finland',
     src: [
-      mapSrc('HSL', 'https://infopalvelut.storage.hsldev.com/gtfs/hsl.zip', false, ['finland/gtfs-rules/hsl-no-trains.rule'], { 'translations.txt': 'translations_new.txt', 'trips.txt': 'trips2.txt' }),
+      mapSrc('HSL', 'https://infopalvelut.storage.hsldev.com/gtfs/hsl.zip', false, ['finland/gtfs-rules/hsl-no-trains.rule'], { 'trips.txt': 'trips2.txt' }),
       mapSrc('MATKA', 'https://koontikartta.navici.com/tiedostot/gtfs_digitransit.zip', true, ['finland/gtfs-rules/matka-cleaned.rule']),
       mapSrc('tampere', 'http://ekstrat.tampere.fi/ekstrat/ptdata/tamperefeed_deprecated.zip'),
       mapSrc('LINKKI', 'https://tvv.fra1.digitaloceanspaces.com/209.zip', true),
