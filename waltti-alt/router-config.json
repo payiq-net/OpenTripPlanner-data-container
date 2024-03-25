@@ -92,7 +92,7 @@
         "type": "Stop",
         "mapper": "DigitransitRealtime",
         "maxZoom": 20,
-        "minZoom": 13,
+        "minZoom": 5,
         "cacheMaxSeconds": 60
       },
       {
