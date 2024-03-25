@@ -87,8 +87,8 @@
         "type": "Stop",
         "mapper": "DigitransitRealtime",
         "maxZoom": 20,
-        "minZoom": 5,
-        "cacheMaxSeconds": 43200
+        "minZoom": 13,
+        "cacheMaxSeconds": 60
       },
       {
         "name": "stations",
