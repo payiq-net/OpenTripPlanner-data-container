@@ -81,7 +81,7 @@ const routers = {
       mapSrc('Lahti', 'https://tvv.fra1.digitaloceanspaces.com/223.zip', true),
       mapSrc('Kuopio', 'http://karttapalvelu.kuopio.fi/google_transit/google_transit.zip'),
       mapSrc('OULU', 'https://tvv.fra1.digitaloceanspaces.com/229.zip'),
-      mapSrc('LINKKI', 'https://tvv.fra1.digitaloceanspaces.com/209.zip', true),
+      mapSrc('LINKKI', 'https://tvv.fra1.digitaloceanspaces.com/209.zip', true, undefined, {'fare_attributes.txt': 'digitransit_fare_attributes.txt', 'fare_rules.txt': 'digitransit_fare_rules.txt'}),
       mapSrc('tampere', 'http://ekstrat.tampere.fi/ekstrat/ptdata/tamperefeed_deprecated.zip'),
       mapSrc('Rovaniemi', 'https://tvv.fra1.digitaloceanspaces.com/237.zip', true),
       mapSrc('digitraffic', 'https://rata.digitraffic.fi/api/v1/trains/gtfs-passenger-stops.zip', false, undefined, undefined, { headers: { 'Accept-Encoding': 'gzip', 'Digitraffic-User': 'Digitransit/OTP-dataloading' } }),
