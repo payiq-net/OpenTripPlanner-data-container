@@ -573,6 +573,15 @@
       "overloadingAllowed": true
     },
     {
+      "id": "tampere-bike-rental",
+      "network": "inurba_tampere",
+      "type": "vehicle-rental",
+      "sourceType": "gbfs",
+      "frequency": "30s",
+      "url": "http://digitransit-proxy:8080/out/gbfs.urbansharing.com/tampere.onurbansharing.com/gbfs.json",
+      "overloadingAllowed": true
+    },
+    {
       "id": "liipi",
       "type": "vehicle-parking",
       "sourceType": "hsl-park",
