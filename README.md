@@ -1,6 +1,6 @@
 # Build process for OpenTripPlanner-data-container
 
-[![Build](https://github.com/hsldevcom/OpenTripPlanner-data-container/workflows/Process%20master%20push%20or%20pr/badge.svg?branch=master)](https://github.com/HSLdevcom/OpenTripPlanner-data-container/actions)
+[![Build](https://github.com/hsldevcom/OpenTripPlanner-data-container/workflows/Process%20v3%20push%20or%20pr/badge.svg?branch=v3)](https://github.com/HSLdevcom/OpenTripPlanner-data-container/actions)
 
 ## This project:
 Contains tools for fetching, building and deploying fresh otp data-containers
