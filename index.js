@@ -10,5 +10,4 @@ postSlackMessage('Starting data build').then(response => {
   console.log(err)
   const { update } = require('./task/Update')
   update()
-});
-
+})
