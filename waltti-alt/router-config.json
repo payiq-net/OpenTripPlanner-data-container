@@ -149,14 +149,6 @@
       "url": "http://digitransit-proxy:8080/out/kajaani.mattersoft.fi/api/gtfsrealtime/v1.0/feed/servicealert",
       "feedId": "Kajaani",
       "fuzzyTripMatching": false
-    },
-    {
-      "id": "raasepori-alerts",
-      "type": "real-time-alerts",
-      "frequency": "30s",
-      "url": "http://digitransit-proxy:8080/out/bosse.mattersoft.fi/api/gtfsrealtime/v1.0/feed/servicealert",
-      "feedId": "Raasepori",
-      "fuzzyTripMatching": false
     }
   ]
 }

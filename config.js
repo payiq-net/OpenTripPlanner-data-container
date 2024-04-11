@@ -98,8 +98,7 @@ const routers = {
     id: 'waltti-alt',
     src: [
       mapSrc('Salo', 'https://tvv.fra1.digitaloceanspaces.com/239.zip', true),
-      mapSrc('Kajaani', 'https://tvv.fra1.digitaloceanspaces.com/211.zip', true),
-      mapSrc('Raasepori', 'https://tvv.fra1.digitaloceanspaces.com/232.zip', true)
+      mapSrc('Kajaani', 'https://tvv.fra1.digitaloceanspaces.com/211.zip', true)
     ],
     osm: ['finland']
   },
