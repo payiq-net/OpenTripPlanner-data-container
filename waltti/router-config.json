@@ -507,7 +507,7 @@
       "type": "vehicle-rental",
       "sourceType": "gbfs",
       "frequency": "30s",
-      "url": "http://digitransit-proxy:8080/out/gbfs.urbansharing.com/tampere.onurbansharing.com/gbfs.json",
+      "url": "https://gbfs.urbansharing.com/tampere.onurbansharing.com/gbfs.json",
       "overloadingAllowed": true
     }
   ]
