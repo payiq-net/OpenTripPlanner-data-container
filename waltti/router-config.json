@@ -1,12 +1,13 @@
 {
   "routingDefaults": {
-    "searchWindow": "12h",
+    "searchWindow": "PT1H",
     "transferSlack": 90,
     "waitReluctance": 0.95,
     "elevatorBoardTime": 60,
     "bicycle": {
       "boardCost": 120,
-      "reluctance": 1.7
+      "reluctance": 1.7,
+      "optimization": "safest-streets"
     },
     "car": {
       "reluctance": 10.0
