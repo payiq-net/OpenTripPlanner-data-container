@@ -105,8 +105,7 @@
           "reluctance": 1.8
         },
         "bicycle": {
-          "speed": 5.55,
-          "optimization": "SAFEST_STREETS"
+          "speed": 5.55
         }
       },
       {
@@ -116,8 +115,7 @@
           "reluctance": 1.8
         },
         "bicycle": {
-          "speed": 5.55,
-          "optimization": "SAFEST_STREETS"
+          "speed": 5.55
         }
       },
       {
@@ -134,8 +132,7 @@
           "reluctance": 1.8
         },
         "bicycle": {
-          "speed": 5.55,
-          "optimization": "SAFEST_STREETS"
+          "speed": 5.55
         }
       },
       {
@@ -145,8 +142,7 @@
           "reluctance": 1.8
         },
         "bicycle": {
-          "speed": 5.55,
-          "optimization": "SAFEST_STREETS"
+          "speed": 5.55
         }
       }
     ]
