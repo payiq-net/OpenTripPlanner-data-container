@@ -80,6 +80,10 @@
     }
   },
   "transit" : {
+    "pagingSearchWindowAdjustments": [ "8h", "2h", "1h", "1h", "1h" ],
+    "dynamicSearchWindow" : {
+      "maxWindow" : "14h"
+    },
     "transferCacheRequests": [
       {
         "modes": "WALK",
