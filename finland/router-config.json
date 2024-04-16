@@ -1,12 +1,13 @@
 {
   "routingDefaults": {
-    "searchWindow": "16h",
+    "searchWindow": "PT2H",
     "transferSlack": 90,
     "waitReluctance": 0.99,
     "elevatorBoardTime": 60,
     "bicycle": {
       "boardCost": 120,
-      "reluctance": 1.7
+      "reluctance": 1.7,
+      "optimization": "safest-streets"
     },
     "car": {
       "reluctance": 10.0
@@ -52,6 +53,10 @@
     }
   },
   "transit": {
+    "pagingSearchWindowAdjustments": ["8h", "4h", "4h", "4h", "4h"],
+    "dynamicSearchWindow" : {
+      "maxWindow" : "24h"
+    },
     "transferCacheRequests": [
       {
         "modes": "WALK",
@@ -77,8 +82,7 @@
           "reluctance": 1.8
         },
         "bicycle": {
-          "speed": 5.55,
-          "optimization": "SAFEST_STREETS"
+          "speed": 5.55
         }
       },
       {
@@ -95,8 +99,7 @@
           "reluctance": 1.8
         },
         "bicycle": {
-          "speed": 5.55,
-          "optimization": "SAFEST_STREETS"
+          "speed": 5.55
         }
       }
     ]
