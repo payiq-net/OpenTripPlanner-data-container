@@ -82,7 +82,8 @@ module.exports = {
             file.contents = newContents
             callback(null, file)
           } else {
-            callback(err, null)
+	    // fallback to old data
+            callback(null, null)
           }
         })
       }
