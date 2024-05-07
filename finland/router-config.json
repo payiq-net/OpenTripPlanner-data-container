@@ -20,7 +20,7 @@
       "boardCost": 120
     },
     "accessEgress": {
-      "maxDuration": "1h",
+      "maxDuration": "2h",
       "maxDurationForMode": {
         "CAR_TO_PARK": "2h"
       }

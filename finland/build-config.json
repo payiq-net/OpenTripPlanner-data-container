@@ -4,7 +4,7 @@
   "staticParkAndRide": false,
   "subwayAccessTime": 0,
   "maxAreaNodes": 1000,
-  "maxTransferDuration": "1h",
+  "maxTransferDuration": "2h",
   "maxStopToShapeSnapDistance": 300,
   "transitServiceStart": "-P2W",
   "transitServiceEnd": "P12W",
