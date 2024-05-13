@@ -10,6 +10,6 @@
     "ActuatorAPI": true,
     "AsyncGraphQLFetchers": true,
     "GtfsGraphQlApiRentalStationFuzzyMatching": true,
-    "Co2Emissions": true
+    "Co2Emissions": false
   }
 }
