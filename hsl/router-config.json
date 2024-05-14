@@ -1,6 +1,6 @@
 {
   "routingDefaults": {
-    "searchWindow": "PT30M",
+    "searchWindow": "1h",
     "transferSlack": 90,
     "waitReluctance": 0.95,
     "elevatorBoardTime": 60,
