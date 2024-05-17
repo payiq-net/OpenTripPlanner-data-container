@@ -62,7 +62,8 @@ const routers = {
       mapSrc('Vikingline', 'https://fgwgtfsprod.blob.core.windows.net/gtfsout/latest_VIKINGLINE.zip'),
       mapSrc('Raasepori', 'https://tvv.fra1.digitaloceanspaces.com/232.zip', true),
       mapSrc('VARELY', 'http://digitransit-proxy:8080/out/varelyadmin.mattersoft.fi/feeds/102.zip', false),
-      mapSrc('Harma', 'https://harmanliikenne.bussikaista.fi/sites/harma/files/gtfs/export/latest.zip', true)
+      mapSrc('Harma', 'https://harmanliikenne.bussikaista.fi/sites/harma/files/gtfs/export/latest.zip', true),
+      mapSrc('PohjolanMatka', 'https://minfoapi.matkahuolto.fi/gtfs/458/gtfs.zip', true)
     ],
     osm: ['finland', 'estonia']
   },
