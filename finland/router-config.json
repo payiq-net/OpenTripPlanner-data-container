@@ -591,10 +591,10 @@
       "feedId": "liipi",
       "timeZone": "Europe/Helsinki",
       "facilitiesFrequencySec": 3600,
-      "facilitiesUrl": "http://digitransit-proxy:8080/out/parking.fintraffic.fi/api/v1/facilities.json?limit=-1",
+      "facilitiesUrl": "https://parking.fintraffic.fi/api/v1/facilities.json?limit=-1",
       "utilizationsFrequencySec": 600,
-      "utilizationsUrl": "http://digitransit-proxy:8080/out/parking.fintraffic.fi/api/v1/utilizations.json?limit=-1",
-      "hubsUrl": "http://digitransit-proxy:8080/out/parking.fintraffic.fi/api/v1/hubs.json?limit=-1"
+      "utilizationsUrl": "https://parking.fintraffic.fi/api/v1/utilizations.json?limit=-1",
+      "hubsUrl": "https://parking.fintraffic.fi/api/v1/hubs.json?limit=-1"
     },
     {
       "id": "raasepori-alerts",
