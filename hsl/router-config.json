@@ -189,7 +189,8 @@
         "maxZoom": 20,
         "minZoom": 5,
         "cacheMaxSeconds": 43200,
-        "expansionFactor": 0.25
+        "expansionFactor": 0.25,
+        "hideNetworks": ["bolt"]
       },
       {
         "name": "realtimeRentalStations",
@@ -198,6 +199,25 @@
         "maxZoom": 20,
         "minZoom": 5,
         "cacheMaxSeconds": 45,
+        "expansionFactor": 0.25,
+        "hideNetworks": ["bolt"]
+      },
+      {
+        "name": "rentalVehicles",
+        "type": "VehicleRentalVehicle",
+        "mapper": "Digitransit",
+        "maxZoom": 20,
+        "minZoom": 5,
+        "cacheMaxSeconds": 43200,
+        "expansionFactor": 0.25
+      },  
+      {
+        "name": "realtimeRentalVehicles",
+        "type": "VehicleRentalVehicle",
+        "mapper": "DigitransitRealtime",
+        "maxZoom": 20,
+        "minZoom": 5,
+        "cacheMaxSeconds": 43200,
         "expansionFactor": 0.25
       },
       {
@@ -278,6 +298,15 @@
         "stop-position",
         "occupancy"
       ]
+    },
+    {
+      "id": "bolt-scooter-rental",
+      "type": "vehicle-rental",
+      "sourceType": "gbfs",
+      "frequency": "30s",
+      "network": "bolt",
+      "url": "https://mds.bolt.eu/gbfs/2/10/gbfs",
+      "geofencingZones": true
     }
   ]
 }
