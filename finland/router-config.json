@@ -137,8 +137,7 @@
         "maxZoom": 20,
         "minZoom": 5,
         "cacheMaxSeconds": 43200,
-        "expansionFactor": 0.25,
-        "hideNetworks": ["bolt"]
+        "expansionFactor": 0.25
       },
       {
         "name": "realtimeRentalStations",
@@ -147,8 +146,7 @@
         "maxZoom": 20,
         "minZoom": 5,
         "cacheMaxSeconds": 45,
-        "expansionFactor": 0.25,
-        "hideNetworks": ["bolt"]
+        "expansionFactor": 0.25
       },
       {
         "name": "rentalVehicles",
