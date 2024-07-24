@@ -7,7 +7,7 @@
       "APIBikeRental": false,
       "SandboxAPIMapboxVectorTilesApi": true,
       "ActuatorAPI": true,
-      "AsyncGraphQLFetchers": true,
+      "AsyncGraphQLFetchers": false,
       "GtfsGraphQlApiRentalStationFuzzyMatching": true
   }
 }

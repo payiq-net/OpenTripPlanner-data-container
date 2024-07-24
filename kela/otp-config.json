@@ -8,7 +8,7 @@
       "SandboxAPIMapboxVectorTilesApi": true,
       "FloatingBike": false,
       "ActuatorAPI": true,
-      "AsyncGraphQLFetchers": true,
+      "AsyncGraphQLFetchers": false,
       "GtfsGraphQlApiRentalStationFuzzyMatching": true
   }
 }

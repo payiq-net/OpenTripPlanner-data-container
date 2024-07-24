@@ -1,7 +1,7 @@
 {
   "routingDefaults": {
     "searchWindow": "1h",
-    "transferSlack": 90,
+    "transferSlack": "1m30s",
     "waitReluctance": 0.95,
     "elevatorBoardTime": 60,
     "bicycle": {
@@ -208,7 +208,7 @@
         "minZoom": 5,
         "cacheMaxSeconds": 43200,
         "expansionFactor": 0.25
-      },  
+      },
       {
         "name": "realtimeRentalVehicles",
         "type": "VehicleRentalVehicle",
