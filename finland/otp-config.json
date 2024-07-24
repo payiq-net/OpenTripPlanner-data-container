@@ -6,7 +6,7 @@
       "APIUpdaterStatus": false,
       "APIBikeRental": false,
       "SandboxAPIMapboxVectorTilesApi": true,
-      "FloatingBike": false,
+      "FloatingBike": true,
       "ActuatorAPI": true,
       "AsyncGraphQLFetchers": false,
       "Co2Emissions": true,
