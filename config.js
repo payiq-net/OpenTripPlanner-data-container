@@ -90,7 +90,7 @@ const routers = {
       mapSrc('Pori', 'https://tvv.fra1.digitaloceanspaces.com/231.zip', true),
       mapSrc('FUNI', 'https://foligtfs.blob.core.windows.net/routeplanner/gtfs-foli-ff.zip', true),
       mapSrc('Raasepori', 'https://tvv.fra1.digitaloceanspaces.com/232.zip', true),
-      mapSrc('KotkaLautat', 'https://koontikartta.navici.com/tiedostot/gtfs_lautat.zip', true, ['waltti/gtfs-rules/only-kotka-ferries.rule']),
+      // mapSrc('KotkaLautat', 'https://koontikartta.navici.com/tiedostot/gtfs_lautat.zip', true, ['waltti/gtfs-rules/only-kotka-ferries.rule']),
     ],
     osm: ['finland'],
     dem: 'waltti'
