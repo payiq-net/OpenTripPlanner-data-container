@@ -65,7 +65,7 @@ const routers = {
       mapSrc('Harma', 'https://harmanliikenne.bussikaista.fi/sites/harma/files/gtfs/export/latest.zip', true),
       mapSrc('PohjolanMatka', 'https://minfoapi.matkahuolto.fi/gtfs/458/gtfs.zip', true)
     ],
-    osm: ['finland', 'estonia']
+    osm: ['finland']
   },
 
   waltti: {
