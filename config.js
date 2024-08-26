@@ -58,7 +58,6 @@ const routers = {
       mapSrc('Kajaani', 'https://tvv.fra1.digitaloceanspaces.com/211.zip', true),
       mapSrc('Salo', 'https://tvv.fra1.digitaloceanspaces.com/239.zip', true),
       mapSrc('Pori', 'https://tvv.fra1.digitaloceanspaces.com/231.zip', true),
-      mapSrc('Viro', 'http://peatus.ee/gtfs/gtfs.zip'),
       mapSrc('Vikingline', 'https://fgwgtfsprod.blob.core.windows.net/gtfsout/latest_VIKINGLINE.zip'),
       mapSrc('Raasepori', 'https://tvv.fra1.digitaloceanspaces.com/232.zip', true),
       mapSrc('VARELY', 'http://digitransit-proxy:8080/out/varelyadmin.mattersoft.fi/feeds/102.zip', false),
