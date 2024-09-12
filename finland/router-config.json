@@ -276,6 +276,14 @@
       "frequency": "30s",
       "url": "http://digitransit-proxy:8080/out/stables.donkey.bike/api/public/gbfs/2/donkey_turku/gbfs.json",
       "overloadingAllowed": true
+    },
+    {
+      "id": "hamina-bike-rental",
+      "type": "vehicle-rental",
+      "sourceType": "gbfs",
+      "frequency": "30s",
+      "url": "http://digitransit-proxy:8080/out/stables.donkey.bike/api/public/gbfs/2/donkey_hamina/gbfs.json",
+      "overloadingAllowed": true
     }
   ]
 }
