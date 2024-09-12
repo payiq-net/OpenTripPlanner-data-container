@@ -228,6 +228,30 @@
       }
     },
     {
+      "id": "lappeenranta-bike-rental",
+      "type": "vehicle-rental",
+      "sourceType": "gbfs",
+      "frequency": "30s",
+      "url": "http://digitransit-proxy:8080/out/stables.donkey.bike/api/public/gbfs/2/donkey_lappeenranta/gbfs.json",
+      "overloadingAllowed": true
+    },
+    {
+      "id": "kotka-bike-rental",
+      "type": "vehicle-rental",
+      "sourceType": "gbfs",
+      "frequency": "30s",
+      "url": "http://digitransit-proxy:8080/out/stables.donkey.bike/api/public/gbfs/2/donkey_kotka/gbfs.json",
+      "overloadingAllowed": true
+    },
+    {
+      "id": "kouvola-bike-rental",
+      "type": "vehicle-rental",
+      "sourceType": "gbfs",
+      "frequency": "30s",
+      "url": "http://digitransit-proxy:8080/out/stables.donkey.bike/api/public/gbfs/2/donkey_kouvola/gbfs.json",
+      "overloadingAllowed": true
+    },
+    {
       "id": "vantaa-bike-rental",
       "type": "vehicle-rental",
       "sourceType": "gbfs",
@@ -243,6 +267,14 @@
       "frequency": "30s",
       "network": "smoove",
       "url": "http://digitransit-proxy:8080/out/helsinki-fi.smoove.pro/api-public/stations",
+      "overloadingAllowed": true
+    },
+    {
+      "id": "turku-bike-rental",
+      "type": "vehicle-rental",
+      "sourceType": "gbfs",
+      "frequency": "30s",
+      "url": "http://digitransit-proxy:8080/out/stables.donkey.bike/api/public/gbfs/2/donkey_turku/gbfs.json",
       "overloadingAllowed": true
     }
   ]
