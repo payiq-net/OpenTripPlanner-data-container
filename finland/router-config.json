@@ -197,6 +197,13 @@
       "backwardsDelayPropagationType": "ALWAYS"
     },
     {
+      "id": "hsl-stop-delay-estimator",
+      "type": "mqtt-gtfs-rt-updater",
+      "url": "tcp://mqtt5",
+      "topic": "gtfsrt/v2/fi/hsl/s",
+      "feedId": "HSL"
+    },
+    {
       "id": "hsl-alerts",
       "type": "real-time-alerts",
       "frequency": "30s",
