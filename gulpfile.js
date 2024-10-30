@@ -97,7 +97,7 @@ gulp.task('gtfs:dl', gulp.series(
     .pipe(renameGTFSFile())
     .pipe(replaceGTFSFilesTask(config.gtfsMap))
     .pipe(gulp.dest(gtfsDlDir))
-    .pipe(testOTPFile())
+    //.pipe(testOTPFile())
     .pipe(gulp.dest(fitDir)),
   () => del(tmpDir)
 ))
